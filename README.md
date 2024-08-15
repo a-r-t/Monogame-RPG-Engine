@@ -3,7 +3,7 @@
 ## What is this?
 
 I made a game engine and built an RPG on top of it in Java for a course I teach, which can be found here: https://github.com/a-r-t/SER-225-Game-RPG.
-Thiat Java game is built using Java Swing, which isn't an actual game framework.
+That Java game is built using Java Swing, which isn't an actual game framework.
 A lot of my inspiration for it came from my past experiences with Monogame, so I figured why not port it over to Monogame itself.
 I might use it in the future to make a game...if I ever have free time.
 But it is free and open for anyone else to use.
@@ -18,6 +18,27 @@ You will likely need at least the 2022 version of Visual Studio to open the proj
 You may need to install/update .NET Framework for this.
 
 After opening the project successfully, you should be able to run the game and play my fun little cat RPG identical to the Java version.
+
+### For Mac Developers
+
+Since Visual Studio is now unsupported by Microsoft on MacOS, we have to get a little creative when running the project. By getting creative, I really mean using the command line.
+
+#### Setup
+
+1. Install .NET 8.0 from [here](https://dotnet.microsoft.com/en-us/download).
+2. Run `dotnet restore`.
+
+#### Run the project for development
+
+1. Run `dotnet build`. This will place a development build in `bin/Debug/net6.0`.
+2. Ensure you're in the `net6.0` directory, then run `./Monogame-RPG-Engine`.
+
+#### Building the project (WIP)
+
+Currently, the project builds in a mess of folders and directories, but it runs! This will guide you through the current process of getting an almost distributable version of the project built.
+
+1. Run the command `dotnet publish -r osx-x64 -c Release /p:PublishSingleFile=true`. This will place the final set of files to `bin/Release/net6.0/osx-x64/publish`.
+2. Ensure you are in the `publish` directory, then run `./Monogame-RPG-Engine`. This will run the executable in the correct folder, so all of the references within the code work properly.
 
 ## How is this project structured?
 
