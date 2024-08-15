@@ -29,6 +29,10 @@
     <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.1.303" />
     <PackageReference Include="Nopipeline.Task" Version="2.2.0" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Content\Resources\Fonts\BitmapFonts\" />
+    <Folder Include="Content\Resources\Fonts\SpriteFonts\" />
+  </ItemGroup>
   <Target Name="RestoreDotnetTools" BeforeTargets="Restore">
     <Message Text="Restoring dotnet tools" Importance="High" />
     <Exec Command="dotnet tool restore" />

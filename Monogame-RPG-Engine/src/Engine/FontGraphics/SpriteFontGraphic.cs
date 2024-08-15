@@ -5,7 +5,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.IO;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Engine.FontGraphics
 {
@@ -14,13 +13,11 @@ namespace Engine.FontGraphics
         public SpriteFont SpriteFont { get; set; }
         public Color OutlineColor { get; set; } = Color.Transparent;
         public int OutlineThickness { get; set; } = 0;
-        private FontSystem fontSystem;
 
 
-        public SpriteFontGraphic(string text, SpriteFont spriteFont, Vector2 position, Color color) : base(text, position, color)
+        public SpriteFontGraphic(string text, SpriteFont spriteFont, Vector2 position, Color color) 
+            : base(text, position, color)
         {
-            fontSystem = new FontSystem();
-            fontSystem.AddFont(File.ReadAllBytes(@"Content/Fonts/SpriteFonts/Arial.ttf"));
             SpriteFont = spriteFont;
         }
 

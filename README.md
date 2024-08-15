@@ -48,7 +48,7 @@ The configuration for the "no pipeline" library is the `Content/Content.npl` fil
 
 This project also uses a font library [FontStashSharp](https://github.com/FontStashSharp/FontStashSharp) for loading/rendering fonts, because...well Monogame's SpriteFont leaves a lot to be desired.
 This engine has built-in support for FontStashSharp type fonts.
-I alos implemented SpriteFont support into the engine just because they are "tried and true", but the FontStashSharp font rending is just so much better, I highly recommend using it over generic SpriteFonts.
+I also implemented SpriteFont support into the engine just because they are "tried and true", but the FontStashSharp font rending is just so much better, I highly recommend using it over generic SpriteFonts.
 
 The actual "main" method is inside the `App/Main/Run.cs` file.
 
