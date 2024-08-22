@@ -10,14 +10,24 @@ But it is free and open for anyone else to use.
 
 ## How to run this project?
 
-Open the project solution file (`Monogame-RPG-Engine.sln`) in Visual Studio and it should handle everything else from there for you as far as opening up the project, restoring external libraries, etc.
+* [Windows](#for-windows-developers)
+* [Mac](#for-mac-developers)
 
-**Note**: Use Visual Studio, NOT Visual Studio Code.
+### For Windows Developers
 
-You will likely need at least the 2022 version of Visual Studio to open the project.
-You may need to install/update .NET Framework for this.
+#### Setup
+
+1. Install .NET 8.0 from [here](https://dotnet.microsoft.com/en-us/download).
+2. Install Visual Studio Community Edition, NOT Visual Studio Code, from [here](https://visualstudio.microsoft.com/vs/).
+3. Open the project solution file (`Monogame-RPG-Engine.sln`) in Visual Studio and it should handle everything else from there for you as far as opening up the project, restoring external libraries, etc.
+
+#### Run the project for development
 
 After opening the project successfully, you should be able to run the game and play my fun little cat RPG identical to the Java version.
+
+#### Building the project (WIP)
+
+NOTE: See if i'm able to build the project from the IDE or through the command line
 
 ### For Mac Developers
 
@@ -26,7 +36,10 @@ Since Visual Studio is now unsupported by Microsoft on MacOS, we have to get a l
 #### Setup
 
 1. Install .NET 8.0 from [here](https://dotnet.microsoft.com/en-us/download).
-2. Run `dotnet restore`.
+2. Run `dotnet new tool-manifest`
+3. Run the following commands to install all the necessary libraries.
+  `dotnet tool install dotnet-mgcb --version 3.8.0.1641`
+  `dotnet tool install dotnet-mgcb-editor --version 3.8.0.1641`
 
 #### Run the project for development
 

@@ -72,5 +72,5 @@ obj/
 .vscode/
 
 todo.txt
-# .config/
+.config/
 pipeline-references/
