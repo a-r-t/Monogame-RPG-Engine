@@ -72,5 +72,6 @@ obj/
 .vscode/
 
 todo.txt
-.config/
+.config/*
+!.config/dotnet-tools.json
 pipeline-references/
