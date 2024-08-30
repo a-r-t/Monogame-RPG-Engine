@@ -10,6 +10,8 @@ But it is free and open for anyone else to use.
 
 ## How to run this project?
 
+Install .NET 8.0 from [here](https://dotnet.microsoft.com/en-us/download) if not already installed.
+
 * [Windows](#for-windows-developers)
 * [Mac](#for-mac-developers)
 
@@ -17,17 +19,16 @@ But it is free and open for anyone else to use.
 
 #### Setup
 
-1. Install .NET 8.0 from [here](https://dotnet.microsoft.com/en-us/download).
-2. Install Visual Studio Community Edition, NOT Visual Studio Code, from [here](https://visualstudio.microsoft.com/vs/).
-3. Open the project solution file (`Monogame-RPG-Engine.sln`) in Visual Studio and it should handle everything else from there for you as far as opening up the project, restoring external libraries, etc.
+1. Install Visual Studio Community Edition, NOT Visual Studio Code, from [here](https://visualstudio.microsoft.com/vs/) if not already installed.
+2. Open the project solution file (`Monogame-RPG-Engine.sln`) in Visual Studio and it should handle everything else from there for you as far as opening up the project, restoring external libraries, etc.
 
 #### Run the project for development
 
-After opening the project successfully, you should be able to run the game and play my fun little cat RPG identical to the Java version.
+After opening the project successfully, you should be able to run the game and play my fun little cat RPG identical to the Java version. Just make sure the dropdown says 'Debug' instead of 'Release' for shorter build times.
 
 #### Building the project (WIP)
 
-NOTE: See if i'm able to build the project from the IDE or through the command line
+In the same dropdown where you selected 'Debug', select 'Release' and run the game again.
 
 ### For Mac Developers
 
@@ -35,11 +36,7 @@ Since Visual Studio is now unsupported by Microsoft on MacOS, we have to get a l
 
 #### Setup
 
-1. Install .NET 8.0 from [here](https://dotnet.microsoft.com/en-us/download).
-2. Run `dotnet new tool-manifest`
-3. Run the following commands to install all the necessary libraries.
-  `dotnet tool install dotnet-mgcb --version 3.8.0.1641`
-  `dotnet tool install dotnet-mgcb-editor --version 3.8.0.1641`
+1. Run `dotnet restore` to download all of the necessary libraries and tools.
 
 #### Run the project for development
 
