@@ -1,4 +1,7 @@
 ﻿using Engine.Scene;
+using Engine.ScriptActions;
+using Engine.ScriptActions.Conditional;
+using Engine.ScriptActions.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -103,7 +106,7 @@ namespace Engine.ScriptActions.Conditional
         protected bool IsFlagRequirementMet(FlagRequirement flagRequirement)
         {
             string flagName = flagRequirement.FlagName;
-            bool currentFlagStatus = this.map.FlagManager.IsFlagSet(flagName);
+            bool currentFlagStatus = map.FlagManager.IsFlagSet(flagName);
             return flagRequirement.FlagValue == currentFlagStatus;
         }
 

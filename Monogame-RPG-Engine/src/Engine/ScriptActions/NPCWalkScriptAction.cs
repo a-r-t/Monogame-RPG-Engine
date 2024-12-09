@@ -58,13 +58,22 @@ namespace Engine.ScriptActions
 
         public override ScriptState Execute()
         {
-            npc.Walk(direction, speed);
             amountMoved += speed;
             if (amountMoved < distance)
             {
+                npc.Walk(direction, speed);
                 return ScriptState.RUNNING;
             }
-            return ScriptState.COMPLETED;
+            else if (amountMoved > distance)
+            {
+                npc.Walk(direction, Math.Min(amountMoved - distance, distance));
+                return ScriptState.COMPLETED;
+            }
+            else // (amountMoved == distance)
+            {
+                npc.Walk(direction, speed);
+                return ScriptState.COMPLETED;
+            }
         }
     }
 }

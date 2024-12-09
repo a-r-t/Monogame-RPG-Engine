@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Engine.Scene;
 using Engine.ScriptActions.Conditional;
+using Engine.ScriptActions.Loop;
 
 // This class is a base class for all scripts in the game -- all scripts should extend from it
 // Scripts can be used to interact with map entities
@@ -95,6 +96,20 @@ namespace Engine.Scene
                         {
                             scriptActionsToInitialize.Enqueue(conditionalScriptActionGroupScriptAction);
                         }
+                    }
+                }
+                else if (scriptAction is LoopIndefiniteScriptAction) {
+                    LoopIndefiniteScriptAction loopScriptAction = (LoopIndefiniteScriptAction)scriptAction;
+                    foreach (ScriptAction loopScriptActionScriptAction in loopScriptAction.ScriptActions)
+                    {
+                        scriptActionsToInitialize.Enqueue(loopScriptActionScriptAction);
+                    }
+                }
+                else if (scriptAction is LoopFixedScriptAction) {
+                    LoopFixedScriptAction loopScriptAction = (LoopFixedScriptAction)scriptAction;
+                    foreach (ScriptAction loopScriptActionScriptAction in loopScriptAction.ScriptActions)
+                    {
+                        scriptActionsToInitialize.Enqueue(loopScriptActionScriptAction);
                     }
                 }
             }

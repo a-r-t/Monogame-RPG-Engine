@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 // Base Requirement
 // it intentionally does nothing -- it's only being used as a common ancestor between all other Conditional Requirement classes to make the requirement logic engine easier
-namespace Engine.ScriptActions.Conditional
+namespace Engine.ScriptActions.Utils
 {
     public abstract class Requirement
     {

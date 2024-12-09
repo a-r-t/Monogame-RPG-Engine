@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Engine.ScriptActions.Conditional
+namespace Engine.ScriptActions.Utils
 {
     public enum FlagStrategy
     {
