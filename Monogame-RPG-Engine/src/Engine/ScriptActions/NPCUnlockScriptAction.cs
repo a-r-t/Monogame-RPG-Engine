@@ -10,6 +10,7 @@ namespace Engine.ScriptActions
 {
     public class NPCUnlockScriptAction : ScriptAction
     {
+        protected int? npcId = null;
         protected NPC npc;
 
         public NPCUnlockScriptAction()
@@ -18,14 +19,29 @@ namespace Engine.ScriptActions
 
         public NPCUnlockScriptAction(int npcId)
         {
-            this.npc = map.GetNPCById(npcId);
+            this.npcId = npcId;
         }
 
         public override void Setup()
         {
-            if (this.npc == null)
+            if (!this.npcId.HasValue)
             {
-                this.npc = (NPC)entity;
+                if (this.entity != null)
+                {
+                    this.npc = (NPC)entity;
+                }
+                else
+                {
+                    throw new Exception("No NPC entity specified!");
+                }
+            }
+            else
+            {
+                this.npc = map.GetNPCById(npcId.Value);
+                if (this.npc == null)
+                {
+                    throw new Exception("NPC with id " + npcId + " not found!");
+                }
             }
         }
 

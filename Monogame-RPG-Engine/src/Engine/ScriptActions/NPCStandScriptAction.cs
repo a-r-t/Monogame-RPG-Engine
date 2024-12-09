@@ -10,6 +10,7 @@ namespace Engine.ScriptActions
 {
     public class NPCStandScriptAction : ScriptAction
     {
+        protected int? npcId = null;
         protected NPC npc;
         protected Direction facingDirection;
 
@@ -20,15 +21,30 @@ namespace Engine.ScriptActions
 
         public NPCStandScriptAction(int npcId, Direction facingDirection)
         {
-            this.npc = map.GetNPCById(npcId);
+            this.npcId = npcId;
             this.facingDirection = facingDirection;
         }
 
         public override void Setup()
         {
-            if (this.npc == null)
+            if (!this.npcId.HasValue)
             {
-                this.npc = (NPC)entity;
+                if (this.entity != null)
+                {
+                    this.npc = (NPC)entity;
+                }
+                else
+                {
+                    throw new Exception("No NPC entity specified!");
+                }
+            }
+            else
+            {
+                this.npc = map.GetNPCById(npcId.Value);
+                if (this.npc == null)
+                {
+                    throw new Exception("NPC with id " + npcId + " not found!");
+                }
             }
         }
 
