@@ -1,4 +1,5 @@
-﻿using App.Main;
+﻿using App.Listeners;
+using App.Main;
 using App.Maps;
 using App.Players;
 using Engine.Core;
@@ -16,7 +17,7 @@ using System.Threading.Tasks;
 // This class is for the win level screen
 namespace App.Screens
 {
-    public class PlayLevelScreen : Screen
+    public class PlayLevelScreen : Screen, GameListener
     {
         protected ScreenCoordinator screenCoordinator;
         protected Map map;
@@ -54,6 +55,8 @@ namespace App.Screens
             // let pieces of map know which button to listen for as the "interact" button
             map.Textbox.InteractKey = player.INTERACT_KEY;
 
+            map.Listeners.Add(this);
+
             // preloads all scripts ahead of time rather than loading them dynamically
             // both are supported, however preloading is recommended
             map.PreloadScripts();
@@ -76,12 +79,6 @@ namespace App.Screens
                 case PlayLevelScreenStates.LEVEL_COMPLETED:
                     winScreen.Update(gameTime, keyboardState);
                     break;
-            }
-
-            // if flag is set at any point during gameplay, game is "won"
-            if (map.FlagManager.IsFlagSet("hasFoundBall"))
-            {
-                PlayLevelScreenState = PlayLevelScreenStates.LEVEL_COMPLETED;
             }
         }
 
@@ -109,6 +106,11 @@ namespace App.Screens
         {
             screenCoordinator.GameState = GameState.MENU;
 
+        }
+
+        public void OnWin()
+        {
+            PlayLevelScreenState = PlayLevelScreenStates.LEVEL_COMPLETED;
         }
 
         // This enum represents the different states this screen can be in

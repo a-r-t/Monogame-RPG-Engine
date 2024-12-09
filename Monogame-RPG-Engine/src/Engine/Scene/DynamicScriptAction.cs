@@ -13,11 +13,6 @@ namespace Engine.Scene
         protected Func<ScriptState> executeFunc;
         protected Action cleanupAction;
 
-        public DynamicScriptAction()
-        {
-
-        }
-
         public DynamicScriptAction(Func<ScriptState> executeFunc)
         {
             this.executeFunc = executeFunc;

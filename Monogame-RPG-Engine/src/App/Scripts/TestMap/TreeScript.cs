@@ -1,4 +1,5 @@
-﻿using Engine.Scene;
+﻿using App.Listeners;
+using Engine.Scene;
 using Engine.ScriptActions;
 using Engine.ScriptActions.Conditional;
 using Engine.ScriptActions.Utils;
@@ -41,6 +42,14 @@ namespace App.Scripts
                         .AddText("I found my ball inside of the tree!\nYippee!")
                     )
                     .AddScriptAction(new ChangeFlagScriptAction("hasFoundBall", true))
+                    .AddScriptAction(new DynamicScriptAction(() =>
+                    {
+                        foreach (GameListener listener in listeners)
+                        {
+                            listener.OnWin();
+                        }
+                        return ScriptState.COMPLETED;
+                    }))
                 )
             );
 

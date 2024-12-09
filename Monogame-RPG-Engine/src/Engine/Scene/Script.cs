@@ -16,6 +16,7 @@ namespace Engine.Scene
     public abstract class Script
     {
         public List<ScriptAction> ScriptActions { get; private set; }
+        protected List<BaseGameListener> listeners = new List<BaseGameListener>();
         private int currentScriptActionIndex;
 
         // this is set to true if script is currently being executed
@@ -67,6 +68,7 @@ namespace Engine.Scene
         public void SetPlayer(Player player) { this.player = player; }
         public MapEntity GetEntity() { return entity; }
         public void SetMapEntity(MapEntity entity) { this.entity = entity; }
+        public void SetListeners(List<BaseGameListener> listeners) { this.listeners = listeners; }
 
         public void Initialize()
         {

@@ -64,7 +64,8 @@ namespace Engine.Scene
         public List<EnhancedMapTile> EnhancedMapTiles { get; private set; }
         public List<NPC> NPCs { get; private set; }
         public List<Trigger> Triggers { get; private set; }
-
+        public List<BaseGameListener> Listeners { get; private set; } = new List<BaseGameListener>();
+        
         // returns all active enhanced map tiles (enhanced map tiles that are a part of the current update cycle) -- this changes every frame by the Camera class
         public List<EnhancedMapTile> ActiveEnhancedMapTiles
         {
@@ -115,6 +116,7 @@ namespace Engine.Scene
                     {
                         activeScript.SetMap(this);
                         activeScript.SetPlayer(Player);
+                        activeScript.SetListeners(Listeners);
                         activeScript.Initialize();
                     }
                     activeScript.IsActive = true;
@@ -404,6 +406,7 @@ namespace Engine.Scene
                 {
                     mapTile.InteractScript.SetMap(this);
                     mapTile.InteractScript.SetPlayer(Player);
+                    mapTile.InteractScript.SetListeners(Listeners);
                     mapTile.InteractScript.Initialize();
                 }
             }
@@ -413,6 +416,7 @@ namespace Engine.Scene
                 {
                     npc.InteractScript.SetMap(this);
                     npc.InteractScript.SetPlayer(Player);
+                    npc.InteractScript.SetListeners(Listeners);
                     npc.InteractScript.Initialize();
                 }
             }
@@ -422,6 +426,7 @@ namespace Engine.Scene
                 {
                     enhancedMapTile.InteractScript.SetMap(this);
                     enhancedMapTile.InteractScript.SetPlayer(Player);
+                    enhancedMapTile.InteractScript.SetListeners(Listeners);
                     enhancedMapTile.InteractScript.Initialize();
                 }
             }
@@ -431,6 +436,7 @@ namespace Engine.Scene
                 {
                     trigger.TriggerScript.SetMap(this);
                     trigger.TriggerScript.SetPlayer(Player);
+                    trigger.TriggerScript.SetListeners(Listeners);
                     trigger.TriggerScript.Initialize();
                 }
             }
