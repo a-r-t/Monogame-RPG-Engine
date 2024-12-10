@@ -27,6 +27,30 @@
 				"TextureFormat": "Color"
 			}
 		},
+		"songs":
+		{
+			"path": "Sounds/Songs/*.wav",
+			"recursive": "True",
+			"action": "build",
+			"importer": "WavImporter",
+			"processor": "SongProcessor",
+			"processorParam":
+			{
+				"Quality": "Low"
+			}
+		},
+		"soundeffects":
+		{
+			"path": "Sounds/SoundEffects/*.wav",
+			"recursive": "True",
+			"action": "build",
+			"importer": "WavImporter",
+			"processor": "SoundEffectProcessor",
+			"processorParam":
+			{
+				"Quality": "Low"
+			}
+		},
 		"spritefonts":
 		{
 			"path": "Fonts/SpriteFonts/*.spritefont",

@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Media;
 
 namespace Engine.Core
 {
@@ -36,6 +38,16 @@ namespace Engine.Core
                 return trueTypeFonts[trueTypeFontPath];
             }
             return File.ReadAllBytes(trueTypeFontPath);
+        }
+
+        public SoundEffect LoadSoundEffect(string soundEffectPath)
+        {
+            return Load<SoundEffect>(soundEffectPath);
+        }
+
+        public Song LoadSong(string songPath)
+        {
+            return Load<Song>(songPath);
         }
 
         public static ContentLoader Create()

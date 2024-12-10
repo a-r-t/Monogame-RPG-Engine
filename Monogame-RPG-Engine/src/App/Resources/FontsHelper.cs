@@ -10,12 +10,12 @@ namespace App.Resources
     {
         public static class SpriteFonts
         {
-
+            private static readonly string pathPrefix = "Fonts/SpriteFonts";
         }
 
         public static class BitmapFonts
         {
-
+            private static readonly string pathPrefix = "Fonts/BitmapFonts";
         }
 
         public static class TrueTypeFonts

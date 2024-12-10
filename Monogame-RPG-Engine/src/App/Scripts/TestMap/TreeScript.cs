@@ -44,9 +44,12 @@ namespace App.Scripts
                     .AddScriptAction(new ChangeFlagScriptAction("hasFoundBall", true))
                     .AddScriptAction(new DynamicScriptAction(() =>
                     {
-                        foreach (GameListener listener in listeners)
+                        foreach (BaseGameListener listener in listeners)
                         {
-                            listener.OnWin();
+                            if (listener is GameListener)
+                            {
+                                ((GameListener)listener).OnWin();
+                            }
                         }
                         return ScriptState.COMPLETED;
                     }))

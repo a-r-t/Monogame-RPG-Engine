@@ -3,15 +3,19 @@ using App.Maps;
 using Engine.Core;
 using Engine.FontGraphics;
 using Engine.Scene;
+using Engine.Sound;
 using Engine.Utils;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static App.Resources.FontsHelper;
+using static App.Resources.SoundsHelper;
 
 // This is the class for the main menu screen
 namespace App.Screens
@@ -27,6 +31,8 @@ namespace App.Screens
         protected int keyPressTimer;
         protected int pointerLocationX, pointerLocationY;
         protected KeyLocker keyLocker = new KeyLocker();
+        protected SoundEffectPlayer menuSelectSound;
+        protected Song menuBackgroundMusic;
 
         public MenuScreen(ScreenCoordinator screenCoordinator)
         {
@@ -47,6 +53,17 @@ namespace App.Screens
             credits = new DynamicSpriteFontGraphic("CREDITS", ContentLoader.LoadTrueTypeFont(TrueTypeFonts.ARIAL), 32, new Vector2(200, 225), new Color(49, 207, 240));
             credits.OutlineColor = Color.Black;
             credits.OutlineThickness = 1;
+
+            SoundEffect menuSelectSoundEffect = ContentLoader.LoadSoundEffect(SoundEffects.MENU_SELECT);
+            menuSelectSound = new SoundEffectPlayer(menuSelectSoundEffect);
+            menuSelectSound.Volume = 1.0f;
+
+            menuBackgroundMusic = ContentLoader.LoadSong(Songs.MENU_BACKGROUND);
+            SongPlayer.ResetPlayer();
+            SongPlayer.CurrentSong = menuBackgroundMusic;
+            SongPlayer.SetVolume(.3f);
+            SongPlayer.SetPlayerMode(SongPlayerMode.PLAY_LOOP);
+            SongPlayer.Play();
         }
 
         public override void Update(GameTime gameTime, KeyboardState keyboardState)
@@ -59,11 +76,13 @@ namespace App.Screens
             {
                 keyPressTimer = 14;
                 currentMenuItemHovered++;
+                menuSelectSound.Play();
             }
             else if (keyboardState.IsKeyDown(Keys.Up) && keyPressTimer == 0)
             {
                 keyPressTimer = 14;
                 currentMenuItemHovered--;
+                menuSelectSound.Play();
             }
             else
             {

@@ -3,15 +3,18 @@ using App.Maps;
 using Engine.Core;
 using Engine.FontGraphics;
 using Engine.Scene;
+using Engine.Sound;
 using Engine.Utils;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static App.Resources.FontsHelper;
+using static App.Resources.SoundsHelper;
 
 // This is the class for the credits screen
 namespace App.Screens

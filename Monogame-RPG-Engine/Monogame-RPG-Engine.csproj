@@ -39,6 +39,8 @@
   <ItemGroup>
     <Folder Include="Content\Resources\Fonts\BitmapFonts\" />
     <Folder Include="Content\Resources\Fonts\SpriteFonts\" />
+    <Folder Include="Content\Resources\Sounds\Songs\" />
+    <Folder Include="Content\Resources\Sounds\SoundEffects\" />
   </ItemGroup>
   <Target Name="RestoreDotnetTools" BeforeTargets="Restore">
     <Message Text="Restoring dotnet tools" Importance="High" />
