@@ -173,19 +173,29 @@ namespace Engine.Scene
 
             if (options != null)
             {
-                if (keyboardState.IsKeyDown(Keys.Down))
+                if (keyboardState.IsKeyDown(Keys.Down) && !keyLocker.IsKeyLocked(Keys.Down))
                 {
+                    keyLocker.LockKey(Keys.Down);
                     if (selectedOptionIndex < options.Count - 1)
                     {
                         selectedOptionIndex++;
                     }
                 }
-                if (keyboardState.IsKeyDown(Keys.Up))
+                if (keyboardState.IsKeyDown(Keys.Up) && !keyLocker.IsKeyLocked(Keys.Up))
                 {
+                    keyLocker.LockKey(Keys.Up);
                     if (selectedOptionIndex > 0)
                     {
                         selectedOptionIndex--;
                     }
+                }
+                if (keyboardState.IsKeyUp(Keys.Down))
+                {
+                    keyLocker.UnlockKey(Keys.Down);
+                }
+                if (keyboardState.IsKeyUp(Keys.Up))
+                {
+                    keyLocker.UnlockKey(Keys.Up);
                 }
             }
         }
