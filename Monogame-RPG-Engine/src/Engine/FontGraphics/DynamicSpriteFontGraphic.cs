@@ -28,7 +28,20 @@ namespace Engine.FontGraphics
         }
         public Color OutlineColor { get; set; } = Color.Transparent;
         public int OutlineThickness { get; set; } = 0;
-        public int FontSize { get; set; }
+        private int fontSize;
+        public int FontSize
+        {
+            get
+            {
+                return fontSize;
+            }
+            set
+            {
+                fontSize = value;
+                font = fontSystem.GetFont(FontSize);
+            }
+        }
+        private DynamicSpriteFont font;
         private FontSystem fontSystem;
 
 
@@ -42,11 +55,11 @@ namespace Engine.FontGraphics
         {
             if (!OutlineColor.Equals(Color) && !OutlineColor.Equals(Color.Transparent))
             {
-                graphicsHandler.DrawStringWithOutline(fontSystem.GetFont(FontSize), Text, new Vector2(Position.X.Round(), Position.Y.Round()), Color, OutlineColor, OutlineThickness);
+                graphicsHandler.DrawStringWithOutline(font, Text, new Vector2(Position.X.Round(), Position.Y.Round()), Color, OutlineColor, OutlineThickness);
             }
             else
             {
-                graphicsHandler.DrawString(fontSystem.GetFont(FontSize), Text, new Vector2(Position.X.Round(), Position.Y.Round()), Color);
+                graphicsHandler.DrawString(font, Text, new Vector2(Position.X.Round(), Position.Y.Round()), Color);
             }
         }
 

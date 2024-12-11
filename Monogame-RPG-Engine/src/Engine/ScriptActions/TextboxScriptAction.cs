@@ -16,13 +16,13 @@ namespace Engine.ScriptActions
             this.textboxItems = new List<TextboxItem>();
         }
 
-        public TextboxScriptAction(String text)
+        public TextboxScriptAction(string text)
         {
             this.textboxItems = new List<TextboxItem>();
             this.textboxItems.Add(new TextboxItem(text));
         }
 
-        public TextboxScriptAction(String[] textItems)
+        public TextboxScriptAction(string[] textItems)
         {
             this.textboxItems = new List<TextboxItem>();
             foreach (string text in textItems)

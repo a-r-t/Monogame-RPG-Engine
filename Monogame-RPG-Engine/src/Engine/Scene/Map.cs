@@ -134,7 +134,7 @@ namespace Engine.Scene
         public FlagManager FlagManager { get; set; }
 
         // map's textbox instance
-        public Textbox Textbox { get; private set; }
+        public Textbox Textbox { get; set; }
 
         // reference to current player
         public Player Player { get; set; }
@@ -204,8 +204,6 @@ namespace Engine.Scene
             this.LoadScripts();
 
             Camera = new Camera(0, 0, Tileset.SpriteWidthScaled, Tileset.SpriteHeightScaled, this);
-            Textbox = new Textbox(this);
-            Textbox.LoadContent();
         }
 
         // reads in a map file to create the map's tilemap
@@ -576,10 +574,6 @@ namespace Engine.Scene
                 AdjustMovementX(Player);
             }
             Camera.Update(Player);
-            if (Textbox.IsActive)
-            {
-                Textbox.Update(keyboardState);
-            }
         }
 
         // based on the player's current X position (which in a level can potentially be updated each frame),
@@ -654,19 +648,11 @@ namespace Engine.Scene
         public virtual void Draw(GraphicsHandler graphicsHandler)
         {
             Camera.Draw(graphicsHandler);
-            if (Textbox.IsActive)
-            {
-                Textbox.Draw(graphicsHandler);
-            }
         }
 
         public virtual void Draw(Player player, GraphicsHandler graphicsHandler)
         {
             Camera.Draw(Player, graphicsHandler);
-            if (Textbox.IsActive)
-            {
-                Textbox.Draw(graphicsHandler);
-            }
         }
     }
 }
