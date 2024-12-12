@@ -1,8 +1,10 @@
-﻿using Engine.Entity;
+﻿using Engine.SpriteGraphics;
 using Engine.Scene;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Engine.Scene.EntitiesCore;
+using Engine.Scene.MapCore;
 
 // Builder class to instantiate a MapTile class
 namespace Engine.Builders

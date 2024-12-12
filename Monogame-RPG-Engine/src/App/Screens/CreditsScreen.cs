@@ -3,6 +3,7 @@ using App.Maps;
 using Engine.Core;
 using Engine.FontGraphics;
 using Engine.Scene;
+using Engine.Scene.MapCore;
 using Engine.Sound;
 using Engine.Utils;
 using Microsoft.Xna.Framework;

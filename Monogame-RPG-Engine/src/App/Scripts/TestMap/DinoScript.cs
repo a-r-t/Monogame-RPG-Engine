@@ -1,15 +1,17 @@
 ﻿using Engine.Builders;
-using Engine.Entity;
+using Engine.SpriteGraphics;
 using Engine.Scene;
-using Engine.ScriptActions;
-using Engine.ScriptActions.Conditional;
-using Engine.ScriptActions.Utils;
 using Engine.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Engine.Scene.ScriptCore;
+using Engine.Scene.MapCore;
+using Engine.Scene.ScriptCore.ScriptActions;
+using Engine.Scene.ScriptCore.ScriptActions.Utils;
+using Engine.Scene.ScriptCore.ScriptActions.Conditional;
 
 namespace App.Scripts
 {

@@ -1,6 +1,6 @@
 ﻿using Engine.Extensions;
 using Engine.Scene;
-using Engine.Entity;
+using Engine.SpriteGraphics;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;

@@ -1,7 +1,7 @@
 ﻿using App.Resources;
 using Engine.Builders;
 using Engine.Core;
-using Engine.Entity;
+using Engine.SpriteGraphics;
 using Engine.Extensions;
 using Engine.Scene;
 using Engine.Utils;
@@ -11,6 +11,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Engine.Scene.EntitiesCore;
+using Engine.Scene.PlayerCore;
 
 namespace App.NPCs
 {
