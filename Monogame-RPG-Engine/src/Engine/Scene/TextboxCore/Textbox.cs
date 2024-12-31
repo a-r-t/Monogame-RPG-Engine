@@ -27,28 +27,28 @@ namespace Engine.Scene.TextboxCore
         public bool IsActive { get; set; }
 
         // textbox constants
-        protected const int x = 22;
-        protected const int bottomY = 460;
-        protected const int topY = 22;
-        protected const int fontX = 35;
-        protected const int fontBottomY = 475;
-        protected const int fontTopY = 37;
-        protected const int width = 750;
-        protected const int height = 100;
+        public int X { get; set; } = 22;
+        public int BottomY { get; set; } = 460;
+        public int TopY { get; set; } = 22;
+        public int FontX { get; set; } = 35;
+        public int FontBottomY { get; set; } = 475;
+        public int FontTopY { get; set; } = 37;
+        public int Width { get; set; } = 750;
+        public int Height { get; set; } = 100;
 
         // options textbox constants
-        protected const int optionX = 680;
-        protected const int optionBottomY = 350;
-        protected const int optionTopY = 130;
-        protected const int optionWidth = 92;
-        protected const int optionHeight = 100;
-        protected const int fontOptionX = 706;
-        protected const int fontOptionBottomYStart = 368;
-        protected const int fontOptionTopYStart = 148;
-        protected const int fontOptionSpacing = 35;
-        protected const int optionPointerX = 690;
-        protected const int optionPointerYBottomStart = 378;
-        protected const int optionPointerYTopStart = 158;
+        public int OptionX { get; set; } = 680;
+        public int OptionBottomY { get; set; } = 350;
+        public int OptionTopY { get; set; } = 130;
+        public int OptionWidth { get; set; } = 92;
+        public int OptionHeight { get; set; } = 100;
+        public int FontOptionX { get; set; } = 706;
+        public int FontOptionBottomYStart { get; set; } = 368;
+        public int FontOptionTopYStart { get; set; } = 148;
+        public int FontOptionSpacing { get; set; } = 35;
+        public int OptionPointerX { get; set; } = 690;
+        public int OptionPointerYBottomStart { get; set; } = 378;
+        public int OptionPointerYTopStart { get; set; } = 158;
 
         // core vars that make textbox work
         private Queue<TextboxItem> textQueue;
@@ -60,7 +60,7 @@ namespace Engine.Scene.TextboxCore
         public Keys InteractKey { get; set; } = Keys.Space;
         private string textboxFont = TrueTypeFonts.ARIAL;
         private int textboxFontSize = 30;
-        private byte[] textboxFontGraphic;
+        private TrueTypeFont textboxFontGraphic;
 
         private ContentLoader contentLoader;
         private Map map;
@@ -71,9 +71,10 @@ namespace Engine.Scene.TextboxCore
         {
             this.textQueue = new Queue<TextboxItem>();
             this.contentLoader = contentLoader;
+            textboxFontGraphic = contentLoader.LoadTrueTypeFont(textboxFont);
         }
 
-        public void setMap(Map map)
+        public void SetMap(Map map)
         {
             this.map = map;
         }
@@ -127,11 +128,6 @@ namespace Engine.Scene.TextboxCore
             return textQueue.Count == 0;
         }
 
-        public void LoadContent()
-        {
-            textboxFontGraphic = contentLoader.LoadTrueTypeFont(textboxFont);
-        }
-
         public void Update(KeyboardState keyboardState)
         {
             // if textQueue has more text to display and the interact key button was pressed previously, display new text
@@ -142,23 +138,23 @@ namespace Engine.Scene.TextboxCore
 
                 // if camera is at bottom of screen, text is drawn at top of screen instead of the bottom like usual
                 // to prevent it from covering the player
-                int fontY = map != null && !map.Camera.IsAtBottomOfMap() ? fontBottomY : fontTopY;
+                int fontY = map != null && !map.Camera.IsAtBottomOfMap() ? FontBottomY : FontTopY;
 
                 // create text spritefont that will be drawn in textbox
-                text = new DynamicSpriteFontGraphic(currentTextItem.Text, textboxFontGraphic, textboxFontSize, new Vector2(fontX, fontY), Color.Black);
+                text = new DynamicSpriteFontGraphic(currentTextItem.Text, textboxFontGraphic, textboxFontSize, new Vector2(FontX, fontY), Color.Black);
 
                 // if there are options associated with this text item, prepare option spritefont text to be drawn in options textbox
                 if (currentTextItem.Options != null)
                 {
                     // if camera is at bottom of screen, text is drawn at top of screen instead of the bottom like usual
                     // to prevent it from covering the player
-                    int fontOptionY = map != null && !map.Camera.IsAtBottomOfMap() ? fontOptionBottomYStart : fontOptionTopYStart;
+                    int fontOptionY = map != null && !map.Camera.IsAtBottomOfMap() ? FontOptionBottomYStart : FontOptionTopYStart;
 
                     options = new List<DynamicSpriteFontGraphic>();
                     // for each option, crate option text spritefont that will be drawn in options textbox
                     for (int i = 0; i < currentTextItem.Options.Count; i++)
                     {
-                        options.Add(new DynamicSpriteFontGraphic(currentTextItem.Options[i], textboxFontGraphic, textboxFontSize, new Vector2(fontOptionX, fontOptionY + (i * fontOptionSpacing)), Color.Black));
+                        options.Add(new DynamicSpriteFontGraphic(currentTextItem.Options[i], textboxFontGraphic, textboxFontSize, new Vector2(FontOptionX, fontOptionY + (i * FontOptionSpacing)), Color.Black));
                     }
                     selectedOptionIndex = 0;
                 }
@@ -220,8 +216,8 @@ namespace Engine.Scene.TextboxCore
             // draw textbox
             // if camera is at bottom of screen, textbox is drawn at top of screen instead of the bottom like usual
             // to prevent it from covering the player
-            int y = map != null && !map.Camera.IsAtBottomOfMap() ? bottomY : topY;
-            graphicsHandler.DrawFilledRectangleWithBorder(new Rectangle(x, y, width, height), Color.White, Color.Black, 2);
+            int y = map != null && !map.Camera.IsAtBottomOfMap() ? BottomY : TopY;
+            graphicsHandler.DrawFilledRectangleWithBorder(new Rectangle(X, y, Width, Height), Color.White, Color.Black, 2);
 
             if (text != null)
             {
@@ -233,8 +229,8 @@ namespace Engine.Scene.TextboxCore
                     // draw options textbox
                     // if camera is at bottom of screen, textbox is drawn at top of screen instead of the bottom like usual
                     // to prevent it from covering the player
-                    int optionY = map != null && !map.Camera.IsAtBottomOfMap() ? optionBottomY : optionTopY;
-                    graphicsHandler.DrawFilledRectangleWithBorder(new Rectangle(optionX, optionY, optionWidth, optionHeight), Color.White, Color.Black, 2);
+                    int optionY = map != null && !map.Camera.IsAtBottomOfMap() ? OptionBottomY : OptionTopY;
+                    graphicsHandler.DrawFilledRectangleWithBorder(new Rectangle(OptionX, optionY, OptionWidth, OptionHeight), Color.White, Color.Black, 2);
 
                     // draw each option text
                     foreach (DynamicSpriteFontGraphic option in options)
@@ -243,9 +239,9 @@ namespace Engine.Scene.TextboxCore
                     }
 
                     // the start y location of the option pointer depends on whether the options textbox is on top or bottom of screen
-                    int optionPointerYStart = map != null && !map.Camera.IsAtBottomOfMap() ? optionPointerYBottomStart : optionPointerYTopStart;
+                    int optionPointerYStart = map != null && !map.Camera.IsAtBottomOfMap() ? OptionPointerYBottomStart : OptionPointerYTopStart;
                     // draw option selection indicator (small black rectangle)
-                    graphicsHandler.DrawFilledRectangle(optionPointerX, optionPointerYStart + (selectedOptionIndex * fontOptionSpacing), 10, 10, Color.Black);
+                    graphicsHandler.DrawFilledRectangle(OptionPointerX, optionPointerYStart + (selectedOptionIndex * FontOptionSpacing), 10, 10, Color.Black);
                 }
             }
         }

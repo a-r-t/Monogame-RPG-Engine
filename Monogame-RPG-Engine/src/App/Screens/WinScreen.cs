@@ -33,8 +33,11 @@ namespace App.Screens
         {
             keyLocker.LockKey(Keys.Space);
             keyLocker.LockKey(Keys.Escape);
-            winMessage = new DynamicSpriteFontGraphic("You win!", ContentLoader.LoadTrueTypeFont(TrueTypeFonts.ARIAL), 32, new Vector2(350, 239), Color.White);
-            instructions = new DynamicSpriteFontGraphic("Press Space to play again or Escape to go back to the main menu", ContentLoader.LoadTrueTypeFont(TrueTypeFonts.ARIAL), 22, new Vector2(120, 279), Color.White);
+
+            TrueTypeFont arialFont = ContentLoader.LoadTrueTypeFont(TrueTypeFonts.ARIAL);
+
+            winMessage = new DynamicSpriteFontGraphic("You win!", arialFont, 32, new Vector2(350, 239), Color.White);
+            instructions = new DynamicSpriteFontGraphic("Press Space to play again or Escape to go back to the main menu", arialFont, 22, new Vector2(120, 279), Color.White);
         }
 
         public override void Update(GameTime gameTime, KeyboardState keyboardState)

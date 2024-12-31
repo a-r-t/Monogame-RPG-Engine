@@ -13,6 +13,7 @@
   <PropertyGroup>
     <MonoGameExtendedPipelineReferencePath>$(MSBuildThisFileDirectory)pipeline-references</MonoGameExtendedPipelineReferencePath>
     <StartupObject>App.Main.Run</StartupObject>
+    <RootNamespace />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <Optimize>True</Optimize>

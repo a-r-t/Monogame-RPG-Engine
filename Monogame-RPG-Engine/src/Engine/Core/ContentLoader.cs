@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using Engine.FontGraphics;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -31,13 +32,13 @@ namespace Engine.Core
         // have to manually handle loading/unloading/cacheing since these are not compatible with the content pipeline
         private Dictionary<string, byte[]> trueTypeFonts = new Dictionary<string, byte[]>();
 
-        public byte[] LoadTrueTypeFont(string trueTypeFontPath)
+        public TrueTypeFont LoadTrueTypeFont(string trueTypeFontPath)
         {
             if (trueTypeFonts.ContainsKey("trueTypeFontPath"))
             {
-                return trueTypeFonts[trueTypeFontPath];
+                return new TrueTypeFont(trueTypeFonts[trueTypeFontPath]);
             }
-            return File.ReadAllBytes(trueTypeFontPath);
+            return new TrueTypeFont(File.ReadAllBytes(trueTypeFontPath));
         }
 
         public SoundEffect LoadSoundEffect(string soundEffectPath)

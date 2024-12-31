@@ -12,8 +12,8 @@ namespace Engine.FontGraphics
 {
     public class DynamicSpriteFontGraphic : FontGraphic
     {
-        private byte[] trueTypeFont;
-        public byte[] TrueTypeFont
+        private TrueTypeFont trueTypeFont;
+        public TrueTypeFont TrueTypeFont
         {
             get
             {
@@ -23,7 +23,7 @@ namespace Engine.FontGraphics
             {
                 trueTypeFont = value;
                 fontSystem = new FontSystem();
-                fontSystem.AddFont(trueTypeFont);
+                fontSystem.AddFont(trueTypeFont.Source);
             }
         }
         public Color OutlineColor { get; set; } = Color.Transparent;
@@ -45,7 +45,7 @@ namespace Engine.FontGraphics
         private FontSystem fontSystem;
 
 
-        public DynamicSpriteFontGraphic(string text, byte[] trueTypeFont, int fontSize, Vector2 position, Color color) : base(text, position, color)
+        public DynamicSpriteFontGraphic(string text, TrueTypeFont trueTypeFont, int fontSize, Vector2 position, Color color) : base(text, position, color)
         {
             TrueTypeFont = trueTypeFont;
             FontSize = fontSize;

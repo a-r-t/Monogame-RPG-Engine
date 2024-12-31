@@ -64,8 +64,7 @@ namespace App.Screens
             map.PreloadScripts();
 
             textbox = new Textbox(ContentLoader);
-            textbox.LoadContent();
-            textbox.setMap(map);
+            textbox.SetMap(map);
             textbox.InteractKey = player.INTERACT_KEY;
             map.Textbox = textbox;
 

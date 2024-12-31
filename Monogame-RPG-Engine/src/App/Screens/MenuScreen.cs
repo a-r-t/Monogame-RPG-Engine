@@ -48,10 +48,12 @@ namespace App.Screens
             menuItemSelected = -1;
             keyLocker.LockKey(Keys.Space);
 
-            playGame = new DynamicSpriteFontGraphic("PLAY GAME", ContentLoader.LoadTrueTypeFont(TrueTypeFonts.ARIAL), 32, new Vector2(200, 125), new Color(49, 207, 240));
+            TrueTypeFont arialFont = ContentLoader.LoadTrueTypeFont(TrueTypeFonts.ARIAL);
+
+            playGame = new DynamicSpriteFontGraphic("PLAY GAME", arialFont, 32, new Vector2(200, 125), new Color(49, 207, 240));
             playGame.OutlineColor = Color.Black;
             playGame.OutlineThickness = 1;
-            credits = new DynamicSpriteFontGraphic("CREDITS", ContentLoader.LoadTrueTypeFont(TrueTypeFonts.ARIAL), 32, new Vector2(200, 225), new Color(49, 207, 240));
+            credits = new DynamicSpriteFontGraphic("CREDITS", arialFont, 32, new Vector2(200, 225), new Color(49, 207, 240));
             credits.OutlineColor = Color.Black;
             credits.OutlineThickness = 1;
 
