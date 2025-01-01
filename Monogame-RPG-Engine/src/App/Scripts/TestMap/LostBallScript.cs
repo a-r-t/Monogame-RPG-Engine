@@ -15,7 +15,6 @@ namespace App.Scripts
         {
             List<ScriptAction> scriptActions = new List<ScriptAction>();
             scriptActions.Add(new LockPlayerScriptAction());
-            scriptActions.Add(new TextboxScriptAction().AddText("s", new string[] { "yes", "no", "maybe " }));
             scriptActions.Add(new TextboxScriptAction()
                 .AddText("Where did my ball go!?")
                 .AddText("I left it right here before I took my 22 hour cat nap.")
