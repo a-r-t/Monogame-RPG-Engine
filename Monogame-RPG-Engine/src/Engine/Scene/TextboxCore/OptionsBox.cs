@@ -29,6 +29,15 @@ namespace Engine.Scene.TextboxCore
         public int OptionPointerYBottomStart { get; set; } = 378;
         public int OptionPointerYTopStart { get; set; } = 158;
 
+        public Color FillColor { get; set; } = Color.White;
+        public Color BorderColor { get; set; } = Color.Black;
+        public int BorderThickness { get; set; } = 2;
+        public Color TextColor { get; set; } = Color.Black;
+
+        public int SelectorWidth { get; set; } = 10;
+        public int SelectorHeight { get; set; } = 10;
+        public Color SelectorColor { get; set; } = Color.Black;
+
         public int SelectedOptionIndex { get; set; } = 0;
 
         private KeyLocker keyLocker = new KeyLocker();
@@ -65,7 +74,7 @@ namespace Engine.Scene.TextboxCore
             // for each option, crate option text spritefont that will be drawn in options textbox
             for (int i = 0; i < currentTextItem.Options.Count; i++)
             {
-                options.Add(new DynamicSpriteFontGraphic(currentTextItem.Options[i], TextboxFontGraphic, TextboxFontSize, new Vector2(FontOptionX, fontOptionY + (i * FontOptionSpacing)), Color.Black));
+                options.Add(new DynamicSpriteFontGraphic(currentTextItem.Options[i], TextboxFontGraphic, TextboxFontSize, new Vector2(FontOptionX, fontOptionY + (i * FontOptionSpacing)), TextColor));
             }
             SelectedOptionIndex = 0;
             keyLocker.LockKey(MoveSelectionUpwardKey);
@@ -130,13 +139,13 @@ namespace Engine.Scene.TextboxCore
             }
         }
 
-        public void Draw(GraphicsHandler graphicsHandler)
+        public virtual void Draw(GraphicsHandler graphicsHandler)
         {
             // draw options textbox
             // if camera is at bottom of screen, textbox is drawn at top of screen instead of the bottom like usual
             // to prevent it from covering the player
             int optionY = GetValueBasedOnPositionMode(OptionBottomY, OptionTopY);
-            graphicsHandler.DrawFilledRectangleWithBorder(new Rectangle(OptionX, optionY, OptionWidth, OptionHeight), Color.White, Color.Black, 2);
+            graphicsHandler.DrawFilledRectangleWithBorder(new Rectangle(OptionX, optionY, OptionWidth, OptionHeight), FillColor, BorderColor, BorderThickness);
 
             // draw each option text
             foreach (DynamicSpriteFontGraphic option in options)
@@ -144,10 +153,15 @@ namespace Engine.Scene.TextboxCore
                 option.Draw(graphicsHandler);
             }
 
+            DrawSelector(graphicsHandler);
+        }
+
+        public virtual void DrawSelector(GraphicsHandler graphicsHandler)
+        {
             // the start y location of the option pointer depends on whether the options textbox is on top or bottom of screen
             int optionPointerYStart = GetValueBasedOnPositionMode(OptionPointerYBottomStart, OptionPointerYTopStart);
             // draw option selection indicator (small black rectangle)
-            graphicsHandler.DrawFilledRectangle(OptionPointerX, optionPointerYStart + (SelectedOptionIndex * FontOptionSpacing), 10, 10, Color.Black);
+            graphicsHandler.DrawFilledRectangle(OptionPointerX, optionPointerYStart + (SelectedOptionIndex * FontOptionSpacing), SelectorWidth, SelectorHeight, SelectorColor);
         }
     }
 }

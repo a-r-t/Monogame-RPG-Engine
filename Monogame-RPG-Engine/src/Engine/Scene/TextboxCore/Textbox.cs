@@ -36,6 +36,14 @@ namespace Engine.Scene.TextboxCore
         public int Width { get; set; } = 750;
         public int Height { get; set; } = 100;
 
+        public Color FillColor { get; set; } = Color.White;
+        public Color BorderColor { get; set; } = Color.Black;
+        public int BorderThickness { get; set; } = 2;
+        public Color TextColor { get; set; } = Color.Black;
+
+        // how much spacing to apply between new lines in text drawn in textbox
+        public int SpaceBetweenLines { get; set; } = 10;
+
         private TextboxPositionMode textboxPositionMode;
         public TextboxPositionMode TextboxPositionMode
         {
@@ -140,7 +148,7 @@ namespace Engine.Scene.TextboxCore
                 int fontY = GetValueBasedOnPositionMode(FontBottomY, FontTopY);
 
                 // create text spritefont that will be drawn in textbox
-                text = new DynamicSpriteFontGraphic(currentTextItem.Text, TextboxFontGraphic, TextboxFontSize, new Vector2(FontX, fontY), Color.Black);
+                text = new DynamicSpriteFontGraphic(currentTextItem.Text, TextboxFontGraphic, TextboxFontSize, new Vector2(FontX, fontY), TextColor);
 
                 // if there are options associated with this text item, prepare option spritefont text to be drawn in options textbox
                 if (currentTextItem.HasOptions())
@@ -213,12 +221,12 @@ namespace Engine.Scene.TextboxCore
             // if camera is at bottom of screen, textbox is drawn at top of screen instead of the bottom like usual
             // to prevent it from covering the player
             int y = GetValueBasedOnPositionMode(BottomY, TopY);
-            graphicsHandler.DrawFilledRectangleWithBorder(new Rectangle(X, y, Width, Height), Color.White, Color.Black, 2);
+            graphicsHandler.DrawFilledRectangleWithBorder(new Rectangle(X, y, Width, Height), FillColor, BorderColor, BorderThickness);
 
             if (text != null)
             {
                 // draw text in textbox
-                text.DrawWithParsedNewLines(graphicsHandler, 10);
+                text.DrawWithParsedNewLines(graphicsHandler, SpaceBetweenLines);
 
                 if (currentTextItem.HasOptions())
                 {
