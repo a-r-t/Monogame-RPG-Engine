@@ -32,5 +32,10 @@ namespace Engine.Scene.TextboxCore
             }
             Options.Add(option);
         }
+
+        public bool HasOptions()
+        {
+            return Options != null && Options.Count > 0;
+        }
     }
 }

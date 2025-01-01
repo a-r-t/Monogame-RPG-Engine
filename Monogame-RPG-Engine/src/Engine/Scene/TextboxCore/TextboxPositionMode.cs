@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Engine.Scene.TextboxCore
 {
-    public class OptionsTextbox
+    public enum TextboxPositionMode
     {
-        
+        TOP, BOTTOM, DYNAMIC_TOP_PREFERRED, DYNAMIC_BOTTOM_PREFERRED
     }
 }

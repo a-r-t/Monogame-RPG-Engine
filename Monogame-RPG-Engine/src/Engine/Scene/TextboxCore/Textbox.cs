@@ -36,47 +36,47 @@ namespace Engine.Scene.TextboxCore
         public int Width { get; set; } = 750;
         public int Height { get; set; } = 100;
 
-        // options textbox constants
-        public int OptionX { get; set; } = 680;
-        public int OptionBottomY { get; set; } = 350;
-        public int OptionTopY { get; set; } = 130;
-        public int OptionWidth { get; set; } = 92;
-        public int OptionHeight { get; set; } = 100;
-        public int FontOptionX { get; set; } = 706;
-        public int FontOptionBottomYStart { get; set; } = 368;
-        public int FontOptionTopYStart { get; set; } = 148;
-        public int FontOptionSpacing { get; set; } = 35;
-        public int OptionPointerX { get; set; } = 690;
-        public int OptionPointerYBottomStart { get; set; } = 378;
-        public int OptionPointerYTopStart { get; set; } = 158;
+        private TextboxPositionMode textboxPositionMode;
+        public TextboxPositionMode TextboxPositionMode
+        {
+            get
+            {
+                return textboxPositionMode;
+            }
+            set
+            {
+                textboxPositionMode = value;
+                OptionsBox.TextboxPositionMode = value;
+            }
+        }
 
         // core vars that make textbox work
         private Queue<TextboxItem> textQueue;
         private TextboxItem currentTextItem;
-        protected int selectedOptionIndex = 0;
         private DynamicSpriteFontGraphic text = null;
-        private List<DynamicSpriteFontGraphic> options = null;
         private KeyLocker keyLocker = new KeyLocker();
         public Keys InteractKey { get; set; } = Keys.Space;
-        private string textboxFont = TrueTypeFonts.ARIAL;
-        private int textboxFontSize = 30;
-        private TrueTypeFont textboxFontGraphic;
+        public TrueTypeFont TextboxFontGraphic { get; set; }
+        public int TextboxFontSize { get; set; } = 30;
 
-        private ContentLoader contentLoader;
         private Map map;
 
-        public int LastOptionIndexSelected = -1;
+        public int LastOptionIndexSelected { get; set; } = -1;
+
+        public OptionsBox OptionsBox { get; set; }
 
         public Textbox(ContentLoader contentLoader)
         {
             this.textQueue = new Queue<TextboxItem>();
-            this.contentLoader = contentLoader;
-            textboxFontGraphic = contentLoader.LoadTrueTypeFont(textboxFont);
+            TextboxFontGraphic = contentLoader.LoadTrueTypeFont(TrueTypeFonts.ARIAL);
+            OptionsBox = new OptionsBox(contentLoader);
+            TextboxPositionMode = TextboxPositionMode.DYNAMIC_BOTTOM_PREFERRED;
         }
 
         public void SetMap(Map map)
         {
             this.map = map;
+            OptionsBox.SetMap(map);
         }
 
         public void AddText(string text)
@@ -134,29 +134,18 @@ namespace Engine.Scene.TextboxCore
             if (textQueue.Count > 0 && keyLocker.IsKeyLocked(InteractKey))
             {
                 currentTextItem = textQueue.Peek();
-                options = null;
 
                 // if camera is at bottom of screen, text is drawn at top of screen instead of the bottom like usual
                 // to prevent it from covering the player
-                int fontY = map != null && !map.Camera.IsAtBottomOfMap() ? FontBottomY : FontTopY;
+                int fontY = GetValueBasedOnPositionMode(FontBottomY, FontTopY);
 
                 // create text spritefont that will be drawn in textbox
-                text = new DynamicSpriteFontGraphic(currentTextItem.Text, textboxFontGraphic, textboxFontSize, new Vector2(FontX, fontY), Color.Black);
+                text = new DynamicSpriteFontGraphic(currentTextItem.Text, TextboxFontGraphic, TextboxFontSize, new Vector2(FontX, fontY), Color.Black);
 
                 // if there are options associated with this text item, prepare option spritefont text to be drawn in options textbox
-                if (currentTextItem.Options != null)
+                if (currentTextItem.HasOptions())
                 {
-                    // if camera is at bottom of screen, text is drawn at top of screen instead of the bottom like usual
-                    // to prevent it from covering the player
-                    int fontOptionY = map != null && !map.Camera.IsAtBottomOfMap() ? FontOptionBottomYStart : FontOptionTopYStart;
-
-                    options = new List<DynamicSpriteFontGraphic>();
-                    // for each option, crate option text spritefont that will be drawn in options textbox
-                    for (int i = 0; i < currentTextItem.Options.Count; i++)
-                    {
-                        options.Add(new DynamicSpriteFontGraphic(currentTextItem.Options[i], textboxFontGraphic, textboxFontSize, new Vector2(FontOptionX, fontOptionY + (i * FontOptionSpacing)), Color.Black));
-                    }
-                    selectedOptionIndex = 0;
+                    OptionsBox.Initialize(currentTextItem);
                 }
             }
 
@@ -168,12 +157,12 @@ namespace Engine.Scene.TextboxCore
 
                 // if an option was selected, set output manager flag to the index of the selected option
                 // a script can then look at output manager later to see which option was selected and do with that information what it wants
-                if (options != null)
+                if (currentTextItem.HasOptions())
                 {
-                    LastOptionIndexSelected = selectedOptionIndex;
+                    LastOptionIndexSelected = OptionsBox.SelectedOptionIndex;
                     if (map != null)
                     {
-                        map.ActiveScript.ScriptActionOutputManager.AddFlag("TEXTBOX_OPTION_SELECTION", selectedOptionIndex);
+                        map.ActiveScript.ScriptActionOutputManager.AddFlag("TEXTBOX_OPTION_SELECTION", OptionsBox.SelectedOptionIndex);
                     }
                 }
             }
@@ -182,31 +171,38 @@ namespace Engine.Scene.TextboxCore
                 keyLocker.UnlockKey(InteractKey);
             }
 
-            if (options != null)
+            if (currentTextItem.Options != null)
             {
-                if (keyboardState.IsKeyDown(Keys.Down) && !keyLocker.IsKeyLocked(Keys.Down))
+                OptionsBox.Update(keyboardState);
+            }
+        }
+
+        private int GetValueBasedOnPositionMode(int bottom, int top)
+        {
+            if (TextboxPositionMode == TextboxPositionMode.TOP)
+            {
+                return top;
+            }
+            else if (TextboxPositionMode == TextboxPositionMode.BOTTOM)
+            {
+                return bottom;
+            }
+            else
+            {
+                if (map == null)
                 {
-                    keyLocker.LockKey(Keys.Down);
-                    if (selectedOptionIndex < options.Count - 1)
+                    return bottom;
+                }
+                else
+                {
+                    if (TextboxPositionMode == TextboxPositionMode.DYNAMIC_BOTTOM_PREFERRED)
                     {
-                        selectedOptionIndex++;
+                        return !map.Camera.IsAtBottomOfMap() ? bottom : top;
                     }
-                }
-                if (keyboardState.IsKeyDown(Keys.Up) && !keyLocker.IsKeyLocked(Keys.Up))
-                {
-                    keyLocker.LockKey(Keys.Up);
-                    if (selectedOptionIndex > 0)
+                    else
                     {
-                        selectedOptionIndex--;
+                        return !map.Camera.IsAtTopOfMap() ? top : bottom;
                     }
-                }
-                if (keyboardState.IsKeyUp(Keys.Down))
-                {
-                    keyLocker.UnlockKey(Keys.Down);
-                }
-                if (keyboardState.IsKeyUp(Keys.Up))
-                {
-                    keyLocker.UnlockKey(Keys.Up);
                 }
             }
         }
@@ -216,7 +212,7 @@ namespace Engine.Scene.TextboxCore
             // draw textbox
             // if camera is at bottom of screen, textbox is drawn at top of screen instead of the bottom like usual
             // to prevent it from covering the player
-            int y = map != null && !map.Camera.IsAtBottomOfMap() ? BottomY : TopY;
+            int y = GetValueBasedOnPositionMode(BottomY, TopY);
             graphicsHandler.DrawFilledRectangleWithBorder(new Rectangle(X, y, Width, Height), Color.White, Color.Black, 2);
 
             if (text != null)
@@ -224,24 +220,9 @@ namespace Engine.Scene.TextboxCore
                 // draw text in textbox
                 text.DrawWithParsedNewLines(graphicsHandler, 10);
 
-                if (options != null)
+                if (currentTextItem.HasOptions())
                 {
-                    // draw options textbox
-                    // if camera is at bottom of screen, textbox is drawn at top of screen instead of the bottom like usual
-                    // to prevent it from covering the player
-                    int optionY = map != null && !map.Camera.IsAtBottomOfMap() ? OptionBottomY : OptionTopY;
-                    graphicsHandler.DrawFilledRectangleWithBorder(new Rectangle(OptionX, optionY, OptionWidth, OptionHeight), Color.White, Color.Black, 2);
-
-                    // draw each option text
-                    foreach (DynamicSpriteFontGraphic option in options)
-                    {
-                        option.Draw(graphicsHandler);
-                    }
-
-                    // the start y location of the option pointer depends on whether the options textbox is on top or bottom of screen
-                    int optionPointerYStart = map != null && !map.Camera.IsAtBottomOfMap() ? OptionPointerYBottomStart : OptionPointerYTopStart;
-                    // draw option selection indicator (small black rectangle)
-                    graphicsHandler.DrawFilledRectangle(OptionPointerX, optionPointerYStart + (selectedOptionIndex * FontOptionSpacing), 10, 10, Color.Black);
+                    OptionsBox.Draw(graphicsHandler);
                 }
             }
         }
