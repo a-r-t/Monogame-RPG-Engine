@@ -1,5 +1,6 @@
 ﻿using Engine.Scene;
-using Engine.ScriptActions;
+using Engine.Scene.ScriptCore;
+using Engine.Scene.ScriptCore.ScriptActions;
 using System;
 using System.Collections.Generic;
 using System.Linq;

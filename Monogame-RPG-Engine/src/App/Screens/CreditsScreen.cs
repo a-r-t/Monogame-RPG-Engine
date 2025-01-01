@@ -3,6 +3,7 @@ using App.Maps;
 using Engine.Core;
 using Engine.FontGraphics;
 using Engine.Scene;
+using Engine.Scene.MapCore;
 using Engine.Sound;
 using Engine.Utils;
 using Microsoft.Xna.Framework;
@@ -39,9 +40,11 @@ namespace App.Screens
             background.AdjustCamera = false;
             keyLocker.LockKey(Keys.Space);
 
-            creditsLabel = new DynamicSpriteFontGraphic("Credits", ContentLoader.LoadTrueTypeFont(TrueTypeFonts.TIMES_NEW_ROMAN), 32, new Vector2(15, 7), Color.White);
-            createdByLabel = new DynamicSpriteFontGraphic("Created by Alex Thimineur", ContentLoader.LoadTrueTypeFont(TrueTypeFonts.TIMES_NEW_ROMAN), 22, new Vector2(130, 121), Color.White);
-            returnInstructionsLabel = new DynamicSpriteFontGraphic("Press Space to return to the menu", ContentLoader.LoadTrueTypeFont(TrueTypeFonts.TIMES_NEW_ROMAN), 32, new Vector2(20, 532), Color.White);
+            TrueTypeFont timesNewRomanFont = ContentLoader.LoadTrueTypeFont(TrueTypeFonts.TIMES_NEW_ROMAN);
+
+            creditsLabel = new DynamicSpriteFontGraphic("Credits", timesNewRomanFont, 32, new Vector2(15, 7), Color.White);
+            createdByLabel = new DynamicSpriteFontGraphic("Created by Alex Thimineur", timesNewRomanFont, 22, new Vector2(130, 121), Color.White);
+            returnInstructionsLabel = new DynamicSpriteFontGraphic("Press Space to return to the menu", timesNewRomanFont, 32, new Vector2(20, 532), Color.White);
         }
 
         public override void Update(GameTime gameTime, KeyboardState keyboardState)

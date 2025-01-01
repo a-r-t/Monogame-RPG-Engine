@@ -7,8 +7,5 @@ using System.Threading.Tasks;
 namespace Engine.Scene
 {
     // intentionally left empty to allow consumers to override it with their desired methods
-    public interface BaseGameListener
-    {
-
-    }
+    public interface BaseGameListener { }
 }

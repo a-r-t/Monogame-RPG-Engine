@@ -5,6 +5,9 @@ using App.Players;
 using Engine.Core;
 using Engine.FontGraphics;
 using Engine.Scene;
+using Engine.Scene.MapCore;
+using Engine.Scene.PlayerCore;
+using Engine.Scene.TextboxCore;
 using Engine.Utils;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
@@ -22,6 +25,7 @@ namespace App.Screens
         protected ScreenCoordinator screenCoordinator;
         protected Map map;
         protected Player player;
+        protected Textbox textbox;
         protected PlayLevelScreenStates PlayLevelScreenState { get; private set; }
         protected WinScreen winScreen;
         protected FlagManager flagManager;
@@ -52,14 +56,17 @@ namespace App.Screens
 
             map.Player = player;
 
-            // let pieces of map know which button to listen for as the "interact" button
-            map.Textbox.InteractKey = player.INTERACT_KEY;
 
             map.Listeners.Add(this);
 
             // preloads all scripts ahead of time rather than loading them dynamically
             // both are supported, however preloading is recommended
             map.PreloadScripts();
+
+            textbox = new Textbox(ContentLoader);
+            textbox.SetMap(map);
+            textbox.InteractKey = player.INTERACT_KEY;
+            map.Textbox = textbox;
 
             winScreen = new WinScreen(this);
             winScreen.Initialize();
@@ -74,6 +81,10 @@ namespace App.Screens
                 case PlayLevelScreenStates.RUNNING:
                     player.Update(keyboardState);
                     map.Update(keyboardState);
+                    if (textbox.IsActive)
+                    {
+                        textbox.Update(keyboardState);
+                    }
                     break;
                 // if level has been completed, bring up level cleared screen
                 case PlayLevelScreenStates.LEVEL_COMPLETED:
@@ -89,6 +100,10 @@ namespace App.Screens
             {
                 case PlayLevelScreenStates.RUNNING:
                     map.Draw(player, graphicsHandler);
+                    if (textbox.IsActive)
+                    {
+                        textbox.Draw(graphicsHandler);
+                    }
                     break;
                 case PlayLevelScreenStates.LEVEL_COMPLETED:
                     winScreen.Draw(graphicsHandler);

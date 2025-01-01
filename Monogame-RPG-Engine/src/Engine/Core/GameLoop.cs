@@ -87,8 +87,8 @@ namespace Engine.Core
 
         protected override void LoadContent()
         {
-            fpsLabel = new DynamicSpriteFontGraphic("FPS", contentLoader.LoadTrueTypeFont(TrueTypeFonts.ARIAL), 12, new Vector2(4, 3), Color.Black);
-
+            TrueTypeFont arialFont = contentLoader.LoadTrueTypeFont(TrueTypeFonts.ARIAL);
+            fpsLabel = new DynamicSpriteFontGraphic("FPS", arialFont, 12, new Vector2(4, 3), Color.Black);
         }
 
         protected override void Update(GameTime gameTime)

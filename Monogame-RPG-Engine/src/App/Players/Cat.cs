@@ -1,7 +1,7 @@
 ﻿using App.Resources;
 using Engine.Builders;
 using Engine.Core;
-using Engine.Entity;
+using Engine.SpriteGraphics;
 using Engine.Scene;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Engine.Scene.PlayerCore;
 
 namespace App.Players
 {

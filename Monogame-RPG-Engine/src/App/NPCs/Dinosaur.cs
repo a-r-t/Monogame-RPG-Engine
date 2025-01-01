@@ -1,7 +1,7 @@
 ﻿using App.Resources;
 using Engine.Builders;
 using Engine.Core;
-using Engine.Entity;
+using Engine.SpriteGraphics;
 using Engine.Scene;
 using Engine.Utils;
 using Microsoft.Xna.Framework.Graphics;
@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Engine.Scene.EntitiesCore;
 
 // This class is for the dinosaur NPC
 namespace App.NPCs

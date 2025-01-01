@@ -1,7 +1,8 @@
 ﻿using Engine.Scene;
-using Engine.ScriptActions;
-using Engine.ScriptActions.Conditional;
-using Engine.ScriptActions.Utils;
+using Engine.Scene.ScriptCore;
+using Engine.Scene.ScriptCore.ScriptActions;
+using Engine.Scene.ScriptCore.ScriptActions.Conditional;
+using Engine.Scene.ScriptCore.ScriptActions.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;

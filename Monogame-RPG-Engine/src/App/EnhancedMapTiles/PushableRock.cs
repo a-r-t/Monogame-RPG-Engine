@@ -1,7 +1,7 @@
 ﻿using App.Resources;
 using Engine.Builders;
 using Engine.Core;
-using Engine.Entity;
+using Engine.SpriteGraphics;
 using Engine.Scene;
 using Engine.Utils;
 using System;
@@ -9,6 +9,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Engine.Scene.EntitiesCore;
+using Engine.Scene.PlayerCore;
+using Engine.Scene.MapCore;
 
 // This class is for the special rock in the map that can be moved around by the player
 // when the player walks into it, it will be "pushed" forward in the same direction the player was moving in
