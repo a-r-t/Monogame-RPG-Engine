@@ -27,7 +27,7 @@ namespace Engine.Scene.TextboxCore
         public bool IsActive { get; set; }
 
         // textbox constants
-        public int X { get; set; } = 22;
+        public int X { get; set; } = 16;
         public int BottomY { get; set; } = 460;
         public int TopY { get; set; } = 22;
         public int FontX { get; set; } = 35;
