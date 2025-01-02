@@ -17,29 +17,29 @@ namespace Engine.Core
         private Screen currentScreen;
 
         // gets bounds of currentScreen -- can be called from anywhere in an application
-        public static Rectangle ScreenBounds { get; private set; } = new Rectangle(0, 0, 0, 0);
+        public static Rectangle WindowBounds { get; private set; } = new Rectangle(0, 0, 0, 0);
 
         // gets width of currentScreen -- can be called from anywhere in an application
-        public static int ScreenWidth
+        public static int WindowWidth
         {
             get
             {
-                return ScreenBounds.Width;
+                return WindowBounds.Width;
             }
         }
 
         // gets height of currentScreen -- can be called from anywhere in an application
-        public static int ScreenHeight
+        public static int WindowHeight
         {
             get
             {
-                return ScreenBounds.Height;
+                return WindowBounds.Height;
             }
         }
 
         public void Initialize(Rectangle screenBounds)
         {
-            ScreenBounds = screenBounds;
+            WindowBounds = screenBounds;
             SetCurrentScreen(new DefaultScreen());
         }
 
@@ -57,7 +57,7 @@ namespace Engine.Core
 
         public void Draw(GraphicsHandler graphicsHandler)
         {
-            currentScreen.Draw(graphicsHandler);
+            currentScreen.Render(graphicsHandler);
         }
     }
 }

@@ -36,7 +36,7 @@ namespace App.Screens
 
         public override void Initialize()
         {
-            background = new TitleScreenMap(ContentLoader);
+            background = new TitleScreenMap(ScreenWidth, ScreenHeight, ContentLoader);
             background.AdjustCamera = false;
             keyLocker.LockKey(Keys.Space);
 
@@ -64,7 +64,7 @@ namespace App.Screens
             }
         }
 
-        public override void Draw(GraphicsHandler graphicsHandler)
+        protected override void Draw(GraphicsHandler graphicsHandler)
         {
             background.Draw(graphicsHandler);
             creditsLabel.Draw(graphicsHandler);

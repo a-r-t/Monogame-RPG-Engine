@@ -18,8 +18,8 @@ namespace App.Maps
     {
         private Sprite cat;
 
-        public TitleScreenMap(ContentLoader contentLoader)
-            : base("title_screen_map.txt", new CommonTileset(contentLoader), contentLoader)
+        public TitleScreenMap(int cameraWidth, int cameraHeight, ContentLoader contentLoader)
+            : base("title_screen_map.txt", new CommonTileset(contentLoader), cameraWidth, cameraHeight, contentLoader)
         {
             Point catLocation = GetMapTile(8, 5).Location.SubtractX(6).SubtractY(7);
             cat = new Sprite(new SpriteSheet(contentLoader.LoadTexture(GraphicsHelper.CAT), 24, 24).GetSprite(0, 0));

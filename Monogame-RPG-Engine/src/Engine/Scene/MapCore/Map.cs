@@ -143,6 +143,9 @@ namespace Engine.Scene.MapCore
         // reference to current player
         public Player Player { get; set; }
 
+        private int cameraWidth;
+        private int cameraHeight;
+
         public int WidthPixels
         {
             get
@@ -162,18 +165,20 @@ namespace Engine.Scene.MapCore
         // instance of content loader to allow maps to load their own content
         public ContentLoader ContentLoader { get; private set; }
 
-        public Map(string mapFileName, Tileset tileset, ContentLoader contentLoader)
+        public Map(string mapFileName, Tileset tileset, int cameraWidth, int cameraHeight, ContentLoader contentLoader)
         {
             MapFileName = mapFileName;
             Tileset = tileset;
             ContentLoader = contentLoader;
+            this.cameraWidth = cameraWidth;
+            this.cameraHeight = cameraHeight;
             SetupMap();
             this.startBoundX = 0;
             this.startBoundY = 0;
             EndBoundX = Width * tileset.SpriteWidthScaled;
             EndBoundY = Height * tileset.SpriteHeightScaled;
-            this.xMidPoint = ScreenManager.ScreenWidth / 2;
-            this.yMidPoint = ScreenManager.ScreenHeight / 2;
+            this.xMidPoint = cameraWidth / 2;
+            this.yMidPoint = cameraHeight / 2;
             PlayerStartTile = new Point(0, 0);
         }
 
@@ -207,7 +212,7 @@ namespace Engine.Scene.MapCore
 
             this.LoadScripts();
 
-            Camera = new Camera(0, 0, Tileset.SpriteWidthScaled, Tileset.SpriteHeightScaled, this);
+            Camera = new Camera(cameraWidth, cameraHeight, Tileset.SpriteWidthScaled, Tileset.SpriteHeightScaled, this);
         }
 
         // reads in a map file to create the map's tilemap

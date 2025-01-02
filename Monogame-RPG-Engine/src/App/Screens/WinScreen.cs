@@ -62,9 +62,9 @@ namespace App.Screens
             }
         }
 
-        public override void Draw(GraphicsHandler graphicsHandler)
+        protected override void Draw(GraphicsHandler graphicsHandler)
         {
-            graphicsHandler.DrawFilledRectangle(0, 0, ScreenManager.ScreenWidth, ScreenManager.ScreenHeight, Color.Black);
+            graphicsHandler.DrawFilledRectangle(0, 0, ScreenManager.WindowWidth, ScreenManager.WindowHeight, Color.Black);
             winMessage.Draw(graphicsHandler);
             instructions.Draw(graphicsHandler);
         }

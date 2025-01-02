@@ -21,8 +21,8 @@ namespace App.Maps
     public class TestMap : Map
     {
 
-        public TestMap(ContentLoader contentLoader)
-            : base("test_map.txt", new CommonTileset(contentLoader), contentLoader)
+        public TestMap(int cameraWidth, int cameraHeight, ContentLoader contentLoader)
+            : base("test_map.txt", new CommonTileset(contentLoader), cameraWidth, cameraHeight, contentLoader)
         {
             PlayerStartPosition = GetMapTile(17, 20).Location;
         }

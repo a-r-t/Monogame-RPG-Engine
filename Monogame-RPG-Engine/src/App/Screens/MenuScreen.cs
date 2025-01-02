@@ -42,7 +42,7 @@ namespace App.Screens
 
         public override void Initialize()
         {
-            background = new TitleScreenMap(ContentLoader);
+            background = new TitleScreenMap(ScreenWidth, ScreenHeight, ContentLoader);
             background.AdjustCamera = false;
             keyPressTimer = 0;
             menuItemSelected = -1;
@@ -140,7 +140,7 @@ namespace App.Screens
             }
         }
 
-        public override void Draw(GraphicsHandler graphicsHandler)
+        protected override void Draw(GraphicsHandler graphicsHandler)
         {
             background.Draw(graphicsHandler);
             playGame.Draw(graphicsHandler);

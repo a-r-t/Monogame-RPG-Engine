@@ -19,6 +19,6 @@ namespace Engine.Core
 
         public override void Update(GameTime gameTime, KeyboardState keyboardState) { }
 
-        public override void Draw(GraphicsHandler graphicsHandler) { }
+        protected override void Draw(GraphicsHandler graphicsHandler) { }
     }
 }
