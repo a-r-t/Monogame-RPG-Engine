@@ -84,7 +84,7 @@ namespace Engine.Core
             renderTarget = new RenderTarget2D(GameLoop.GraphicsDeviceInstance, ScreenWidth, ScreenHeight);
         }
 
-        public void SetBounds(int x, int y, int width, int height)
+        public void SetScreenBounds(int x, int y, int width, int height)
         {
             ScreenX = x;
             ScreenY = y;
@@ -98,7 +98,7 @@ namespace Engine.Core
         public Screen()
         {
             ContentLoader = ContentLoader.Create();
-            SetBounds(0, 0, ScreenManager.WindowWidth, ScreenManager.WindowHeight);
+            SetScreenBounds(0, 0, ScreenManager.WindowWidth, ScreenManager.WindowHeight);
             DrawReference = Draw;
         }
 
