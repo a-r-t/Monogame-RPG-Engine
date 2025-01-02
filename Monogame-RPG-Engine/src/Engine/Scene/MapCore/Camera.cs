@@ -52,13 +52,13 @@ namespace Engine.Scene.MapCore
         }
 
         public Camera(int startX, int startY, int tileWidth, int tileHeight, Map map)
-            : base(startX, startY, ScreenManager.ScreenWidth / tileWidth, ScreenManager.ScreenHeight / tileHeight)
+            : base(startX, startY, ScreenManager.WindowWidth / tileWidth, ScreenManager.WindowHeight / tileHeight)
         {
             this.map = map;
             this.tileWidth = tileWidth;
             this.tileHeight = tileHeight;
-            this.leftoverSpaceX = ScreenManager.ScreenWidth % this.tileWidth;
-            this.leftoverSpaceY = ScreenManager.ScreenHeight % this.tileHeight;
+            this.leftoverSpaceX = ScreenManager.WindowWidth % this.tileWidth;
+            this.leftoverSpaceY = ScreenManager.WindowHeight % this.tileHeight;
             ActiveEnhancedMapTiles = new List<EnhancedMapTile>();
             ActiveNPCs = new List<NPC>();
             ActiveTriggers = new List<Trigger>();

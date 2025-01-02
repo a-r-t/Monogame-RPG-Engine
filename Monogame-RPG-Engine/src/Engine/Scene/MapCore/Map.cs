@@ -172,8 +172,8 @@ namespace Engine.Scene.MapCore
             this.startBoundY = 0;
             EndBoundX = Width * tileset.SpriteWidthScaled;
             EndBoundY = Height * tileset.SpriteHeightScaled;
-            this.xMidPoint = ScreenManager.ScreenWidth / 2;
-            this.yMidPoint = ScreenManager.ScreenHeight / 2;
+            this.xMidPoint = ScreenManager.WindowWidth / 2;
+            this.yMidPoint = ScreenManager.WindowHeight / 2;
             PlayerStartTile = new Point(0, 0);
         }
 

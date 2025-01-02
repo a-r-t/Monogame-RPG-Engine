@@ -93,7 +93,7 @@ namespace App.Screens
             }
         }
 
-        public override void Draw(GraphicsHandler graphicsHandler)
+        protected override void Draw(GraphicsHandler graphicsHandler)
         {
             // based on screen state, draw appropriate graphics
             switch (PlayLevelScreenState)
@@ -106,7 +106,7 @@ namespace App.Screens
                     }
                     break;
                 case PlayLevelScreenStates.LEVEL_COMPLETED:
-                    winScreen.Draw(graphicsHandler);
+                    winScreen.Render(graphicsHandler);
                     break;
             }
         }

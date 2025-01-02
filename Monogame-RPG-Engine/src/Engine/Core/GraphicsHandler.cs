@@ -6,6 +6,7 @@ using MonoGame.Extended.BitmapFonts;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 namespace Engine.Core
 {
@@ -15,12 +16,15 @@ namespace Engine.Core
         public GraphicsDevice GraphicsDevice { get; private set; }
         public SpriteBatch SpriteBatch { get; private set; }
         private Rectangle currentViewportScissorRectangle;
+        private RenderTarget2D currentRenderTarget;
+        private Stack<RenderTargetBinding> previousRenderTargets;
 
         public GraphicsHandler(GraphicsDevice graphicsDevice, SpriteBatch spriteBatch)
         {
             GraphicsDevice = graphicsDevice;
             SpriteBatch = spriteBatch;
             currentViewportScissorRectangle = SpriteBatch.GraphicsDevice.ScissorRectangle;
+            previousRenderTargets = new Stack<RenderTargetBinding>();
         }
 
         public void DrawRectangle(int x, int y, int width, int height, Color color, int borderThickness = 1)
@@ -247,6 +251,58 @@ namespace Engine.Core
             SpriteBatch.End();
             SpriteBatch.GraphicsDevice.ScissorRectangle = currentViewportScissorRectangle;
             SpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullCounterClockwise);
+        }
+
+        public void SetRenderTarget(int width, int height)
+        {
+            SpriteBatch.End();
+            RenderTarget2D renderTarget = new RenderTarget2D(GraphicsDevice, width, height);
+            SetRenderTarget(renderTarget);
+        }
+
+        public void SetRenderTarget(RenderTarget2D renderTarget)
+        {
+            SpriteBatch.End();
+            currentRenderTarget = renderTarget;
+            if (GraphicsDevice.GetRenderTargets().Length > 0 && GraphicsDevice.GetRenderTargets()[0].RenderTarget != null)
+            {
+                previousRenderTargets.Push(GraphicsDevice.GetRenderTargets()[0]);
+
+            }
+            SpriteBatch.GraphicsDevice.SetRenderTarget(renderTarget);
+            SpriteBatch.GraphicsDevice.Clear(Color.CornflowerBlue);
+            SpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullCounterClockwise);
+        }
+
+        public void DrawRenderTarget(int x, int y, Color? color = null)
+        {
+            if (color == null)
+            {
+                color = Color.White;
+            }
+            SpriteBatch.End();
+
+            if (previousRenderTargets.Count > 0 && previousRenderTargets.Peek().RenderTarget != null)
+            {
+                SpriteBatch.GraphicsDevice.SetRenderTarget(previousRenderTargets.Peek().RenderTarget as RenderTarget2D);
+            }
+            else
+            {
+                // If no previous render target, reset to the default back buffer
+                SpriteBatch.GraphicsDevice.SetRenderTarget(null);
+            }
+
+            SpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullCounterClockwise);
+            SpriteBatch.Draw(currentRenderTarget, new Vector2(x, y), color.Value);
+
+            if (previousRenderTargets.Count > 0 && previousRenderTargets.Peek().RenderTarget != null)
+            {
+                currentRenderTarget = previousRenderTargets.Pop().RenderTarget as RenderTarget2D;
+            }
+            else
+            {
+                currentRenderTarget = null;
+            }
         }
     }
 

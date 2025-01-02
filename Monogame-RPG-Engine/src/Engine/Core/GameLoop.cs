@@ -16,11 +16,12 @@ namespace Engine.Core
 {
     public class GameLoop : Game
     {
-        private GraphicsDeviceManager graphics;
+        private GraphicsDeviceManager graphicsDeviceManager;
         private SpriteBatch spriteBatch;
         private GraphicsHandler graphicsHandler;
         public ScreenManager ScreenManager { get; private set; }
         public static GraphicsDeviceManager GraphicsDeviceManager { get; private set; }
+        public static GraphicsDevice GraphicsDeviceInstance { get; private set; }
         public static ContentManager ContentManager { get; private set; }
         public static GameServiceContainer GameServiceContainer { get; private set; }
         public static int ViewportWidth { get; private set; }
@@ -35,8 +36,8 @@ namespace Engine.Core
 
         public GameLoop()
         {
-            graphics = new GraphicsDeviceManager(this);
-            GraphicsDeviceManager = graphics;
+            graphicsDeviceManager = new GraphicsDeviceManager(this);
+            GraphicsDeviceManager = graphicsDeviceManager;
 
             // holding on to these graphics settings in the hopes I can figure out how to best utilize them later on, but right now they make the game choppy
             // graphics.PreferMultiSampling = true;
@@ -48,9 +49,9 @@ namespace Engine.Core
             TargetElapsedTime = TimeSpan.FromMilliseconds(1000.0f / Config.FPS);
             ContentManager = Content;
             GameServiceContainer = Services;
-            graphics.PreferredBackBufferWidth = Config.GAME_WINDOW_WIDTH;  // set this value to the desired width of your window
-            graphics.PreferredBackBufferHeight = Config.GAME_WINDOW_HEIGHT;   // set this value to the desired height of your window
-            graphics.ApplyChanges();
+            graphicsDeviceManager.PreferredBackBufferWidth = Config.GAME_WINDOW_WIDTH;  // set this value to the desired width of your window
+            graphicsDeviceManager.PreferredBackBufferHeight = Config.GAME_WINDOW_HEIGHT;   // set this value to the desired height of your window
+            graphicsDeviceManager.ApplyChanges();
             ViewportWidth = GraphicsDevice.Viewport.Width;
             ViewportHeight = GraphicsDevice.Viewport.Height;
 
@@ -59,6 +60,7 @@ namespace Engine.Core
             // this.Window.ClientSizeChanged += new EventHandler<EventArgs>(Window_ClientSizeChanged);
             
             GameWindow = Window;
+            GraphicsDeviceInstance = GraphicsDevice;
 
             ScreenManager = new ScreenManager();
             ScreenManager.Initialize(new Rectangle(0, 0, Config.GAME_WINDOW_WIDTH, Config.GAME_WINDOW_HEIGHT));
@@ -71,6 +73,7 @@ namespace Engine.Core
         protected override void Initialize()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
+
             graphicsHandler = new GraphicsHandler(GraphicsDevice, spriteBatch);
 
             renderTarget = new RenderTarget2D(

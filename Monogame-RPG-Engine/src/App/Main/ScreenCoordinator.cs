@@ -23,6 +23,7 @@ namespace App.Main
         {
             GameState = GameState.MENU;
             previousGameState = GameState;
+            UseRenderTarget = false;
             UpdateCurrentScreen();
         }
 
@@ -65,9 +66,9 @@ namespace App.Main
             currentScreen.LoadContent();
         }
 
-        public override void Draw(GraphicsHandler graphicsHandler)
+        protected override void Draw(GraphicsHandler graphicsHandler)
         {
-            currentScreen.Draw(graphicsHandler);
+            currentScreen.Render(graphicsHandler);
         }
     }
 }

@@ -140,7 +140,7 @@ namespace App.Screens
             }
         }
 
-        public override void Draw(GraphicsHandler graphicsHandler)
+        protected override void Draw(GraphicsHandler graphicsHandler)
         {
             background.Draw(graphicsHandler);
             playGame.Draw(graphicsHandler);

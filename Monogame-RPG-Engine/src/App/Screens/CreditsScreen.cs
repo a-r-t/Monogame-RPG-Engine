@@ -64,7 +64,7 @@ namespace App.Screens
             }
         }
 
-        public override void Draw(GraphicsHandler graphicsHandler)
+        protected override void Draw(GraphicsHandler graphicsHandler)
         {
             background.Draw(graphicsHandler);
             creditsLabel.Draw(graphicsHandler);
