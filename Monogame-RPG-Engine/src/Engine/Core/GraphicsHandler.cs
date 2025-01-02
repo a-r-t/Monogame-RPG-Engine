@@ -260,17 +260,27 @@ namespace Engine.Core
             SetRenderTarget(renderTarget);
         }
 
+        // creates a render target that all future content will be drawn to until DrawRenderTarget method is eventually called
+        // when DrawRenderTarget method is called, the entire render target will be drawn to the previous render target that was in use prior to this method being called
         public void SetRenderTarget(RenderTarget2D renderTarget)
         {
             SpriteBatch.End();
+
+            // set currentRenderTarget reference to the new render target
             currentRenderTarget = renderTarget;
+
+            // save existing render target if exists
             if (GraphicsDevice.GetRenderTargets().Length > 0 && GraphicsDevice.GetRenderTargets()[0].RenderTarget != null)
             {
                 previousRenderTargets.Push(GraphicsDevice.GetRenderTargets()[0]);
 
             }
+
+            // set new render target
             SpriteBatch.GraphicsDevice.SetRenderTarget(renderTarget);
             SpriteBatch.GraphicsDevice.Clear(Color.CornflowerBlue);
+
+            // start new spritebatch with new render target
             SpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullCounterClockwise);
         }
 
@@ -282,6 +292,8 @@ namespace Engine.Core
             }
             SpriteBatch.End();
 
+            // if there is a previous render target that was in use prior to SetRenderTarget being called, restore it
+            // this will ensure the new render target is drawn on top of whatever was there prior
             if (previousRenderTargets.Count > 0 && previousRenderTargets.Peek().RenderTarget != null)
             {
                 SpriteBatch.GraphicsDevice.SetRenderTarget(previousRenderTargets.Peek().RenderTarget as RenderTarget2D);
@@ -292,9 +304,12 @@ namespace Engine.Core
                 SpriteBatch.GraphicsDevice.SetRenderTarget(null);
             }
 
+            // draw render target on top of previous render target
             SpriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullCounterClockwise);
             SpriteBatch.Draw(currentRenderTarget, new Vector2(x, y), color.Value);
 
+            // reset currentRenderTarget reference to the previous render target (if exists)
+            // this will ensure that if this was a situation where a render target was being drawn on another render target, that previous render target can now "continue" on like normal
             if (previousRenderTargets.Count > 0 && previousRenderTargets.Peek().RenderTarget != null)
             {
                 currentRenderTarget = previousRenderTargets.Pop().RenderTarget as RenderTarget2D;
