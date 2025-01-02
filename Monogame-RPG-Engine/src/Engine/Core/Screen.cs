@@ -15,46 +15,46 @@ namespace Engine.Core
         private RenderTarget2D renderTarget;
 
         // bounds of screen
-        public int X { get; set; }
-        public int Y { get; set; }
-        private int width = 1;
-        public int Width
+        public int ScreenX { get; set; }
+        public int ScreenY { get; set; }
+        private int screenWidth = 1;
+        public int ScreenWidth
         {
             get
             {
-                return width;
+                return screenWidth;
             }
             set
             {
-                if (width > 0)
+                if (screenWidth > 0)
                 {
-                    width = value;
+                    screenWidth = value;
                     CreateRenderTarget();
                 }
             }
         }
-        private int height = 1;
-        public int Height
+        private int screenHeight = 1;
+        public int ScreenHeight
         {
             get
             {
-                return height;
+                return screenHeight;
             }
             set
             {
-                if (height > 0)
+                if (screenHeight > 0)
                 {
-                    height = value;
+                    screenHeight = value;
                     CreateRenderTarget();
                 }
             }
         }
 
-        public Rectangle Bounds
+        public Rectangle ScreenBounds
         {
             get
             {
-                return new Rectangle(X, Y, Width, Height);
+                return new Rectangle(ScreenX, ScreenY, ScreenWidth, ScreenHeight);
             }
         }
 
@@ -81,15 +81,15 @@ namespace Engine.Core
 
         public void CreateRenderTarget()
         {
-            renderTarget = new RenderTarget2D(GameLoop.GraphicsDeviceInstance, Width, Height);
+            renderTarget = new RenderTarget2D(GameLoop.GraphicsDeviceInstance, ScreenWidth, ScreenHeight);
         }
 
         public void SetBounds(int x, int y, int width, int height)
         {
-            X = x;
-            Y = y;
-            Width = width;
-            Height = height;
+            ScreenX = x;
+            ScreenY = y;
+            ScreenWidth = width;
+            ScreenHeight = height;
         }
 
         // all screens share this global content loader for content that is designed to be used everywhere
@@ -125,7 +125,7 @@ namespace Engine.Core
             {
                 graphicsHandler.SetRenderTarget(renderTarget);
                 DrawReference.Invoke(graphicsHandler);
-                graphicsHandler.DrawRenderTarget(X, Y);
+                graphicsHandler.DrawRenderTarget(ScreenX, ScreenY);
             }
             else
             {

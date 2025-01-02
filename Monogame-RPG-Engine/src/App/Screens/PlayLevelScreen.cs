@@ -45,7 +45,7 @@ namespace App.Screens
             flagManager.AddFlag("hasFoundBall", false);
 
             // define/setup map
-            map = new TestMap(ContentLoader);
+            map = new TestMap(ScreenWidth, ScreenHeight, ContentLoader);
             map.FlagManager = flagManager;
 
             // setup player
