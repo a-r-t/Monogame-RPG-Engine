@@ -12,9 +12,11 @@ namespace Engine.Core
     {
         // each individual screen has access to its own content loader
         public ContentLoader ContentLoader { get; private set; }
+
+        // screen render target instance
         private RenderTarget2D renderTarget;
 
-        // bounds of screen
+        // bounds of screen for render target
         public int ScreenX { get; set; }
         public int ScreenY { get; set; }
         private int screenWidth = 1;
@@ -79,6 +81,7 @@ namespace Engine.Core
             }
         }
 
+        // create a new render target using screen bounds
         public void CreateRenderTarget()
         {
             renderTarget = new RenderTarget2D(GameLoop.GraphicsDeviceInstance, ScreenWidth, ScreenHeight);
@@ -99,6 +102,8 @@ namespace Engine.Core
         {
             ContentLoader = ContentLoader.Create();
             SetScreenBounds(0, 0, ScreenManager.WindowWidth, ScreenManager.WindowHeight);
+
+            // this allows for a subclass to override Draw while still ensuring the render target logic will be enforced in the Render method
             DrawReference = Draw;
         }
 
@@ -119,6 +124,7 @@ namespace Engine.Core
 
         private Action<GraphicsHandler> DrawReference = (graphicsHandler) => { };
 
+        // if render target is in use, it sets the render target first, then draws the screen's content to that render target, and then draws the entire render target
         public void Render(GraphicsHandler graphicsHandler) 
         {
             if (useRenderTarget)
