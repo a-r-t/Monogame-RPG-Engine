@@ -130,7 +130,7 @@ namespace Engine.Core
         private Action<GraphicsHandler> DrawReference = (graphicsHandler) => { };
 
         // if render target is in use, it sets the render target first, then draws the screen's content to that render target, and then draws the entire render target
-        public void Render(GraphicsHandler graphicsHandler) 
+        public void Render(GraphicsHandler graphicsHandler, Microsoft.Xna.Framework.Color? color = null) 
         {
             if (useRenderTarget)
             {
@@ -140,7 +140,7 @@ namespace Engine.Core
                     graphicsHandler.DrawFilledRectangle(new Microsoft.Xna.Framework.Rectangle(0, 0, ScreenWidth, ScreenHeight), ScreenBackgroundColor.Value);
                 }
                 DrawReference.Invoke(graphicsHandler);
-                graphicsHandler.DrawRenderTarget(ScreenX, ScreenY);
+                graphicsHandler.DrawRenderTarget(ScreenX, ScreenY, color);
             }
             else
             {
