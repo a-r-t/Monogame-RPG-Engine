@@ -39,6 +39,12 @@ namespace Engine.Core
             }
         }
 
+        // wrapper for the above auto property setter
+        public void SetScreenBounds(int x, int y, int width, int height)
+        {
+            ScreenBounds = new System.Drawing.Rectangle(x, y, width, height);
+        }
+
         private bool useRenderTarget;
         public bool UseRenderTarget
         {
@@ -66,11 +72,6 @@ namespace Engine.Core
         public void CreateRenderTarget()
         {
             renderTarget = new RenderTarget2D(GameLoop.GraphicsDeviceInstance, ScreenWidth, ScreenHeight);
-        }
-
-        public void SetScreenBounds(int x, int y, int width, int height)
-        {
-            ScreenBounds = new System.Drawing.Rectangle(x, y, width, height);
         }
 
         public void SetScreenDimensions(int width, int height)
@@ -128,12 +129,19 @@ namespace Engine.Core
         {
             if (useRenderTarget)
             {
+                // setup render target
                 graphicsHandler.SetRenderTarget(renderTarget);
+
+                // fill render target background if ScreenBackgroundColor is set
                 if (ScreenBackgroundColor.HasValue)
                 {
                     graphicsHandler.DrawFilledRectangle(new Microsoft.Xna.Framework.Rectangle(0, 0, ScreenWidth, ScreenHeight), ScreenBackgroundColor.Value);
                 }
+
+                // apply draw content from screen class to render target
                 DrawReference.Invoke(graphicsHandler);
+
+                // draw finished render target at appropriate location
                 graphicsHandler.DrawRenderTarget(ScreenX, ScreenY, color);
             }
             else
