@@ -22,38 +22,8 @@ namespace Engine.Core
         public int ScreenY { get; set; }
 
         // bounds of screen for render target
-        private int screenWidth = 1;
-        public int ScreenWidth
-        {
-            get
-            {
-                return screenWidth;
-            }
-            set
-            {
-                if (screenWidth > 0)
-                {
-                    screenWidth = value;
-                    CreateRenderTarget();
-                }
-            }
-        }
-        private int screenHeight = 1;
-        public int ScreenHeight
-        {
-            get
-            {
-                return screenHeight;
-            }
-            set
-            {
-                if (screenHeight > 0)
-                {
-                    screenHeight = value;
-                    CreateRenderTarget();
-                }
-            }
-        }
+        public int ScreenWidth { get; private set; } = 1;
+        public int ScreenHeight { get; private set; } = 1;
 
         public System.Drawing.Rectangle ScreenBounds
         {
@@ -61,9 +31,15 @@ namespace Engine.Core
             {
                 return new System.Drawing.Rectangle(ScreenX, ScreenY, ScreenWidth, ScreenHeight);
             }
+            set
+            {
+                ScreenX = value.X;
+                ScreenY = value.Y;
+                SetScreenDimensions(value.Width, value.Height);
+            }
         }
 
-        private bool useRenderTarget = true;
+        private bool useRenderTarget;
         public bool UseRenderTarget
         {
             get
@@ -73,9 +49,9 @@ namespace Engine.Core
             set
             {
                 useRenderTarget = value;
-                if (useRenderTarget)
+                if (value)
                 {
-                    CreateRenderTarget();
+                    SetScreenBounds(ScreenX, ScreenY, ScreenWidth, ScreenHeight);
                 }
                 else
                 {
@@ -94,10 +70,26 @@ namespace Engine.Core
 
         public void SetScreenBounds(int x, int y, int width, int height)
         {
-            ScreenX = x;
-            ScreenY = y;
-            ScreenWidth = width;
-            ScreenHeight = height;
+            ScreenBounds = new System.Drawing.Rectangle(x, y, width, height);
+        }
+
+        public void SetScreenDimensions(int width, int height)
+        {
+            if (width > 0 && height > 0)
+            {
+                ScreenWidth = width;
+                ScreenHeight = height;
+                // if render target is turned on, AND if render target has not yet been created OR the current render target's dimensions are different than the desired ones, recreate the render target instance
+                // this limits creating a new render target instance to only when necessary, which is better for overall game performance
+                if (useRenderTarget && (renderTarget == null || renderTarget.Width != width || renderTarget.Height != height))
+                {
+                    CreateRenderTarget();
+                }
+            }
+            else
+            {
+                throw new Exception($"Unable to create Screen render target of size (w: {width}, h: {height}) -- invalid dimensions (note: width and height MUST be greater than 0).");
+            }
         }
 
         // all screens share this global content loader for content that is designed to be used everywhere
@@ -110,6 +102,8 @@ namespace Engine.Core
 
             // this allows for a subclass to override Draw while still ensuring the render target logic will be enforced in the Render method
             DrawReference = Draw;
+
+            UseRenderTarget = true;
         }
 
         static Screen()
@@ -130,7 +124,7 @@ namespace Engine.Core
         private Action<GraphicsHandler> DrawReference = (graphicsHandler) => { };
 
         // if render target is in use, it sets the render target first, then draws the screen's content to that render target, and then draws the entire render target
-        public void Render(GraphicsHandler graphicsHandler, Microsoft.Xna.Framework.Color? color = null) 
+        public void Render(GraphicsHandler graphicsHandler, Microsoft.Xna.Framework.Color? color = null)
         {
             if (useRenderTarget)
             {
