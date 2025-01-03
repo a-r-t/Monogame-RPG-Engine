@@ -132,6 +132,19 @@ namespace Engine.Scene.EntitiesCore
             IsLocked = false;
         }
 
+        // used to make piecing together animation names based on facing direction easier
+        protected string GetDirectionSuffix(Direction direction)
+        {
+            switch (direction)
+            {
+                case Direction.LEFT: return "LEFT";
+                case Direction.RIGHT: return "RIGHT";
+                case Direction.UP: return "UP";
+                case Direction.DOWN: return "DOWN";
+                default: return "";
+            }
+        }
+
         protected virtual void PerformAction(Player player) { }
 
         public override void Draw(GraphicsHandler graphicsHandler)

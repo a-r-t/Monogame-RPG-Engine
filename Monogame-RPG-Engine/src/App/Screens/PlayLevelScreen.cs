@@ -51,7 +51,6 @@ namespace App.Screens
             // setup player
             player = new Cat(map.PlayerStartPosition.X, map.PlayerStartPosition.Y, ContentLoader);
             player.SetMap(map);
-            PlayLevelScreenState = PlayLevelScreenStates.RUNNING;
             player.FacingDirection = Direction.LEFT;
 
             map.Player = player;
@@ -70,6 +69,8 @@ namespace App.Screens
 
             winScreen = new WinScreen(this);
             winScreen.Initialize();
+
+            PlayLevelScreenState = PlayLevelScreenStates.RUNNING;
         }
 
         public override void Update(GameTime gameTime, KeyboardState keyboardState)

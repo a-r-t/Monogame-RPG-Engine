@@ -1,13 +1,6 @@
-﻿using Engine.Core;
-using Engine.SpriteGraphics;
-using Engine.Extensions;
+﻿using Engine.SpriteGraphics;
 using Engine.Utils;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
 using Engine.Scene.EntitiesCore;
 
 namespace Engine.Scene.PlayerCore
@@ -104,7 +97,7 @@ namespace Engine.Scene.PlayerCore
             }
 
             // if a walk key is pressed, player enters WALKING state
-            if (keyboardState.IsKeyDown(MOVE_LEFT_KEY) || keyboardState.IsKeyDown(MOVE_RIGHT_KEY) || keyboardState.IsKeyDown(MOVE_UP_KEY) || keyboardState.IsKeyDown(MOVE_DOWN_KEY))
+            if (IsMovementKeyPressed(keyboardState))
             {
                 PlayerState = PlayerState.WALKING;
             }
@@ -119,13 +112,14 @@ namespace Engine.Scene.PlayerCore
                 map.EntityInteract(this);
             }
 
+            LastWalkingXDirection = CurrentWalkingXDirection;
+
             // if walk left key is pressed, move player to the left
             if (keyboardState.IsKeyDown(MOVE_LEFT_KEY))
             {
                 moveAmountX -= walkSpeed;
                 FacingDirection = Direction.LEFT;
                 CurrentWalkingXDirection = Direction.LEFT;
-                LastWalkingXDirection = Direction.LEFT;
             }
 
             // if walk right key is pressed, move player to the right
@@ -134,44 +128,40 @@ namespace Engine.Scene.PlayerCore
                 moveAmountX += walkSpeed;
                 FacingDirection = Direction.RIGHT;
                 CurrentWalkingXDirection = Direction.RIGHT;
-                LastWalkingXDirection = Direction.RIGHT;
             }
             else
             {
                 CurrentWalkingXDirection = Direction.NONE;
             }
 
+            LastWalkingYDirection = CurrentWalkingYDirection;
+
             if (keyboardState.IsKeyDown(MOVE_UP_KEY))
             {
                 moveAmountY -= walkSpeed;
+                FacingDirection = Direction.UP;
                 CurrentWalkingYDirection = Direction.UP;
-                LastWalkingYDirection = Direction.UP;
             }
             else if (keyboardState.IsKeyDown(MOVE_DOWN_KEY))
             {
                 moveAmountY += walkSpeed;
+                FacingDirection = Direction.DOWN;
                 CurrentWalkingYDirection = Direction.DOWN;
-                LastWalkingYDirection = Direction.DOWN;
             }
             else
             {
                 CurrentWalkingYDirection = Direction.NONE;
             }
 
-            if ((CurrentWalkingXDirection == Direction.RIGHT || CurrentWalkingXDirection == Direction.LEFT) && CurrentWalkingYDirection == Direction.NONE)
-            {
-                LastWalkingYDirection = Direction.NONE;
-            }
-
-            if ((CurrentWalkingYDirection == Direction.UP || CurrentWalkingYDirection == Direction.DOWN) && CurrentWalkingXDirection == Direction.NONE)
-            {
-                LastWalkingXDirection = Direction.NONE;
-            }
-
-            if (keyboardState.IsKeyUp(MOVE_LEFT_KEY) && keyboardState.IsKeyUp(MOVE_RIGHT_KEY) && keyboardState.IsKeyUp(MOVE_UP_KEY) && keyboardState.IsKeyUp(MOVE_DOWN_KEY))
+            if (!IsMovementKeyPressed(keyboardState))
             {
                 PlayerState = PlayerState.STANDING;
             }
+        }
+
+        protected bool IsMovementKeyPressed(KeyboardState keyboardState)
+        {
+            return keyboardState.IsKeyDown(MOVE_LEFT_KEY) || keyboardState.IsKeyDown(MOVE_RIGHT_KEY) || keyboardState.IsKeyDown(MOVE_UP_KEY) || keyboardState.IsKeyDown(MOVE_DOWN_KEY);
         }
 
         protected void UpdateLockedKeys(KeyboardState keyboardState)
@@ -183,23 +173,36 @@ namespace Engine.Scene.PlayerCore
         }
 
         // anything extra the player should do based on interactions can be handled here
-        protected void HandlePlayerAnimation()
+        protected virtual void HandlePlayerAnimation()
         {
             if (PlayerState == PlayerState.STANDING)
             {
                 // sets animation to a STAND animation based on which way player is facing
-                CurrentAnimationName = FacingDirection == Direction.RIGHT ? "STAND_RIGHT" : "STAND_LEFT";
+                CurrentAnimationName = $"STAND_{GetFacingDirectionSuffix()}";
             }
             else if (PlayerState == PlayerState.WALKING)
             {
-                // sets animation to a WALK animation based on which way player is facing
-                CurrentAnimationName = FacingDirection == Direction.RIGHT ? "WALK_RIGHT" : "WALK_LEFT";
+                CurrentAnimationName = $"WALK_{GetFacingDirectionSuffix()}";
+            }
+        }
+
+        // used to make piecing together animation names based on facing direction easier
+        protected string GetFacingDirectionSuffix()
+        {
+
+            switch (FacingDirection)
+            {
+                case Direction.LEFT: return "LEFT";
+                case Direction.RIGHT: return "RIGHT";
+                case Direction.UP: return "UP";
+                case Direction.DOWN: return "DOWN";
+                default: return "";
             }
         }
 
         public override void OnEndCollisionCheckX(bool hasCollided, Direction direction, GameObject entityCollidedWith)
         {
- 
+
         }
 
         public override void OnEndCollisionCheckY(bool hasCollided, Direction direction, GameObject entityCollidedWith)
@@ -207,9 +210,9 @@ namespace Engine.Scene.PlayerCore
 
         }
 
-        public SpriteGraphics.Rectangle GetInteractionRange()
+        public Rectangle GetInteractionRange()
         {
-            return new SpriteGraphics.Rectangle(
+            return new Rectangle(
                 Bounds.X1 - interactionRange,
                 Bounds.Y1 - interactionRange,
                 Bounds.Width + (interactionRange * 2),
@@ -220,14 +223,14 @@ namespace Engine.Scene.PlayerCore
         {
             isLocked = true;
             PlayerState = PlayerState.STANDING;
-            CurrentAnimationName = FacingDirection == Direction.RIGHT ? "STAND_RIGHT" : "STAND_LEFT";
+            CurrentAnimationName = $"STAND_{GetFacingDirectionSuffix()}";
         }
 
         public void Unlock()
         {
             isLocked = false;
             PlayerState = PlayerState.STANDING;
-            CurrentAnimationName = FacingDirection == Direction.RIGHT ? "STAND_RIGHT" : "STAND_LEFT";
+            CurrentAnimationName = $"STAND_{GetFacingDirectionSuffix()}";
         }
 
         // used by other files or scripts to force player to stand
@@ -235,14 +238,7 @@ namespace Engine.Scene.PlayerCore
         {
             PlayerState = PlayerState.STANDING;
             FacingDirection = direction;
-            if (direction == Direction.RIGHT)
-            {
-                CurrentAnimationName = "STAND_RIGHT";
-            }
-            else if (direction == Direction.LEFT)
-            {
-                CurrentAnimationName = "STAND_LEFT";
-            }
+            CurrentAnimationName = $"STAND_{GetFacingDirectionSuffix()}";
         }
 
         // used by other files or scripts to force player to walk
@@ -250,14 +246,8 @@ namespace Engine.Scene.PlayerCore
         {
             PlayerState = PlayerState.WALKING;
             FacingDirection = direction;
-            if (direction == Direction.RIGHT)
-            {
-                CurrentAnimationName = "WALK_RIGHT";
-            }
-            else if (direction == Direction.LEFT)
-            {
-                CurrentAnimationName = "WALK_LEFT";
-            }
+            CurrentAnimationName = $"WALK_{GetFacingDirectionSuffix()}";
+
             if (direction == Direction.UP)
             {
                 MoveY(-speed);
