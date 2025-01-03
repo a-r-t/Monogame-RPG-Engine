@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Text;
 
 namespace Engine.Core
@@ -16,9 +17,11 @@ namespace Engine.Core
         // screen render target instance
         private RenderTarget2D renderTarget;
 
-        // bounds of screen for render target
+        // location for screen to be drawn
         public int ScreenX { get; set; }
         public int ScreenY { get; set; }
+
+        // bounds of screen for render target
         private int screenWidth = 1;
         public int ScreenWidth
         {
@@ -52,11 +55,11 @@ namespace Engine.Core
             }
         }
 
-        public Rectangle ScreenBounds
+        public System.Drawing.Rectangle ScreenBounds
         {
             get
             {
-                return new Rectangle(ScreenX, ScreenY, ScreenWidth, ScreenHeight);
+                return new System.Drawing.Rectangle(ScreenX, ScreenY, ScreenWidth, ScreenHeight);
             }
         }
 
@@ -80,6 +83,8 @@ namespace Engine.Core
                 }
             }
         }
+
+        public Microsoft.Xna.Framework.Color? ScreenBackgroundColor { get; set; } = null;
 
         // create a new render target using screen bounds
         public void CreateRenderTarget()
@@ -130,6 +135,10 @@ namespace Engine.Core
             if (useRenderTarget)
             {
                 graphicsHandler.SetRenderTarget(renderTarget);
+                if (ScreenBackgroundColor.HasValue)
+                {
+                    graphicsHandler.DrawFilledRectangle(new Microsoft.Xna.Framework.Rectangle(0, 0, ScreenWidth, ScreenHeight), ScreenBackgroundColor.Value);
+                }
                 DrawReference.Invoke(graphicsHandler);
                 graphicsHandler.DrawRenderTarget(ScreenX, ScreenY);
             }
