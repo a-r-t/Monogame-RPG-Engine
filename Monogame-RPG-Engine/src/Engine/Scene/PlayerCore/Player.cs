@@ -3,6 +3,8 @@ using Engine.Utils;
 using Microsoft.Xna.Framework.Input;
 using Engine.Scene.EntitiesCore;
 using Engine.Extensions;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Engine.Scene.PlayerCore
 {
@@ -34,6 +36,10 @@ namespace Engine.Scene.PlayerCore
         protected Keys MOVE_UP_KEY = Keys.Up;
         protected Keys MOVE_DOWN_KEY = Keys.Down;
         public Keys INTERACT_KEY { get; private set; } = Keys.Space;
+        private List<Keys> movementXKeysPressed = new List<Keys>();
+        private List<Keys> movementYKeysPressed = new List<Keys>();
+        private List<Keys> movementKeysPressed = new List<Keys>();
+
 
         protected bool isLocked = false;
 
@@ -115,45 +121,124 @@ namespace Engine.Scene.PlayerCore
 
             LastWalkingXDirection = CurrentWalkingXDirection;
 
-            // if walk left key is pressed, move player to the left
-            if (keyboardState.IsKeyDown(MOVE_LEFT_KEY))
+            // if player is walking left or right, put keys in the movementKeysPressed list
+            if (keyboardState.IsKeyDown(MOVE_LEFT_KEY) && !movementKeysPressed.Contains(MOVE_LEFT_KEY))
             {
-                moveAmountX -= walkSpeed;
-                FacingDirection = Direction.LEFT;
-                CurrentWalkingXDirection = Direction.LEFT;
+                movementKeysPressed.Add(MOVE_LEFT_KEY);
             }
-
-            // if walk right key is pressed, move player to the right
-            else if (keyboardState.IsKeyDown(MOVE_RIGHT_KEY))
+            else if (keyboardState.IsKeyDown(MOVE_RIGHT_KEY) && !movementKeysPressed.Contains(MOVE_RIGHT_KEY))
             {
-                moveAmountX += walkSpeed;
-                FacingDirection = Direction.RIGHT;
-                CurrentWalkingXDirection = Direction.RIGHT;
+                movementKeysPressed.Add(MOVE_RIGHT_KEY);
             }
             else
             {
                 CurrentWalkingXDirection = Direction.NONE;
             }
 
+            // if either left or right is no longer being pressed, remove the key from the movementKeysPressed list
+            if (keyboardState.IsKeyUp(MOVE_LEFT_KEY))
+            {
+                movementKeysPressed.Remove(MOVE_LEFT_KEY);
+            }
+            if (keyboardState.IsKeyUp(MOVE_RIGHT_KEY))
+            {
+                movementKeysPressed.Remove(MOVE_RIGHT_KEY);
+            }
+
             LastWalkingYDirection = CurrentWalkingYDirection;
 
-            if (keyboardState.IsKeyDown(MOVE_UP_KEY))
+            // if player is walking up or down, put keys in the movementKeysPressed list
+            if (keyboardState.IsKeyDown(MOVE_UP_KEY) && !movementKeysPressed.Contains(MOVE_UP_KEY))
             {
-                moveAmountY -= walkSpeed;
-                FacingDirection = Direction.UP;
-                CurrentWalkingYDirection = Direction.UP;
+                movementKeysPressed.Add(MOVE_UP_KEY);
             }
-            else if (keyboardState.IsKeyDown(MOVE_DOWN_KEY))
+            else if (keyboardState.IsKeyDown(MOVE_DOWN_KEY) && !movementKeysPressed.Contains(MOVE_DOWN_KEY))
             {
-                moveAmountY += walkSpeed;
-                FacingDirection = Direction.DOWN;
-                CurrentWalkingYDirection = Direction.DOWN;
+                movementKeysPressed.Add(MOVE_DOWN_KEY);
             }
             else
             {
                 CurrentWalkingYDirection = Direction.NONE;
             }
 
+            // if either up or down is no longer being pressed, remove the key from the movementKeysPressed list
+            if (keyboardState.IsKeyUp(MOVE_UP_KEY))
+            {
+                movementKeysPressed.Remove(MOVE_UP_KEY);
+            }
+            if (keyboardState.IsKeyUp(MOVE_DOWN_KEY))
+            {
+                movementKeysPressed.Remove(MOVE_DOWN_KEY);
+            }
+
+            // figure out which key was last pressed on x (left/right) and y (up/down)
+            Keys? lastMovementXKeyPressed = null;
+            Keys? lastMovementYKeyPressed = null;
+            foreach (Keys key in movementKeysPressed)
+            {
+                if (key == MOVE_LEFT_KEY || key == MOVE_RIGHT_KEY)
+                {
+                    lastMovementXKeyPressed = key;
+                }
+                else if (key == MOVE_UP_KEY || key == MOVE_DOWN_KEY)
+                {
+                    lastMovementYKeyPressed = key;
+                }
+            }
+            // figure out which movement key was last pressed (regardless of axis)
+            Keys? lastMovementKeyPressed = movementKeysPressed.LastOrDefault();
+
+            // based on last movement key pressed on x axis, move player either left or right
+            if (lastMovementXKeyPressed.HasValue)
+            {
+                if (lastMovementXKeyPressed.Value == MOVE_LEFT_KEY)
+                {
+                    moveAmountX -= walkSpeed;
+                    CurrentWalkingXDirection = Direction.LEFT;
+                }
+                else if (lastMovementXKeyPressed.Value == MOVE_RIGHT_KEY)
+                {
+                    moveAmountX += walkSpeed;
+                    CurrentWalkingXDirection = Direction.RIGHT;
+                }
+            }
+
+            // based on last movement key pressed on y axis, move player either up or down
+            if (lastMovementYKeyPressed.HasValue)
+            {
+                if (lastMovementYKeyPressed.Value == MOVE_UP_KEY)
+                {
+                    moveAmountY -= walkSpeed;
+                    CurrentWalkingYDirection = Direction.UP;
+                }
+                else if (lastMovementYKeyPressed.Value == MOVE_DOWN_KEY)
+                {
+                    moveAmountY += walkSpeed;
+                    CurrentWalkingYDirection = Direction.DOWN;
+                }
+            }
+            
+            // have player face the direction of the last movement key pressed
+            if (lastMovementKeyPressed.HasValue)
+            {
+                if (lastMovementKeyPressed == MOVE_LEFT_KEY)
+                {
+                    FacingDirection = Direction.LEFT;
+                }
+                else if (lastMovementKeyPressed == MOVE_RIGHT_KEY)
+                {
+                    FacingDirection = Direction.RIGHT;
+                }
+                else if (lastMovementKeyPressed == MOVE_UP_KEY)
+                {
+                    FacingDirection = Direction.UP;
+                }
+                else if (lastMovementKeyPressed == MOVE_DOWN_KEY)
+                {
+                    FacingDirection = Direction.DOWN;
+                }
+            }
+            
             if (!IsMovementKeyPressed(keyboardState))
             {
                 PlayerState = PlayerState.STANDING;
