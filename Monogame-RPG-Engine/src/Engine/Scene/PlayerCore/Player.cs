@@ -5,6 +5,8 @@ using Engine.Scene.EntitiesCore;
 using Engine.Extensions;
 using System.Collections.Generic;
 using System.Linq;
+using System;
+using Microsoft.Xna.Framework;
 
 namespace Engine.Scene.PlayerCore
 {
@@ -67,9 +69,12 @@ namespace Engine.Scene.PlayerCore
                     HandlePlayerState(keyboardState);
                 } while (previousPlayerState != PlayerState);
 
+                // normalize movement vector (adjusts movement values so that diagonal movement is not faster than pure horizontal/vertical movement)
+                Vector2 moveVector = MathUtils.GetNormalizedVector(moveAmountX, moveAmountY) * walkSpeed;
+
                 // move player with respect to map collisions based on how much player needs to move this frame
-                lastAmountMovedY = base.MoveYHandleCollision(moveAmountY);
-                lastAmountMovedX = base.MoveXHandleCollision(moveAmountX);
+                lastAmountMovedY = base.MoveYHandleCollision(moveVector.Y);
+                lastAmountMovedX = base.MoveXHandleCollision(moveVector.X);
             }
 
             HandlePlayerAnimation();
@@ -276,9 +281,9 @@ namespace Engine.Scene.PlayerCore
 
         public override void OnEndCollisionCheckY(bool hasCollided, Direction direction, GameObject entityCollidedWith) { }
 
-        public Rectangle GetInteractionRange()
+        public SpriteGraphics.Rectangle GetInteractionRange()
         {
-            return new Rectangle(
+            return new SpriteGraphics.Rectangle(
                 Bounds.X1 - interactionRange,
                 Bounds.Y1 - interactionRange,
                 Bounds.Width + (interactionRange * 2),
