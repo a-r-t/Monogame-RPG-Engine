@@ -547,37 +547,16 @@ namespace Engine.Scene.MapCore
             {
                 return true;
             }
+            // if player is facing up and entity is completely above the player, location is valid
             else if (player.FacingDirection == Direction.UP && entityBounds.Y2 < playerBounds.Y1)
             {
                 return true;
             }
+            // if player is facing down and entity is completely below the player, location is valid
             else if (player.FacingDirection == Direction.DOWN && entityBounds.Y1 > playerBounds.Y2)
             {
                 return true;
             }
-
-            //bool isEntityOverOrUnderPlayer = entityBounds.Y2 < playerBounds.Y1 || entityBounds.Y1 > playerBounds.Y2;
-            //if (interactedEntity is NPC)
-            //{
-            //    // if player is facing left and entity is either on top of or underneath player and player's center point is greater than entity's center point, location is valid
-            //    if (player.FacingDirection == Direction.LEFT && isEntityOverOrUnderPlayer && playerBounds.X1 < entityBounds.X2)
-            //    {
-            //        return true;
-            //    }
-            //    // if player is facing right and entity is either on top of or underneath player and player's center point is less than entity's center point, location is valid
-            //    else if (player.FacingDirection == Direction.RIGHT && isEntityOverOrUnderPlayer && playerBounds.X2 > entityBounds.X1)
-            //    {
-            //        return true;
-            //    }
-            //}
-            //else
-            //{
-            //    // if interacted with anything other than NPC, it doesn't matter which direction you're facing, so it's valid if above/below player
-            //    if (isEntityOverOrUnderPlayer)
-            //    {
-            //        return true;
-            //    }
-            //}
 
             // if none of the location validity checks matched, location is not valid and the interaction will fail
             return false;
