@@ -27,6 +27,7 @@ namespace App.Screens
         public WinScreen(PlayLevelScreen playLevelScreen)
         {
             this.playLevelScreen = playLevelScreen;
+            ScreenBackgroundColor = Color.Black;
         }
 
         public override void Initialize()
@@ -64,7 +65,6 @@ namespace App.Screens
 
         protected override void Draw(GraphicsHandler graphicsHandler)
         {
-            graphicsHandler.DrawFilledRectangle(0, 0, ScreenManager.WindowWidth, ScreenManager.WindowHeight, Color.Black);
             winMessage.Draw(graphicsHandler);
             instructions.Draw(graphicsHandler);
         }

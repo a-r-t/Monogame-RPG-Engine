@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Text;
 
 namespace Engine.Core
@@ -16,51 +17,35 @@ namespace Engine.Core
         // screen render target instance
         private RenderTarget2D renderTarget;
 
-        // bounds of screen for render target
+        // location for screen to be drawn
         public int ScreenX { get; set; }
         public int ScreenY { get; set; }
-        private int screenWidth = 1;
-        public int ScreenWidth
+
+        // bounds of screen for render target
+        public int ScreenWidth { get; private set; } = 1;
+        public int ScreenHeight { get; private set; } = 1;
+
+        public System.Drawing.Rectangle ScreenBounds
         {
             get
             {
-                return screenWidth;
+                return new System.Drawing.Rectangle(ScreenX, ScreenY, ScreenWidth, ScreenHeight);
             }
             set
             {
-                if (screenWidth > 0)
-                {
-                    screenWidth = value;
-                    CreateRenderTarget();
-                }
-            }
-        }
-        private int screenHeight = 1;
-        public int ScreenHeight
-        {
-            get
-            {
-                return screenHeight;
-            }
-            set
-            {
-                if (screenHeight > 0)
-                {
-                    screenHeight = value;
-                    CreateRenderTarget();
-                }
+                ScreenX = value.X;
+                ScreenY = value.Y;
+                SetScreenDimensions(value.Width, value.Height);
             }
         }
 
-        public Rectangle ScreenBounds
+        // wrapper for the above auto property setter
+        public void SetScreenBounds(int x, int y, int width, int height)
         {
-            get
-            {
-                return new Rectangle(ScreenX, ScreenY, ScreenWidth, ScreenHeight);
-            }
+            ScreenBounds = new System.Drawing.Rectangle(x, y, width, height);
         }
 
-        private bool useRenderTarget = true;
+        private bool useRenderTarget;
         public bool UseRenderTarget
         {
             get
@@ -70,9 +55,9 @@ namespace Engine.Core
             set
             {
                 useRenderTarget = value;
-                if (useRenderTarget)
+                if (value)
                 {
-                    CreateRenderTarget();
+                    SetScreenBounds(ScreenX, ScreenY, ScreenWidth, ScreenHeight);
                 }
                 else
                 {
@@ -81,18 +66,31 @@ namespace Engine.Core
             }
         }
 
+        public Microsoft.Xna.Framework.Color? ScreenBackgroundColor { get; set; } = null;
+
         // create a new render target using screen bounds
         public void CreateRenderTarget()
         {
             renderTarget = new RenderTarget2D(GameLoop.GraphicsDeviceInstance, ScreenWidth, ScreenHeight);
         }
 
-        public void SetScreenBounds(int x, int y, int width, int height)
+        public void SetScreenDimensions(int width, int height)
         {
-            ScreenX = x;
-            ScreenY = y;
-            ScreenWidth = width;
-            ScreenHeight = height;
+            if (width > 0 && height > 0)
+            {
+                ScreenWidth = width;
+                ScreenHeight = height;
+                // if render target is turned on, AND if render target has not yet been created OR the current render target's dimensions are different than the desired ones, recreate the render target instance
+                // this limits creating a new render target instance to only when necessary, which is better for overall game performance
+                if (useRenderTarget && (renderTarget == null || renderTarget.Width != width || renderTarget.Height != height))
+                {
+                    CreateRenderTarget();
+                }
+            }
+            else
+            {
+                throw new Exception($"Unable to create Screen render target of size (w: {width}, h: {height}) -- invalid dimensions (note: width and height MUST be greater than 0).");
+            }
         }
 
         // all screens share this global content loader for content that is designed to be used everywhere
@@ -105,6 +103,8 @@ namespace Engine.Core
 
             // this allows for a subclass to override Draw while still ensuring the render target logic will be enforced in the Render method
             DrawReference = Draw;
+
+            UseRenderTarget = true;
         }
 
         static Screen()
@@ -125,13 +125,24 @@ namespace Engine.Core
         private Action<GraphicsHandler> DrawReference = (graphicsHandler) => { };
 
         // if render target is in use, it sets the render target first, then draws the screen's content to that render target, and then draws the entire render target
-        public void Render(GraphicsHandler graphicsHandler) 
+        public void Render(GraphicsHandler graphicsHandler, Microsoft.Xna.Framework.Color? color = null)
         {
             if (useRenderTarget)
             {
+                // setup render target
                 graphicsHandler.SetRenderTarget(renderTarget);
+
+                // fill render target background if ScreenBackgroundColor is set
+                if (ScreenBackgroundColor.HasValue)
+                {
+                    graphicsHandler.DrawFilledRectangle(new Microsoft.Xna.Framework.Rectangle(0, 0, ScreenWidth, ScreenHeight), ScreenBackgroundColor.Value);
+                }
+
+                // apply draw content from screen class to render target
                 DrawReference.Invoke(graphicsHandler);
-                graphicsHandler.DrawRenderTarget(ScreenX, ScreenY);
+
+                // draw finished render target at appropriate location
+                graphicsHandler.DrawRenderTarget(ScreenX, ScreenY, color);
             }
             else
             {

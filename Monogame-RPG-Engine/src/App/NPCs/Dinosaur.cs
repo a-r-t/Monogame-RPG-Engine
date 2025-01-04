@@ -43,6 +43,22 @@ namespace App.NPCs
                     }
                 },
                 {
+                    "STAND_UP", new Frame[] {
+                        new FrameBuilder(spriteSheet.GetSprite(2, 0))
+                                .WithScale(3)
+                                .WithBounds(4, 5, 5, 10)
+                                .Build()
+                    }
+                },
+                {
+                    "STAND_DOWN", new Frame[] {
+                        new FrameBuilder(spriteSheet.GetSprite(4, 0))
+                                .WithScale(3)
+                                .WithBounds(4, 5, 5, 10)
+                                .Build()
+                    }
+                },
+                {
                     "WALK_LEFT", new Frame[] {
                         new FrameBuilder(spriteSheet.GetSprite(1, 0), 14)
                                 .WithScale(3)
@@ -64,6 +80,46 @@ namespace App.NPCs
                         new FrameBuilder(spriteSheet.GetSprite(1, 1), 14)
                                 .WithScale(3)
                                 .WithSpriteEffect(SpriteEffects.FlipHorizontally)
+                                .WithBounds(4, 5, 5, 10)
+                                .Build()
+                    }
+                },
+                {
+                    "WALK_UP", new Frame[] {
+                        new FrameBuilder(spriteSheet.GetSprite(3, 0), 14)
+                                .WithScale(3)
+                                .WithBounds(4, 5, 5, 10)
+                                .Build(),
+                        new FrameBuilder(spriteSheet.GetSprite(3, 1), 14)
+                                .WithScale(3)
+                                .WithBounds(4, 5, 5, 10)
+                                .Build(),
+                        new FrameBuilder(spriteSheet.GetSprite(3, 2), 14)
+                                .WithScale(3)
+                                .WithBounds(4, 5, 5, 10)
+                                .Build(),
+                        new FrameBuilder(spriteSheet.GetSprite(3, 3), 14)
+                                .WithScale(3)
+                                .WithBounds(4, 5, 5, 10)
+                                .Build()
+                    }
+                },
+                {
+                    "WALK_DOWN", new Frame[] {
+                        new FrameBuilder(spriteSheet.GetSprite(5, 0), 14)
+                                .WithScale(3)
+                                .WithBounds(4, 5, 5, 10)
+                                .Build(),
+                        new FrameBuilder(spriteSheet.GetSprite(5, 1), 14)
+                                .WithScale(3)
+                                .WithBounds(4, 5, 5, 10)
+                                .Build(),
+                        new FrameBuilder(spriteSheet.GetSprite(5, 2), 14)
+                                .WithScale(3)
+                                .WithBounds(4, 5, 5, 10)
+                                .Build(),
+                        new FrameBuilder(spriteSheet.GetSprite(5, 3), 14)
+                                .WithScale(3)
                                 .WithBounds(4, 5, 5, 10)
                                 .Build()
                     }

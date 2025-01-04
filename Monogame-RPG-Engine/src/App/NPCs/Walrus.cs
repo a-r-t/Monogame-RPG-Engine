@@ -41,6 +41,22 @@ namespace App.NPCs
                                 .WithBounds(7, 13, 11, 7)
                                 .Build()
                     }
+                },
+                {
+                    "STAND_DOWN", new Frame[] {
+                        new FrameBuilder(spriteSheet.GetSprite(1, 0))
+                                .WithScale(3)
+                                .WithBounds(7, 13, 11, 7)
+                                .Build()
+                    }
+                },
+                {
+                    "STAND_UP", new Frame[] {
+                        new FrameBuilder(spriteSheet.GetSprite(2, 0))
+                                .WithScale(3)
+                                .WithBounds(7, 13, 11, 7)
+                                .Build()
+                    }
                 }
             };
         }

@@ -23,5 +23,19 @@ namespace Engine.Extensions
                     return 0;
             }
         }
+
+        // used to make piecing together animation names based on direction easier
+        public static string GetFacingDirectionSuffix(this Direction direction)
+        {
+
+            switch (direction)
+            {
+                case Direction.LEFT: return "LEFT";
+                case Direction.RIGHT: return "RIGHT";
+                case Direction.UP: return "UP";
+                case Direction.DOWN: return "DOWN";
+                default: return "";
+            }
+        }
     }
 }
