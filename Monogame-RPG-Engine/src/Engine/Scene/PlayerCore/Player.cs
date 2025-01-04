@@ -2,6 +2,7 @@
 using Engine.Utils;
 using Microsoft.Xna.Framework.Input;
 using Engine.Scene.EntitiesCore;
+using Engine.Extensions;
 
 namespace Engine.Scene.PlayerCore
 {
@@ -178,37 +179,17 @@ namespace Engine.Scene.PlayerCore
             if (PlayerState == PlayerState.STANDING)
             {
                 // sets animation to a STAND animation based on which way player is facing
-                CurrentAnimationName = $"STAND_{GetFacingDirectionSuffix()}";
+                CurrentAnimationName = $"STAND_{FacingDirection.GetFacingDirectionSuffix()}";
             }
             else if (PlayerState == PlayerState.WALKING)
             {
-                CurrentAnimationName = $"WALK_{GetFacingDirectionSuffix()}";
+                CurrentAnimationName = $"WALK_{FacingDirection.GetFacingDirectionSuffix()}";
             }
         }
 
-        // used to make piecing together animation names based on facing direction easier
-        protected string GetFacingDirectionSuffix()
-        {
+        public override void OnEndCollisionCheckX(bool hasCollided, Direction direction, GameObject entityCollidedWith) { }
 
-            switch (FacingDirection)
-            {
-                case Direction.LEFT: return "LEFT";
-                case Direction.RIGHT: return "RIGHT";
-                case Direction.UP: return "UP";
-                case Direction.DOWN: return "DOWN";
-                default: return "";
-            }
-        }
-
-        public override void OnEndCollisionCheckX(bool hasCollided, Direction direction, GameObject entityCollidedWith)
-        {
-
-        }
-
-        public override void OnEndCollisionCheckY(bool hasCollided, Direction direction, GameObject entityCollidedWith)
-        {
-
-        }
+        public override void OnEndCollisionCheckY(bool hasCollided, Direction direction, GameObject entityCollidedWith) { }
 
         public Rectangle GetInteractionRange()
         {
@@ -223,14 +204,14 @@ namespace Engine.Scene.PlayerCore
         {
             isLocked = true;
             PlayerState = PlayerState.STANDING;
-            CurrentAnimationName = $"STAND_{GetFacingDirectionSuffix()}";
+            CurrentAnimationName = $"STAND_{FacingDirection.GetFacingDirectionSuffix()}";
         }
 
         public void Unlock()
         {
             isLocked = false;
             PlayerState = PlayerState.STANDING;
-            CurrentAnimationName = $"STAND_{GetFacingDirectionSuffix()}";
+            CurrentAnimationName = $"STAND_{FacingDirection.GetFacingDirectionSuffix()}";
         }
 
         // used by other files or scripts to force player to stand
@@ -238,7 +219,7 @@ namespace Engine.Scene.PlayerCore
         {
             PlayerState = PlayerState.STANDING;
             FacingDirection = direction;
-            CurrentAnimationName = $"STAND_{GetFacingDirectionSuffix()}";
+            CurrentAnimationName = $"STAND_{FacingDirection.GetFacingDirectionSuffix()}";
         }
 
         // used by other files or scripts to force player to walk
@@ -246,7 +227,7 @@ namespace Engine.Scene.PlayerCore
         {
             PlayerState = PlayerState.WALKING;
             FacingDirection = direction;
-            CurrentAnimationName = $"WALK_{GetFacingDirectionSuffix()}";
+            CurrentAnimationName = $"WALK_{FacingDirection.GetFacingDirectionSuffix()}";
 
             if (direction == Direction.UP)
             {

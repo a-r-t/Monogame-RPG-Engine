@@ -1,4 +1,5 @@
 ﻿using Engine.Core;
+using Engine.Extensions;
 using Engine.Scene.PlayerCore;
 using Engine.SpriteGraphics;
 using Engine.Utils;
@@ -6,6 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 // This class is a base class for all npcs in the game -- all npcs should extend from it
@@ -46,55 +48,71 @@ namespace Engine.Scene.EntitiesCore
             Id = id;
         }
 
+        private struct Proximity
+        {
+            public CardinalDirection CardinalDirection { get; }
+            public float? Distance { get; }
+
+            public Proximity(CardinalDirection cardinalDirection, float? distance)
+            {
+                CardinalDirection = cardinalDirection;
+                Distance = distance;
+            }
+        }
+
         public void FacePlayer(Player player)
         {
-            // if npc's center point is to the right of the player's center point, npc needs to face left
-            // else if npc's center point is to the left of the player's center point, npc needs to face right
-            float centerPoint = Bounds.X + (Bounds.Width / 2);
-            float playerCenterPoint = player.Bounds.X + (player.Bounds.Width / 2);
-            if (centerPoint < playerCenterPoint)
+            List<Proximity> proximities = new List<Proximity>();
+            bool isNorthOfPlayer = Bounds.Y2 <= player.Bounds.Y;
+            float? northDistance = isNorthOfPlayer ? Math.Abs(Bounds.Y2 - player.Bounds.Y) : null;
+            proximities.Add(new Proximity(CardinalDirection.NORTH, northDistance));
+            bool isSouthOfPlayer = Bounds.Y >= player.Bounds.Y2;
+            float? southDistance = isSouthOfPlayer ? Math.Abs(Bounds.Y - player.Bounds.Y2) : null;
+            proximities.Add(new Proximity(CardinalDirection.SOUTH, southDistance));
+
+            bool isEastOfPlayer = Bounds.X2 <= player.Bounds.X;
+            float? eastDistance = isEastOfPlayer ? Math.Abs(Bounds.X2 - player.Bounds.X) : null;
+            proximities.Add(new Proximity(CardinalDirection.EAST, eastDistance));
+
+            bool isWestOfPlayer = Bounds.X >= player.Bounds.X2;
+            float? westDistance = isWestOfPlayer ? Math.Abs(Bounds.X - player.Bounds.X2) : null;
+            proximities.Add(new Proximity(CardinalDirection.WEST, westDistance));
+
+            Proximity closest = proximities[0];
+            foreach (Proximity proximity in proximities.Skip(1))
             {
-                CurrentAnimationName = "STAND_RIGHT";
+                if (proximity.Distance.HasValue && (closest.Distance == null || closest.Distance > proximity.Distance.Value))
+                {
+                    closest = proximity;
+                }
             }
-            else if (centerPoint >= playerCenterPoint)
+
+            switch (closest.CardinalDirection)
             {
-                CurrentAnimationName = "STAND_LEFT";
+                case CardinalDirection.NORTH:
+                    CurrentAnimationName = "STAND_DOWN";
+                    break;
+                case CardinalDirection.SOUTH:
+                    CurrentAnimationName = "STAND_UP";
+                    break;
+                case CardinalDirection.EAST:
+                    CurrentAnimationName = "STAND_RIGHT";
+                    break;
+                case CardinalDirection.WEST:
+                    CurrentAnimationName = "STAND_LEFT";
+                    break;
             }
         }
 
         public void Stand(Direction direction)
         {
-            if (direction == Direction.RIGHT)
-            {
-                CurrentAnimationName = "STAND_RIGHT";
-            }
-            else if (direction == Direction.LEFT)
-            {
-                CurrentAnimationName = "STAND_LEFT";
-            }
+            CurrentAnimationName = $"STAND_{direction.GetFacingDirectionSuffix()}";
         }
 
         public void Walk(Direction direction, float speed)
         {
-            if (direction == Direction.RIGHT)
-            {
-                CurrentAnimationName = "WALK_RIGHT";
-            }
-            else if (direction == Direction.LEFT)
-            {
-                CurrentAnimationName = "WALK_LEFT";
-            }
-            else
-            {
-                if (CurrentAnimationName.Contains("RIGHT"))
-                {
-                    CurrentAnimationName = "WALK_RIGHT";
-                }
-                else
-                {
-                    CurrentAnimationName = "WALK_LEFT";
-                }
-            }
+            CurrentAnimationName = $"WALK_{direction.GetFacingDirectionSuffix()}";
+
             if (direction == Direction.UP)
             {
                 MoveY(-speed);
@@ -130,19 +148,6 @@ namespace Engine.Scene.EntitiesCore
         public void Unlock()
         {
             IsLocked = false;
-        }
-
-        // used to make piecing together animation names based on facing direction easier
-        protected string GetDirectionSuffix(Direction direction)
-        {
-            switch (direction)
-            {
-                case Direction.LEFT: return "LEFT";
-                case Direction.RIGHT: return "RIGHT";
-                case Direction.UP: return "UP";
-                case Direction.DOWN: return "DOWN";
-                default: return "";
-            }
         }
 
         protected virtual void PerformAction(Player player) { }

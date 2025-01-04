@@ -23,7 +23,7 @@ namespace App.NPCs
         private float speed = 1;
 
         public Bug(int id, Point location, ContentLoader contentLoader)
-            : base(id, location.X, location.Y, new SpriteSheet(contentLoader.LoadTexture(GraphicsHelper.BUG), 24, 15), "WALK_RIGHT")
+            : base(id, location.X, location.Y, new SpriteSheet(contentLoader.LoadTexture(GraphicsHelper.BUG), 24, 17), "WALK_RIGHT")
         {
         }
 
@@ -83,6 +83,22 @@ namespace App.NPCs
                     }
                 },
                 {
+                    "STAND_DOWN", new Frame[] {
+                        new FrameBuilder(spriteSheet.GetSprite(1, 0))
+                            .WithScale(2)
+                            .WithBounds(3, 5, 18, 7)
+                            .Build()
+                    }
+                },
+                {
+                    "STAND_UP", new Frame[] {
+                        new FrameBuilder(spriteSheet.GetSprite(2, 0))
+                            .WithScale(2)
+                            .WithBounds(3, 5, 18, 7)
+                            .Build()
+                    }
+                },
+                {
                     "WALK_LEFT", new Frame[] {
                         new FrameBuilder(spriteSheet.GetSprite(0, 0), 8)
                             .WithScale(2)
@@ -107,7 +123,31 @@ namespace App.NPCs
                                 .WithBounds(3, 5, 18, 7)
                                 .Build()
                     }
-                }
+                },
+                {
+                    "WALK_UP", new Frame[] {
+                        new FrameBuilder(spriteSheet.GetSprite(1, 0), 8)
+                            .WithScale(2)
+                            .WithBounds(3, 5, 18, 7)
+                            .Build(),
+                        new FrameBuilder(spriteSheet.GetSprite(1, 1), 8)
+                            .WithScale(2)
+                            .WithBounds(3, 5, 18, 7)
+                            .Build()
+                    }
+                },
+                {
+                    "WALK_DOWN", new Frame[] {
+                        new FrameBuilder(spriteSheet.GetSprite(2, 0), 8)
+                            .WithScale(2)
+                            .WithBounds(3, 5, 18, 7)
+                            .Build(),
+                        new FrameBuilder(spriteSheet.GetSprite(2, 1), 8)
+                            .WithScale(2)
+                            .WithBounds(3, 5, 18, 7)
+                            .Build()
+                    }
+                },
             };
         }
     }
