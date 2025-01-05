@@ -64,6 +64,7 @@ namespace MapEditor.src.MapList
                     newNode.Tag = "folder";
                     newNode.ImageKey = "folder";
                     newNode.SelectedImageKey = "folder";
+                    newNode.Name = newFolderName;
                     selectedNode.Nodes.Add(newNode);
                     mapTreeView.Sort();
                 }
@@ -80,13 +81,15 @@ namespace MapEditor.src.MapList
                 int newMapIndex = GetNewMapIndex($"./Resources/{path}");
                 string newMapName = newMapIndex == 0 ? "New map" : $"New map ({newMapIndex})";
                 string newMapFilePath = $"./Resources/{path}/{newMapName}.map";
-                File.Create(newMapFilePath);
+                FileStream fs = File.Create(newMapFilePath);
+                fs.Close();
                 if (File.Exists(newMapFilePath))
                 {
                     TreeNode newNode = new TreeNode(newMapName);
                     newNode.Tag = "file";
                     newNode.ImageKey = "file";
                     newNode.SelectedImageKey = "file";
+                    newNode.Name = newMapName;
                     selectedNode.Nodes.Add(newNode);
                     mapTreeView.Sort();
                 }
@@ -132,7 +135,7 @@ namespace MapEditor.src.MapList
             string name = "/New map";
             string current = name;
             int i = 0;
-            while (Directory.Exists($"{path}/{current}"))
+            while (File.Exists($"{path}/{current}.map"))
             {
                 i++;
                 current = $"{name} ({i})";
