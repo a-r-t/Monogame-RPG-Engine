@@ -1,3 +1,5 @@
+using Basic_Map_Editor.Forms;
+
 namespace Basic_Map_Editor
 {
     internal static class Program
