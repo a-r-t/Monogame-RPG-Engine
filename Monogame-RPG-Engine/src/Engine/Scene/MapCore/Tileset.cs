@@ -1,17 +1,17 @@
-﻿using Engine.Builders;
-using Engine.Core;
-using Engine.Extensions;
-using Engine.SpriteGraphics;
+﻿using Monogame_RPG_Engine.Engine.Builders;
+using Monogame_RPG_Engine.Engine.Core;
+using Monogame_RPG_Engine.Engine.Extensions;
+using Monogame_RPG_Engine.Engine.SpriteGraphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Engine.Utils;
+using Monogame_RPG_Engine.Engine.Utils;
 using MonoGame.Extended.Collections;
 
 // This class represents a tileset, which defines a set of tiles based on a sprite sheet image
-namespace Engine.Scene.MapCore
+namespace Monogame_RPG_Engine.Engine.Scene.MapCore
 {
     public abstract class Tileset : SpriteSheet
     {

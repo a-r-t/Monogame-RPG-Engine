@@ -1,7 +1,7 @@
-﻿using Engine.Core;
+﻿using Monogame_RPG_Engine.Engine.Core;
 using System.Diagnostics;
 
-namespace App.Main
+namespace Monogame_RPG_Engine.App.Main
 {
     public class Run
     {

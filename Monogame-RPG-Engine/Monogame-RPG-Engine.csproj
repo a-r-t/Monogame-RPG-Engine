@@ -12,7 +12,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <MonoGameExtendedPipelineReferencePath>$(MSBuildThisFileDirectory)pipeline-references</MonoGameExtendedPipelineReferencePath>
-    <StartupObject>App.Main.Run</StartupObject>
+    <StartupObject>Monogame_RPG_Engine.App.Main.Run</StartupObject>
     <RootNamespace />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

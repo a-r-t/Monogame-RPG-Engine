@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Engine.Utils
+namespace Monogame_RPG_Engine.Engine.Utils
 {
     public enum Visibility
     {

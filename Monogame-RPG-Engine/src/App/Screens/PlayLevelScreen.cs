@@ -1,14 +1,14 @@
-﻿using App.Listeners;
-using App.Main;
-using App.Maps;
-using App.Players;
-using Engine.Core;
-using Engine.FontGraphics;
-using Engine.Scene;
-using Engine.Scene.MapCore;
-using Engine.Scene.PlayerCore;
-using Engine.Scene.TextboxCore;
-using Engine.Utils;
+﻿using Monogame_RPG_Engine.App.Listeners;
+using Monogame_RPG_Engine.App.Main;
+using Monogame_RPG_Engine.App.Maps;
+using Monogame_RPG_Engine.App.Players;
+using Monogame_RPG_Engine.Engine.Core;
+using Monogame_RPG_Engine.Engine.FontGraphics;
+using Monogame_RPG_Engine.Engine.Scene;
+using Monogame_RPG_Engine.Engine.Scene.MapCore;
+using Monogame_RPG_Engine.Engine.Scene.PlayerCore;
+using Monogame_RPG_Engine.Engine.Scene.TextboxCore;
+using Monogame_RPG_Engine.Engine.Utils;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using System;
@@ -18,7 +18,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 // This class is for the win level screen
-namespace App.Screens
+namespace Monogame_RPG_Engine.App.Screens
 {
     public class PlayLevelScreen : Screen, GameListener
     {

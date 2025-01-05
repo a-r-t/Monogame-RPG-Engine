@@ -1,12 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Engine.Core;
+using Monogame_RPG_Engine.Engine.Core;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 
-namespace Engine.SpriteGraphics
+namespace Monogame_RPG_Engine.Engine.SpriteGraphics
 {
     public class Sprite : Rectangle, IntersectableRectangle
     {

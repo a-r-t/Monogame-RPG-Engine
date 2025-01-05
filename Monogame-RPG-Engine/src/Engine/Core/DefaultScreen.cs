@@ -9,7 +9,7 @@ using System.Text;
  * Its existence is really just to prevent null pointers from occurring if no Screen is set somewhere
  * Think of it as the equivalent as setting a String to "" instead of just leaving it as null
  */
-namespace Engine.Core
+namespace Monogame_RPG_Engine.Engine.Core
 {
     public class DefaultScreen : Screen
     {

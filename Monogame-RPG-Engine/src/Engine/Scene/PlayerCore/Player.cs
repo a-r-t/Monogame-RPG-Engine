@@ -1,14 +1,14 @@
-﻿using Engine.SpriteGraphics;
-using Engine.Utils;
+﻿using Monogame_RPG_Engine.Engine.SpriteGraphics;
+using Monogame_RPG_Engine.Engine.Utils;
 using Microsoft.Xna.Framework.Input;
-using Engine.Scene.EntitiesCore;
-using Engine.Extensions;
+using Monogame_RPG_Engine.Engine.Scene.EntitiesCore;
+using Monogame_RPG_Engine.Engine.Extensions;
 using System.Collections.Generic;
 using System.Linq;
 using System;
 using Microsoft.Xna.Framework;
 
-namespace Engine.Scene.PlayerCore
+namespace Monogame_RPG_Engine.Engine.Scene.PlayerCore
 {
     public abstract class Player : GameObject
     {

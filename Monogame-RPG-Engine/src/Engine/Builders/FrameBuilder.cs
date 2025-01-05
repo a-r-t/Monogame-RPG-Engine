@@ -1,13 +1,13 @@
-﻿using Engine.Extensions;
-using Engine.Scene;
-using Engine.SpriteGraphics;
+﻿using Monogame_RPG_Engine.Engine.Extensions;
+using Monogame_RPG_Engine.Engine.Scene;
+using Monogame_RPG_Engine.Engine.SpriteGraphics;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 // Builder class to instantiate a Frame class
-namespace Engine.Builders
+namespace Monogame_RPG_Engine.Engine.Builders
 {
     public class FrameBuilder
     {

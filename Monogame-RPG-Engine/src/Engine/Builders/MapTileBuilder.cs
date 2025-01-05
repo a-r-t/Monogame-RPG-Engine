@@ -1,13 +1,13 @@
-﻿using Engine.SpriteGraphics;
-using Engine.Scene;
+﻿using Monogame_RPG_Engine.Engine.SpriteGraphics;
+using Monogame_RPG_Engine.Engine.Scene;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Engine.Scene.EntitiesCore;
-using Engine.Scene.MapCore;
+using Monogame_RPG_Engine.Engine.Scene.EntitiesCore;
+using Monogame_RPG_Engine.Engine.Scene.MapCore;
 
 // Builder class to instantiate a MapTile class
-namespace Engine.Builders
+namespace Monogame_RPG_Engine.Engine.Builders
 {
     public class MapTileBuilder
     {

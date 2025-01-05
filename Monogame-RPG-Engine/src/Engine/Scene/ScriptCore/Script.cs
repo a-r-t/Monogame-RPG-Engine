@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Engine.Scene;
-using Engine.Scene.EntitiesCore;
-using Engine.Scene.MapCore;
-using Engine.Scene.PlayerCore;
-using Engine.Scene.ScriptCore.ScriptActions.Conditional;
-using Engine.Scene.ScriptCore.ScriptActions.Loop;
+using Monogame_RPG_Engine.Engine.Scene;
+using Monogame_RPG_Engine.Engine.Scene.EntitiesCore;
+using Monogame_RPG_Engine.Engine.Scene.MapCore;
+using Monogame_RPG_Engine.Engine.Scene.PlayerCore;
+using Monogame_RPG_Engine.Engine.Scene.ScriptCore.ScriptActions.Conditional;
+using Monogame_RPG_Engine.Engine.Scene.ScriptCore.ScriptActions.Loop;
 
 // This class is a base class for all scripts in the game -- all scripts should extend from it
 // Scripts can be used to interact with map entities
 // Each script defines a set of instructions that will be carried out by the game when it is set to active
 // Some examples include interact scripts (such as talking to an NPC) and trigger scripts (scripts that activate when the player walks on them)
-namespace Engine.Scene.ScriptCore
+namespace Monogame_RPG_Engine.Engine.Scene.ScriptCore
 {
     public abstract class Script
     {

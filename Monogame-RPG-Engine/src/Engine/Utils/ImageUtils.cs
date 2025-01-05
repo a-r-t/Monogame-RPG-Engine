@@ -1,4 +1,4 @@
-﻿using Engine.Core;
+﻿using Monogame_RPG_Engine.Engine.Core;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Engine.Utils
+namespace Monogame_RPG_Engine.Engine.Utils
 {
     public class ImageUtils
     {

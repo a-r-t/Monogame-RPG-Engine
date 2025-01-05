@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Engine.Core
+namespace Monogame_RPG_Engine.Engine.Core
 {
     public static class Config
     {

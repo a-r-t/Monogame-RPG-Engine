@@ -1,9 +1,9 @@
-﻿using App.Main;
-using App.Maps;
-using Engine.Core;
-using Engine.FontGraphics;
-using Engine.Scene;
-using Engine.Utils;
+﻿using Monogame_RPG_Engine.App.Main;
+using Monogame_RPG_Engine.App.Maps;
+using Monogame_RPG_Engine.Engine.Core;
+using Monogame_RPG_Engine.Engine.FontGraphics;
+using Monogame_RPG_Engine.Engine.Scene;
+using Monogame_RPG_Engine.Engine.Utils;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -12,10 +12,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static App.Resources.FontsHelper;
+using static Monogame_RPG_Engine.App.Resources.FontsHelper;
 
 // This class is for the win level screen
-namespace App.Screens
+namespace Monogame_RPG_Engine.App.Screens
 {
     public class WinScreen : Screen
     {

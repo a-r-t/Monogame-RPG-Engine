@@ -1,14 +1,14 @@
-﻿using Engine.Extensions;
-using Engine.Scene.EntitiesCore;
-using Engine.Scene.PlayerCore;
-using Engine.Utils;
+﻿using Monogame_RPG_Engine.Engine.Extensions;
+using Monogame_RPG_Engine.Engine.Scene.EntitiesCore;
+using Monogame_RPG_Engine.Engine.Scene.PlayerCore;
+using Monogame_RPG_Engine.Engine.Utils;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 // This class has methods to check if a game object has collided with a map tile
 // it is used by the game object class to determine if a collision occurred
-namespace Engine.Scene.MapCore
+namespace Monogame_RPG_Engine.Engine.Scene.MapCore
 {
     public class MapCollisionHandler
     {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Engine.Scene
+namespace Monogame_RPG_Engine.Engine.Scene
 {
     public class FlagManager
     {

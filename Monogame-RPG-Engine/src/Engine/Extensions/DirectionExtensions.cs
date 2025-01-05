@@ -1,11 +1,11 @@
-﻿using Engine.Utils;
+﻿using Monogame_RPG_Engine.Engine.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Engine.Extensions
+namespace Monogame_RPG_Engine.Engine.Extensions
 {
     public static class DirectionExtensions
     {

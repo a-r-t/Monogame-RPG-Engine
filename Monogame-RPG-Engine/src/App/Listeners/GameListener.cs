@@ -1,11 +1,11 @@
-﻿using Engine.Scene;
+﻿using Monogame_RPG_Engine.Engine.Scene;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace App.Listeners
+namespace Monogame_RPG_Engine.App.Listeners
 {
     public interface GameListener : BaseGameListener
     {

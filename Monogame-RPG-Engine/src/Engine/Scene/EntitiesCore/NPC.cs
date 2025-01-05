@@ -1,8 +1,8 @@
-﻿using Engine.Core;
-using Engine.Extensions;
-using Engine.Scene.PlayerCore;
-using Engine.SpriteGraphics;
-using Engine.Utils;
+﻿using Monogame_RPG_Engine.Engine.Core;
+using Monogame_RPG_Engine.Engine.Extensions;
+using Monogame_RPG_Engine.Engine.Scene.PlayerCore;
+using Monogame_RPG_Engine.Engine.SpriteGraphics;
+using Monogame_RPG_Engine.Engine.Utils;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
@@ -11,7 +11,7 @@ using System.Linq;
 using System.Text;
 
 // This class is a base class for all npcs in the game -- all npcs should extend from it
-namespace Engine.Scene.EntitiesCore
+namespace Monogame_RPG_Engine.Engine.Scene.EntitiesCore
 {
     public class NPC : MapEntity
     {

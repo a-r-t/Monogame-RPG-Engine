@@ -1,9 +1,9 @@
-﻿using Engine.Core;
-using Engine.Extensions;
-using Engine.Scene.EntitiesCore;
-using Engine.Scene.PlayerCore;
-using Engine.SpriteGraphics;
-using Engine.Utils;
+﻿using Monogame_RPG_Engine.Engine.Core;
+using Monogame_RPG_Engine.Engine.Extensions;
+using Monogame_RPG_Engine.Engine.Scene.EntitiesCore;
+using Monogame_RPG_Engine.Engine.Scene.PlayerCore;
+using Monogame_RPG_Engine.Engine.SpriteGraphics;
+using Monogame_RPG_Engine.Engine.Utils;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -11,7 +11,7 @@ using System.Text;
 
 // This class represents a Map's "Camera", aka a piece of the map that is currently included in a level's update/draw logic based on what should be shown on screen.
 // A majority of its job is just determining which map tiles, enemies, npcs, and enhanced map tiles are "active" each frame (active = included in update/draw cycle)
-namespace Engine.Scene.MapCore
+namespace Monogame_RPG_Engine.Engine.Scene.MapCore
 {
     public class Camera : Rectangle
     {

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Engine.Scene;
+using Monogame_RPG_Engine.Engine.Scene;
 
-namespace Engine.Scene.ScriptCore
+namespace Monogame_RPG_Engine.Engine.Scene.ScriptCore
 {
     public class DynamicScriptAction : ScriptAction
     {

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 // Represents a Point on a 2D plane, has some "point math" methods
-namespace Engine.Utils
+namespace Monogame_RPG_Engine.Engine.Utils
 {
     public class Point
     {

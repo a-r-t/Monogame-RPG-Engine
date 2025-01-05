@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace App.Resources
+namespace Monogame_RPG_Engine.App.Resources
 {
     public static class GraphicsHelper
     {

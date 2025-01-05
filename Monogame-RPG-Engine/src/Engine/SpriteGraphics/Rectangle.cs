@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework;
-using Engine.Extensions;
-using Engine.Core;
+using Monogame_RPG_Engine.Engine.Extensions;
+using Monogame_RPG_Engine.Engine.Core;
 
-namespace Engine.SpriteGraphics
+namespace Monogame_RPG_Engine.Engine.SpriteGraphics
 {
     public class Rectangle : IntersectableRectangle
     {

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 // This enum represents different execution states a Script can be in
-namespace Engine.Scene.ScriptCore
+namespace Monogame_RPG_Engine.Engine.Scene.ScriptCore
 {
     public enum ScriptState
     {

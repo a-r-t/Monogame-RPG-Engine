@@ -9,7 +9,7 @@ using System.Text;
  * The idea is an external class should be allowed to set its own Screen to this class's currentScreen variable,
  * and then that class can handle coordinating which Screen to show.
  */
-namespace Engine.Core
+namespace Monogame_RPG_Engine.Engine.Core
 {
     public class ScreenManager
     {

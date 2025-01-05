@@ -1,6 +1,6 @@
-﻿using Engine.Core;
-using Engine.Scene.ScriptCore;
-using Engine.SpriteGraphics;
+﻿using Monogame_RPG_Engine.Engine.Core;
+using Monogame_RPG_Engine.Engine.Scene.ScriptCore;
+using Monogame_RPG_Engine.Engine.SpriteGraphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -9,7 +9,7 @@ using System.Text;
 
 // This class represents a trigger script that can be placed on a map
 // upon the player colliding with the trigger, it will play out the attached script
-namespace Engine.Scene.EntitiesCore
+namespace Monogame_RPG_Engine.Engine.Scene.EntitiesCore
 {
     public class Trigger : MapEntity
     {

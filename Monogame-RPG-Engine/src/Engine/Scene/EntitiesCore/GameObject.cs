@@ -1,16 +1,16 @@
-﻿using Engine.Builders;
-using Engine.Utils;
+﻿using Monogame_RPG_Engine.Engine.Builders;
+using Monogame_RPG_Engine.Engine.Utils;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
-using Engine.Extensions;
-using Engine.Core;
-using Engine.SpriteGraphics;
+using Monogame_RPG_Engine.Engine.Extensions;
+using Monogame_RPG_Engine.Engine.Core;
+using Monogame_RPG_Engine.Engine.SpriteGraphics;
 using Microsoft.Xna.Framework.Input;
-using Engine.Scene.MapCore;
+using Monogame_RPG_Engine.Engine.Scene.MapCore;
 
 /*
 	The all important GameObject class is what every "entity" used in this game should be based off of
@@ -21,7 +21,7 @@ using Engine.Scene.MapCore;
 	3. collision detection with a map
 	4. performing proper draw logic based on camera movement
  */
-namespace Engine.Scene.EntitiesCore
+namespace Monogame_RPG_Engine.Engine.Scene.EntitiesCore
 {
     public class GameObject : AnimatedSprite
     {

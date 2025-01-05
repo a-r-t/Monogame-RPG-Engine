@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Engine.Scene;
-using Engine.Scene.EntitiesCore;
-using Engine.Scene.MapCore;
-using Engine.Scene.PlayerCore;
+using Monogame_RPG_Engine.Engine.Scene;
+using Monogame_RPG_Engine.Engine.Scene.EntitiesCore;
+using Monogame_RPG_Engine.Engine.Scene.MapCore;
+using Monogame_RPG_Engine.Engine.Scene.PlayerCore;
 
-namespace Engine.Scene.ScriptCore
+namespace Monogame_RPG_Engine.Engine.Scene.ScriptCore
 {
     public class ScriptAction
     {

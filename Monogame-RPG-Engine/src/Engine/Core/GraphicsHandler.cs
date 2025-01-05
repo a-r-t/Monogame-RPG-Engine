@@ -1,4 +1,4 @@
-﻿using Engine.Extensions;
+﻿using Monogame_RPG_Engine.Engine.Extensions;
 using FontStashSharp;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
-namespace Engine.Core
+namespace Monogame_RPG_Engine.Engine.Core
 {
     // TODO: Look at this answer: https://stackoverflow.com/a/13905075
     public class GraphicsHandler

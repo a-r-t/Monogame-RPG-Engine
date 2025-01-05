@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Engine.Utils
+namespace Monogame_RPG_Engine.Engine.Utils
 {
     public class MathUtils
     {

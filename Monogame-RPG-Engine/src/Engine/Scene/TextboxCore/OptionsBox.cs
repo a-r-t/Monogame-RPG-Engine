@@ -1,7 +1,7 @@
-﻿using Engine.Core;
-using Engine.FontGraphics;
-using Engine.Scene.MapCore;
-using Engine.Utils;
+﻿using Monogame_RPG_Engine.Engine.Core;
+using Monogame_RPG_Engine.Engine.FontGraphics;
+using Monogame_RPG_Engine.Engine.Scene.MapCore;
+using Monogame_RPG_Engine.Engine.Utils;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using System;
@@ -9,9 +9,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static App.Resources.FontsHelper;
+using static Monogame_RPG_Engine.App.Resources.FontsHelper;
 
-namespace Engine.Scene.TextboxCore
+namespace Monogame_RPG_Engine.Engine.Scene.TextboxCore
 {
     public class OptionsBox
     {

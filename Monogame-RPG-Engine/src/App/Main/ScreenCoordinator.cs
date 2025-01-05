@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
-using Engine.Core;
-using App.Screens;
+using Monogame_RPG_Engine.Engine.Core;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Input;
+using Monogame_RPG_Engine.App.Screens;
 
-namespace App.Main
+namespace Monogame_RPG_Engine.App.Main
 {
     public class ScreenCoordinator : Screen
     {

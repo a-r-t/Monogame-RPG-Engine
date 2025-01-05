@@ -1,12 +1,12 @@
-﻿using Engine.Core;
-using Engine.Extensions;
+﻿using Monogame_RPG_Engine.Engine.Core;
+using Monogame_RPG_Engine.Engine.Extensions;
 using FontStashSharp;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.IO;
 
-namespace Engine.FontGraphics
+namespace Monogame_RPG_Engine.Engine.FontGraphics
 {
     public class SpriteFontGraphic : FontGraphic
     {

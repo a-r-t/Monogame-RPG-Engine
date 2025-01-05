@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Engine.Scene.ScriptCore.ScriptActions.Utils
+namespace Monogame_RPG_Engine.Engine.Scene.ScriptCore.ScriptActions.Utils
 {
     public class CustomRequirement : Requirement
     {

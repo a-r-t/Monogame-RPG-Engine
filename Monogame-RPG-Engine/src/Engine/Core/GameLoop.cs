@@ -1,7 +1,6 @@
-﻿using App.Resources;
-using Engine.Extensions;
-using Engine.FontGraphics;
-using Engine.Utils;
+﻿using Monogame_RPG_Engine.Engine.Extensions;
+using Monogame_RPG_Engine.Engine.FontGraphics;
+using Monogame_RPG_Engine.Engine.Utils;
 using FontStashSharp;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -10,9 +9,9 @@ using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended.BitmapFonts;
 using MonoGame.Extended.Screens;
 using System;
-using static App.Resources.FontsHelper;
+using static Monogame_RPG_Engine.Engine.Resources.FontsHelper;
 
-namespace Engine.Core
+namespace Monogame_RPG_Engine.Engine.Core
 {
     public class GameLoop : Game
     {

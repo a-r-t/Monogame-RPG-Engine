@@ -1,17 +1,17 @@
-﻿using App.Resources;
-using Engine.Builders;
-using Engine.Core;
-using Engine.SpriteGraphics;
-using Engine.Scene;
+﻿using Monogame_RPG_Engine.App.Resources;
+using Monogame_RPG_Engine.Engine.Builders;
+using Monogame_RPG_Engine.Engine.Core;
+using Monogame_RPG_Engine.Engine.SpriteGraphics;
+using Monogame_RPG_Engine.Engine.Scene;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Engine.Scene.PlayerCore;
+using Monogame_RPG_Engine.Engine.Scene.PlayerCore;
 
-namespace App.Players
+namespace Monogame_RPG_Engine.App.Players
 {
     public class Cat : Player
     {

@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Engine.Extensions
+namespace Monogame_RPG_Engine.Engine.Extensions
 {
     public static class Texture2DExtensions
     {

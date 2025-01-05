@@ -1,19 +1,19 @@
-﻿using Engine.Builders;
-using Engine.SpriteGraphics;
-using Engine.Scene;
-using Engine.Utils;
+﻿using Monogame_RPG_Engine.Engine.Builders;
+using Monogame_RPG_Engine.Engine.SpriteGraphics;
+using Monogame_RPG_Engine.Engine.Scene;
+using Monogame_RPG_Engine.Engine.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Engine.Scene.ScriptCore;
-using Engine.Scene.MapCore;
-using Engine.Scene.ScriptCore.ScriptActions;
-using Engine.Scene.ScriptCore.ScriptActions.Utils;
-using Engine.Scene.ScriptCore.ScriptActions.Conditional;
+using Monogame_RPG_Engine.Engine.Scene.ScriptCore;
+using Monogame_RPG_Engine.Engine.Scene.MapCore;
+using Monogame_RPG_Engine.Engine.Scene.ScriptCore.ScriptActions;
+using Monogame_RPG_Engine.Engine.Scene.ScriptCore.ScriptActions.Utils;
+using Monogame_RPG_Engine.Engine.Scene.ScriptCore.ScriptActions.Conditional;
 
-namespace App.Scripts
+namespace Monogame_RPG_Engine.App.Scripts.TestMap
 {
     public class DinoScript : Script
     {

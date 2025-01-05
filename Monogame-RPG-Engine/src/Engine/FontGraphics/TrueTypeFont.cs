@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 // just a wrapper around a byte[] true type font file
-namespace Engine.FontGraphics
+namespace Monogame_RPG_Engine.Engine.FontGraphics
 {
     public class TrueTypeFont
     {

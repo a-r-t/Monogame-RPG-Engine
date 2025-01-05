@@ -1,12 +1,12 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using Engine.Extensions;
+using Monogame_RPG_Engine.Engine.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 // This class is for reading in a SpriteSheet (collection of images laid out in a specific way)
 // As long as each graphic on the sheet is the same size, it can parse it into sub images
-namespace Engine.SpriteGraphics
+namespace Monogame_RPG_Engine.Engine.SpriteGraphics
 {
     public class SpriteSheet
     {

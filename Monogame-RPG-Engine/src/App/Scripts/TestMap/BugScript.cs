@@ -1,15 +1,15 @@
-﻿using Engine.Scene;
-using Engine.Scene.ScriptCore;
-using Engine.Scene.ScriptCore.ScriptActions;
-using Engine.Scene.ScriptCore.ScriptActions.Conditional;
-using Engine.Scene.ScriptCore.ScriptActions.Utils;
+﻿using Monogame_RPG_Engine.Engine.Scene;
+using Monogame_RPG_Engine.Engine.Scene.ScriptCore;
+using Monogame_RPG_Engine.Engine.Scene.ScriptCore.ScriptActions;
+using Monogame_RPG_Engine.Engine.Scene.ScriptCore.ScriptActions.Conditional;
+using Monogame_RPG_Engine.Engine.Scene.ScriptCore.ScriptActions.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace App.Scripts
+namespace Monogame_RPG_Engine.App.Scripts.TestMap
 {
     public class BugScript : Script
     {

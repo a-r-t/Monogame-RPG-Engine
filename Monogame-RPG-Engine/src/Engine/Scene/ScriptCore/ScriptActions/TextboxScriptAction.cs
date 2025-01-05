@@ -1,13 +1,13 @@
-﻿using Engine.Scene;
-using Engine.Scene.ScriptCore;
-using Engine.Scene.TextboxCore;
+﻿using Monogame_RPG_Engine.Engine.Scene;
+using Monogame_RPG_Engine.Engine.Scene.ScriptCore;
+using Monogame_RPG_Engine.Engine.Scene.TextboxCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Engine.Scene.ScriptCore.ScriptActions
+namespace Monogame_RPG_Engine.Engine.Scene.ScriptCore.ScriptActions
 {
     public class TextboxScriptAction : ScriptAction
     {

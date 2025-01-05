@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace App.Main
+namespace Monogame_RPG_Engine.App.Main
 {
     public enum GameState
     {

@@ -1,10 +1,10 @@
-﻿using Engine.Core;
+﻿using Monogame_RPG_Engine.Engine.Core;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Engine.FontGraphics
+namespace Monogame_RPG_Engine.Engine.FontGraphics
 {
     public abstract class FontGraphic
     {

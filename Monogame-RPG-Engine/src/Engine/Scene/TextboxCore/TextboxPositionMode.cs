@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Engine.Scene.TextboxCore
+namespace Monogame_RPG_Engine.Engine.Scene.TextboxCore
 {
     public enum TextboxPositionMode
     {

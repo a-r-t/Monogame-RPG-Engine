@@ -1,12 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Engine.Core;
+using Monogame_RPG_Engine.Engine.Core;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Diagnostics;
-using Engine.Scene;
-using App.NPCs;
+using Monogame_RPG_Engine.Engine.Scene;
 
 /*
 	Represents an animated sprite
@@ -16,7 +15,7 @@ using App.NPCs;
 	While this calls does not extend from Sprite, it is set up in a way where it is still treated by other classes as if it is a singular sprite (based on value of currentFrame)
 */
 
-namespace Engine.SpriteGraphics
+namespace Monogame_RPG_Engine.Engine.SpriteGraphics
 {
     public class AnimatedSprite : IntersectableRectangle
     {

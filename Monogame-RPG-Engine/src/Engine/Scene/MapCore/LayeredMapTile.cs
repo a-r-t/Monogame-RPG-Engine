@@ -1,11 +1,11 @@
-﻿using Engine.Core;
+﻿using Monogame_RPG_Engine.Engine.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Engine.Scene.MapCore
+namespace Monogame_RPG_Engine.Engine.Scene.MapCore
 {
     public class LayeredMapTile
     {

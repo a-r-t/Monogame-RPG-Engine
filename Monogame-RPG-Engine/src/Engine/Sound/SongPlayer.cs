@@ -1,4 +1,4 @@
-﻿using Engine.Core;
+﻿using Monogame_RPG_Engine.Engine.Core;
 using Microsoft.Xna.Framework.Media;
 using System;
 using System.Collections.Generic;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Engine.Sound
+namespace Monogame_RPG_Engine.Engine.Sound
 {
     // A wrapper class for the build in MediaPlayer class
     public static class SongPlayer

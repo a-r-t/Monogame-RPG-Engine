@@ -1,14 +1,14 @@
-﻿using Engine.SpriteGraphics;
-using Engine.Core;
+﻿using Monogame_RPG_Engine.Engine.SpriteGraphics;
+using Monogame_RPG_Engine.Engine.Core;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework;
-using Engine.Scene.EntitiesCore;
+using Monogame_RPG_Engine.Engine.Scene.EntitiesCore;
 
 // Represents a map tile in a Map's tile map
-namespace Engine.Scene.MapCore
+namespace Monogame_RPG_Engine.Engine.Scene.MapCore
 {
     public class MapTile : MapEntity
     {

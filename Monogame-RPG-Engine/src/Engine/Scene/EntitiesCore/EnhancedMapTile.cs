@@ -1,14 +1,14 @@
-﻿using Engine.Core;
-using Engine.Scene.MapCore;
-using Engine.Scene.PlayerCore;
-using Engine.SpriteGraphics;
+﻿using Monogame_RPG_Engine.Engine.Core;
+using Monogame_RPG_Engine.Engine.Scene.MapCore;
+using Monogame_RPG_Engine.Engine.Scene.PlayerCore;
+using Monogame_RPG_Engine.Engine.SpriteGraphics;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 // This class is a base class for all enhanced map tiles in the game -- all enhanced map tiles should extend from it
-namespace Engine.Scene.EntitiesCore
+namespace Monogame_RPG_Engine.Engine.Scene.EntitiesCore
 {
     public class EnhancedMapTile : MapTile
     {

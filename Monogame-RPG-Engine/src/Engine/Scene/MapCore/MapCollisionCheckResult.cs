@@ -1,5 +1,5 @@
-﻿using Engine.Scene.EntitiesCore;
-using Engine.Utils;
+﻿using Monogame_RPG_Engine.Engine.Scene.EntitiesCore;
+using Monogame_RPG_Engine.Engine.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 // Return type from MapTileCollisionHandler collision checks
 // Contains adjusted location (where player should be moved to if a collision occurred) and the entity the player collided with (if any)
-namespace Engine.Scene.MapCore
+namespace Monogame_RPG_Engine.Engine.Scene.MapCore
 {
     public class MapCollisionCheckResult
     {

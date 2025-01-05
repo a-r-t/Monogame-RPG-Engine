@@ -1,11 +1,11 @@
-﻿using App.EnhancedMapTiles;
-using App.NPCs;
-using App.Scripts;
-using App.Tilesets;
-using Engine.Core;
-using Engine.SpriteGraphics;
-using Engine.Scene;
-using Engine.Utils;
+﻿using Monogame_RPG_Engine.App.EnhancedMapTiles;
+using Monogame_RPG_Engine.App.NPCs;
+using Monogame_RPG_Engine.App.Scripts;
+using Monogame_RPG_Engine.App.Tilesets;
+using Monogame_RPG_Engine.Engine.Core;
+using Monogame_RPG_Engine.Engine.SpriteGraphics;
+using Monogame_RPG_Engine.Engine.Scene;
+using Monogame_RPG_Engine.Engine.Utils;
 using Microsoft.Xna.Framework.Graphics;
 using MonoGame.Extended.Collections;
 using System;
@@ -13,10 +13,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Engine.Scene.EntitiesCore;
-using Engine.Scene.MapCore;
+using Monogame_RPG_Engine.Engine.Scene.EntitiesCore;
+using Monogame_RPG_Engine.Engine.Scene.MapCore;
+using Monogame_RPG_Engine.App.Scripts.TestMap;
 
-namespace App.Maps
+namespace Monogame_RPG_Engine.App.Maps
 {
     public class TestMap : Map
     {

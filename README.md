@@ -20,7 +20,7 @@ Install .NET 8.0 from [here](https://dotnet.microsoft.com/en-us/download) if not
 #### Setup
 
 1. Install Visual Studio Community Edition, NOT Visual Studio Code, from [here](https://visualstudio.microsoft.com/vs/) if not already installed.
-2. Open the project solution file (`Monogame-RPG-Engine.sln`) in Visual Studio and it should handle everything else from there for you as far as opening up the project, restoring external libraries, etc.
+2. Open the project solution file (`Monogame-RPG-Monogame_RPG_Engine.Engine.sln`) in Visual Studio and it should handle everything else from there for you as far as opening up the project, restoring external libraries, etc.
 
 #### Run the project for development
 

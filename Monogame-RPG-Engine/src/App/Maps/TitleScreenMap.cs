@@ -1,18 +1,18 @@
-﻿using App.Resources;
-using App.Tilesets;
-using Engine.Core;
-using Engine.SpriteGraphics;
-using Engine.Scene;
-using Engine.Utils;
+﻿using Monogame_RPG_Engine.App.Resources;
+using Monogame_RPG_Engine.App.Tilesets;
+using Monogame_RPG_Engine.Engine.Core;
+using Monogame_RPG_Engine.Engine.SpriteGraphics;
+using Monogame_RPG_Engine.Engine.Scene;
+using Monogame_RPG_Engine.Engine.Utils;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Engine.Scene.MapCore;
+using Monogame_RPG_Engine.Engine.Scene.MapCore;
 
-namespace App.Maps
+namespace Monogame_RPG_Engine.App.Maps
 {
     public class TitleScreenMap : Map
     {

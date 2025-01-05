@@ -1,7 +1,7 @@
-﻿using Engine.Core;
-using Engine.FontGraphics;
-using Engine.Scene.MapCore;
-using Engine.Utils;
+﻿using Monogame_RPG_Engine.Engine.Core;
+using Monogame_RPG_Engine.Engine.FontGraphics;
+using Monogame_RPG_Engine.Engine.Scene.MapCore;
+using Monogame_RPG_Engine.Engine.Utils;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -12,14 +12,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static App.Resources.FontsHelper;
+using static Monogame_RPG_Engine.Engine.Resources.FontsHelper;
 
 // Represents the game's textbox
 // Will display the text it is given to its textQueue
 // Each String in the textQueue will be displayed in the textbox, and hitting the interact key will cycle between additional Strings in the queue
 // Use the newline character in a String in the textQueue to break the text up into a second line if needed
 // Also supports adding options for a player to select from
-namespace Engine.Scene.TextboxCore
+namespace Monogame_RPG_Engine.Engine.Scene.TextboxCore
 {
     public class Textbox
     {

@@ -1,8 +1,8 @@
 ﻿
-using Engine.Core;
-using Engine.SpriteGraphics;
-using Engine.Extensions;
-using Engine.Utils;
+using Monogame_RPG_Engine.Engine.Core;
+using Monogame_RPG_Engine.Engine.SpriteGraphics;
+using Monogame_RPG_Engine.Engine.Extensions;
+using Monogame_RPG_Engine.Engine.Utils;
 using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended;
 using System;
@@ -11,10 +11,10 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
-using Engine.Scene.EntitiesCore;
-using Engine.Scene.PlayerCore;
-using Engine.Scene.ScriptCore;
-using Engine.Scene.TextboxCore;
+using Monogame_RPG_Engine.Engine.Scene.EntitiesCore;
+using Monogame_RPG_Engine.Engine.Scene.PlayerCore;
+using Monogame_RPG_Engine.Engine.Scene.ScriptCore;
+using Monogame_RPG_Engine.Engine.Scene.TextboxCore;
 
 /*
     This class is for defining a map that is used for a specific level
@@ -25,7 +25,7 @@ using Engine.Scene.TextboxCore;
     4. adjusting camera location based off of player location
     5. calculating which tile a game object is currently on based on its x and y location
 */
-namespace Engine.Scene.MapCore
+namespace Monogame_RPG_Engine.Engine.Scene.MapCore
 {
     public abstract class Map
     {

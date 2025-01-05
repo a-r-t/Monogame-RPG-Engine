@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Text;
 
-namespace Engine.Core
+namespace Monogame_RPG_Engine.Engine.Core
 {
     public abstract class Screen
     {

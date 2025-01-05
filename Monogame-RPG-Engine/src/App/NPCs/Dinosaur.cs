@@ -1,19 +1,19 @@
-﻿using App.Resources;
-using Engine.Builders;
-using Engine.Core;
-using Engine.SpriteGraphics;
-using Engine.Scene;
-using Engine.Utils;
+﻿using Monogame_RPG_Engine.App.Resources;
+using Monogame_RPG_Engine.Engine.Builders;
+using Monogame_RPG_Engine.Engine.Core;
+using Monogame_RPG_Engine.Engine.SpriteGraphics;
+using Monogame_RPG_Engine.Engine.Scene;
+using Monogame_RPG_Engine.Engine.Utils;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Engine.Scene.EntitiesCore;
+using Monogame_RPG_Engine.Engine.Scene.EntitiesCore;
 
 // This class is for the dinosaur NPC
-namespace App.NPCs
+namespace Monogame_RPG_Engine.App.NPCs
 {
     public class Dinosaur : NPC
     {

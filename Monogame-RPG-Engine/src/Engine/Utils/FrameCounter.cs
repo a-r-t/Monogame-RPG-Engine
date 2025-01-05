@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 // https://stackoverflow.com/a/20679895
-namespace Engine.Utils
+namespace Monogame_RPG_Engine.Engine.Utils
 {
     public class FrameCounter
     {

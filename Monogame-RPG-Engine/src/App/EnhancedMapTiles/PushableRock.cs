@@ -1,21 +1,21 @@
-﻿using App.Resources;
-using Engine.Builders;
-using Engine.Core;
-using Engine.SpriteGraphics;
-using Engine.Scene;
-using Engine.Utils;
+﻿using Monogame_RPG_Engine.Engine.Builders;
+using Monogame_RPG_Engine.Engine.Core;
+using Monogame_RPG_Engine.Engine.SpriteGraphics;
+using Monogame_RPG_Engine.Engine.Scene;
+using Monogame_RPG_Engine.Engine.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Engine.Scene.EntitiesCore;
-using Engine.Scene.PlayerCore;
-using Engine.Scene.MapCore;
+using Monogame_RPG_Engine.Engine.Scene.EntitiesCore;
+using Monogame_RPG_Engine.Engine.Scene.PlayerCore;
+using Monogame_RPG_Engine.Engine.Scene.MapCore;
+using Monogame_RPG_Engine.App.Resources;
 
 // This class is for the special rock in the map that can be moved around by the player
 // when the player walks into it, it will be "pushed" forward in the same direction the player was moving in
-namespace App.EnhancedMapTiles
+namespace Monogame_RPG_Engine.App.EnhancedMapTiles
 {
     public class PushableRock : EnhancedMapTile
     {

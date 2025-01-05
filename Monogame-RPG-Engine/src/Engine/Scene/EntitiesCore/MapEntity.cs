@@ -1,11 +1,11 @@
-﻿using Engine.Scene.ScriptCore;
-using Engine.SpriteGraphics;
+﻿using Monogame_RPG_Engine.Engine.Scene.ScriptCore;
+using Monogame_RPG_Engine.Engine.SpriteGraphics;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Engine.Scene.EntitiesCore
+namespace Monogame_RPG_Engine.Engine.Scene.EntitiesCore
 {
     public class MapEntity : GameObject
     {
