@@ -7,6 +7,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Text.Json;
+using System.Data.Common;
+using MapEditor.Utils;
+using static MapEditor.Models.TilesetDataFile;
+using MapEditor.Models;
 
 namespace MapEditor.src.Models
 {
@@ -54,69 +58,74 @@ namespace MapEditor.src.Models
             LoadTileset();
         }
 
-        public static Dictionary<string, JsonElement> ReadTilesetFile(string tilesetFilePath)
+        public static TilesetDataFile ReadTilesetDataFile(string tilesetDataFilePath)
         {
-            string json = File.ReadAllText(tilesetFilePath);
-            return JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(json);
+            string json = File.ReadAllText(tilesetDataFilePath);
+            return JsonSerializer.Deserialize<TilesetDataFile>(json);
         }
 
         public void LoadTileset()
         {
-            Dictionary<string, JsonElement> tilesetProperties = ReadTilesetFile(TilesetFilePath);
+            TilesetDataFile tilesetData = Tileset.ReadTilesetDataFile(TilesetFilePath);
 
-            TilesetImageFilePath = $"./Resources/Tilesets/{tilesetProperties["tilesetImage"].GetString()}";
+            TilesetImageFilePath = $"{Config.GraphicsPath}/{tilesetData.Properties.TilesetImagePath}";
             TilesetImage = new Bitmap(TilesetImageFilePath);
-            TileWidth = tilesetProperties["tileWidth"].GetInt32();
-            TileHeight = tilesetProperties["tileHeight"].GetInt32();
-            TileScale = tilesetProperties["tileScale"].GetInt32();
+            TileWidth = tilesetData.Properties.TileWidth;
+            TileHeight = tilesetData.Properties.TileHeight;
+            TileScale = tilesetData.Properties.TileScale;
 
             TilesetImageWidth = TilesetImage.Width;
             TilesetImageHeight = TilesetImage.Height;
             numberOfRows = TilesetImageHeight / TileHeight;
             numberOfColumns = TilesetImageWidth / TileWidth;
 
-            NumberOfTiles = numberOfRows * numberOfColumns;
-
+            NumberOfTiles = tilesetData.Tiles.Count;
             Tiles = new Tile[NumberOfTiles];
-            for (int i = 0; i < NumberOfTiles; i++)
-            {
-                Tiles[i] = new Tile(i, GetTileSubImage(i));
-            }
-        }
 
-        private Rectangle GetTileSubImageRectangle(int index)
-        {
-            int row = index / numberOfColumns;
-            int column = index % numberOfColumns;
-            return new Rectangle(column + (TileWidth * column), row + (TileHeight * row), TileWidth, TileHeight);
-        }
-
-        public Bitmap GetTileSubImage(int index)
-        {
-            if (index >= 0 && index < NumberOfTiles)
+            for (int i = 0; i < tilesetData.Tiles.Count; i++)
             {
-                Rectangle tileSubImageRect = GetTileSubImageRectangle(index);
-                return TilesetImage.Clone(tileSubImageRect, TilesetImage.PixelFormat);
-            }
-            else
-            {
-                return GetDefaultTile();
-            }
-        }
-
-        public Bitmap GetDefaultTile()
-        {
-            Bitmap defaultTile = new Bitmap(TileWidth, TileHeight);
-            using (Graphics graphics = Graphics.FromImage(defaultTile))
-            {
-                using (SolidBrush brush = new SolidBrush(Color.FromArgb(0, 0, 0)))
+                TileData tileData = tilesetData.Tiles[i];
+                Bitmap finalTileImage = null;
+                foreach (LayerData layerData in tileData.Layers)
                 {
-                    graphics.FillRectangle(brush, 0, 0, TileWidth, TileHeight);
+                    FrameData firstFrameOfLayer = layerData.Frames[0];
+                    Bitmap layerImage = GetTileSubImage(firstFrameOfLayer.Row, firstFrameOfLayer.Column);
+                    layerImage = ImageUtils.MakeColorTransparent(layerImage, Color.Magenta);
+                    if (firstFrameOfLayer.SpriteEffect != null)
+                    {
+                        switch (firstFrameOfLayer.SpriteEffect)
+                        {
+                            case "FLIP_HORIZONTALLY":
+                                layerImage.RotateFlip(RotateFlipType.RotateNoneFlipX);
+                                break;
+                            case "FLIP VERTICALLY":
+                                layerImage.RotateFlip(RotateFlipType.RotateNoneFlipY);
+                                break;
+                        }
+                    }
+                    if (finalTileImage == null)
+                    {
+                        finalTileImage = layerImage;
+                    }
+                    else
+                    {
+                        using (Graphics g = Graphics.FromImage(finalTileImage))
+                        {
+                            g.DrawImage(layerImage, new Point(0, 0));
+                        }
+                    }
                 }
+                Tiles[i] = new Tile(i, finalTileImage);
             }
-            return defaultTile;
         }
 
+        public Bitmap GetTileSubImage(int row, int column)
+        {
+            Rectangle tileRectangle = new Rectangle(column * TileWidth + column, row * TileHeight + row, TileWidth, TileHeight);
+            return TilesetImage.Clone(tileRectangle, TilesetImage.PixelFormat);
+        }
+
+       
         /*
         public void SaveTileset()
         {

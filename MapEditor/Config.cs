@@ -12,5 +12,6 @@ namespace MapEditor
         public static string GameMapFilesPath = @".\..\..\..\..\Monogame-RPG-Engine\Content\Resources\MapFiles";
         public static string TilesetFilesPath = @".\..\..\..\..\Monogame-RPG-Engine\Content\Resources\TilesetFiles";
         public static string GraphicsPath = @".\..\..\..\..\Monogame-RPG-Engine\Content\Resources\Graphics";
+        public static Color TransparentColor = Color.Magenta;
     }
 }

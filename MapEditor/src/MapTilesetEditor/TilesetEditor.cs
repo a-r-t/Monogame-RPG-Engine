@@ -55,9 +55,9 @@ namespace MapEditor.src.MapTilesetEditor
 
             tilesetCombobox.SelectedIndexChanged += (sender, e) =>
             {
-                Dictionary<string, JsonElement> tilesetProperties = Tileset.ReadTilesetFile((tilesetCombobox.SelectedItem as ComboBoxItem<string>).Value);
-                selectedTilesetGraphic = new Bitmap($"./Resources/Tilesets/{tilesetProperties["tilesetImage"].GetString()}");
-                selectedScale = tilesetProperties["tileScale"].GetInt32();
+                TilesetDataFile tilesetData = Tileset.ReadTilesetDataFile((tilesetCombobox.SelectedItem as ComboBoxItem<string>).Value);
+                selectedTilesetGraphic = new Bitmap($"{Config.GraphicsPath}/{tilesetData.Properties.TilesetImagePath}");
+                selectedScale = tilesetData.Properties.TileScale;
                 UpdateTilesetPreviewImage();
             };
         }
@@ -79,7 +79,7 @@ namespace MapEditor.src.MapTilesetEditor
         public void Reset()
         {
             tilesetCombobox.Items.Clear();
-            string[] tilesetFiles = Directory.GetFiles("./Resources/TilesetFiles");
+            string[] tilesetFiles = Directory.GetFiles($"{Config.TilesetFilesPath}");
             ComboBoxItem<string> selectedItem = null;
             foreach (string tilesetFile in tilesetFiles)
             {

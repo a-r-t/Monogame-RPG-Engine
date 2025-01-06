@@ -47,7 +47,7 @@ namespace Engine.Scene.TilesetCore
         }
 
         public Tileset(TilesetDataFile tilesetDataFile, ContentLoader contentLoader)
-        : base(contentLoader.LoadTexture("Graphics/" + tilesetDataFile.Properties.TilesetImagePath), tilesetDataFile.Properties.TileWidth, tilesetDataFile.Properties.TileHeight)
+        : base(contentLoader.LoadTexture("Graphics/" + Path.GetFileNameWithoutExtension(tilesetDataFile.Properties.TilesetImagePath)), tilesetDataFile.Properties.TileWidth, tilesetDataFile.Properties.TileHeight)
         {
             this.tilesetDataFile = tilesetDataFile;
             TileScale = tilesetDataFile.Properties.TileScale;

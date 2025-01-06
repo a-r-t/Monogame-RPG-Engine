@@ -133,7 +133,7 @@ namespace MapEditor.src.MapDimensionsEditor
                     }
                     else
                     {
-                        Tile tile = new Tile(0, Map.Tileset.GetTileSubImage(0));
+                        Tile tile = new Tile(0, Map.Tileset.GetTileSubImage(0, 0));
                         int tileX = widthCounter * Map.Tileset.TilesetScaledWidth;
                         int tileY = heightCounter * Map.Tileset.TilesetScaledHeight;
                         int tileWidth = Map.Tileset.TilesetScaledWidth;
@@ -168,7 +168,7 @@ namespace MapEditor.src.MapDimensionsEditor
                     }
                     else
                     {
-                        Tile tile = new Tile(0, Map.Tileset.GetTileSubImage(0));
+                        Tile tile = new Tile(0, Map.Tileset.GetTileSubImage(0, 0));
                         int tileX = widthCounter * Map.Tileset.TilesetScaledWidth;
                         int tileY = heightCounter * Map.Tileset.TilesetScaledHeight;
                         int tileWidth = Map.Tileset.TilesetScaledWidth;
@@ -211,7 +211,7 @@ namespace MapEditor.src.MapDimensionsEditor
                     }
                     else
                     {
-                        Tile tile = new Tile(0, Map.Tileset.GetTileSubImage(0));
+                        Tile tile = new Tile(0, Map.Tileset.GetTileSubImage(0, 0));
                         int tileX = widthCounter * Map.Tileset.TilesetScaledWidth;
                         int tileY = heightCounter * Map.Tileset.TilesetScaledHeight;
                         int tileWidth = Map.Tileset.TilesetScaledWidth;
@@ -245,7 +245,7 @@ namespace MapEditor.src.MapDimensionsEditor
                     }
                     else
                     {
-                        Tile tile = new Tile(0, Map.Tileset.GetTileSubImage(0));
+                        Tile tile = new Tile(0, Map.Tileset.GetTileSubImage(0, 0));
                         int tileX = widthCounter * Map.Tileset.TilesetScaledWidth;
                         int tileY = heightCounter * Map.Tileset.TilesetScaledHeight;
                         int tileWidth = Map.Tileset.TilesetScaledWidth;

@@ -156,7 +156,8 @@ namespace MapEditor.src.Models
                 int tileWidth = Tileset.TilesetScaledWidth;
                 int tileHeight = Tileset.TilesetScaledHeight;
 
-                Tile tile = new Tile(tileIndex, Tileset.GetTileSubImage(tileIndex));
+
+                Tile tile = new Tile(tileIndex, Tileset.Tiles[tileIndex].Image);
                 tile.SetLocation(tileX, tileY);
                 tile.SetDimensions(tileWidth, tileHeight);
                 MapTiles[i] = tile;
