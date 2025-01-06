@@ -1,0 +1,6 @@
+{
+	"tileWidth": 16,
+	"tileHeight": 16,
+	"tileScale": 1,
+	"tilesetImage": "CommonTileset.png"
+}

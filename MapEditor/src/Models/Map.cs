@@ -66,11 +66,9 @@ namespace MapEditor.src.Models
                 Width = int.Parse(dimensions[0]);
                 Height = int.Parse(dimensions[1]);
 
-                string[] tilesetInfo = sr.ReadLine().Split(' ');
-                string tilesetName = tilesetInfo[0];
-                int mapTileScale = int.Parse(tilesetInfo[1]);
+                string tilesetName = sr.ReadLine().Trim();
 
-                this.Tileset = new Tileset($"./Resources/TilesetFiles/{tilesetName}.tileset", mapTileScale);
+                this.Tileset = new Tileset($"./Resources/TilesetFiles/{tilesetName}.tileset");
 
                 MapTiles = new Tile[Width * Height];
                 string indexes = "";
@@ -204,7 +202,7 @@ namespace MapEditor.src.Models
             {
                 StreamWriter sw = new StreamWriter(MapFilePath);
                 sw.WriteLine($"{Width} {Height}");
-                sw.WriteLine($"{Tileset.Name} {Tileset.TileScale}");
+                sw.WriteLine(Tileset.Name);
                 for (int i = 0; i < Height; i++)
                 {
                     StringBuilder sb = new StringBuilder();

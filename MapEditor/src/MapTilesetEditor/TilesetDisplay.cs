@@ -31,7 +31,7 @@ namespace MapEditor.src.MapTilesetEditor
 
             tilesetGraphicDisplayPanel.Controls.Add(tilesetGraphicDisplay);
             Controls.Add(tilesetGraphicDisplayPanel);
-            tilesetGraphicDisplayPanel.Location = new Point(0, 150);
+            tilesetGraphicDisplayPanel.Location = new Point(0, 130);
             tilesetGraphicDisplay.Paint += (sender, e) =>
             {
                 e.Graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
@@ -44,15 +44,13 @@ namespace MapEditor.src.MapTilesetEditor
 
             Label tilesetGraphicPreviewLabel = new Label();
             tilesetGraphicPreviewLabel.Text = "Tileset Preview:";
-            tilesetGraphicPreviewLabel.Location = new Point(0, 130);
+            tilesetGraphicPreviewLabel.Location = new Point(0, 110);
             Controls.Add(tilesetGraphicPreviewLabel);
         }
 
         public void Reset()
         {
             tilesetLabel.Text = $"Tileset: {Map.Tileset.Name}";
-            scaleLabel.Text = $"Scale: {Map.Tileset.TileScale}";
-
             tilesetGraphicDisplay.Image = new Bitmap(Map.Tileset.TilesetImage.Width * Map.Tileset.TileScale, Map.Tileset.TilesetImage.Height * Map.Tileset.TileScale);
         }
 

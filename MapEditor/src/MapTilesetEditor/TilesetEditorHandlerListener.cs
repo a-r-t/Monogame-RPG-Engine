@@ -8,6 +8,6 @@ namespace MapEditor.src.MapTilesetEditor
 {
     public interface TilesetEditorHandlerListener
     {
-        void OnTilesetInfoUpdated(string tilesetName, int scale);
+        void OnTilesetInfoUpdated(string tilesetName);
     }
 }

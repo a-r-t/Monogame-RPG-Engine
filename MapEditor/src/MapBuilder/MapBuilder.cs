@@ -83,7 +83,7 @@ namespace MapEditor.src.MapBuilder
             IsDirty = true;
         }
 
-        public void OnTilesetInfoUpdated(string tilesetName, int scale)
+        public void OnTilesetInfoUpdated(string tilesetName)
         {
             map.ReloadMapTiles();
             tileEditor.Map = map;

@@ -77,13 +77,13 @@ namespace MapEditor.src.MapTilesetEditor
             EditMode = EditMode.EDIT;
         }
 
-        public void OnTilesetInfoUpdated(string tilesetName, int scale)
+        public void OnTilesetInfoUpdated(string tilesetName)
         {
             EditMode = EditMode.DISPLAY;
 
             foreach (TilesetEditorHandlerListener listener in listeners)
             {
-                listener.OnTilesetInfoUpdated(tilesetName, scale);
+                listener.OnTilesetInfoUpdated(tilesetName);
             }
         }
 

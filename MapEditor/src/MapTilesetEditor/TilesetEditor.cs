@@ -36,7 +36,7 @@ namespace MapEditor.src.MapTilesetEditor
 
             tilesetGraphicDisplayPanel.Controls.Add(tilesetGraphicDisplay);
             Controls.Add(tilesetGraphicDisplayPanel);
-            tilesetGraphicDisplayPanel.Location = new Point(0, 190);
+            tilesetGraphicDisplayPanel.Location = new Point(0, 170);
 
             tilesetGraphicDisplay.Paint += (sender, e) =>
             {
@@ -50,23 +50,15 @@ namespace MapEditor.src.MapTilesetEditor
 
             Label tilesetGraphicPreviewLabel = new Label();
             tilesetGraphicPreviewLabel.Text = "Tileset Preview:";
-            tilesetGraphicPreviewLabel.Location = new Point(0, 170);
+            tilesetGraphicPreviewLabel.Location = new Point(0, 150);
             Controls.Add(tilesetGraphicPreviewLabel);
 
             tilesetCombobox.SelectedIndexChanged += (sender, e) =>
             {
                 Dictionary<string, JsonElement> tilesetProperties = Tileset.ReadTilesetFile((tilesetCombobox.SelectedItem as ComboBoxItem<string>).Value);
-                selectedTilesetGraphic = new Bitmap($"./Resources/Tilesets/{tilesetProperties["tilesetImage"].ToString()}");
+                selectedTilesetGraphic = new Bitmap($"./Resources/Tilesets/{tilesetProperties["tilesetImage"].GetString()}");
+                selectedScale = tilesetProperties["tileScale"].GetInt32();
                 UpdateTilesetPreviewImage();
-            };
-
-            scaleTextbox.TextChanged += (sender, e) =>
-            {
-                if (IsScaleInputValid())
-                {
-                    selectedScale = int.Parse(scaleTextbox.Text);
-                    UpdateTilesetPreviewImage();
-                }
             };
         }
 
@@ -105,89 +97,38 @@ namespace MapEditor.src.MapTilesetEditor
             selectedTilesetGraphic = Map.Tileset.TilesetImage;
             selectedScale = Map.Tileset.TileScale;
 
-            scaleTextbox.Text = selectedScale.ToString();
-
             errorMessageLabel.Visible = false;
 
             tilesetGraphicDisplay.Image = new Bitmap(selectedTilesetGraphic.Width * selectedScale, selectedTilesetGraphic.Height * selectedScale);
         }
 
-        private bool IsScaleInputValid()
-        {
-            int newScale = 0;
-            try
-            {
-                newScale = int.Parse(scaleTextbox.Text);
-            }
-            catch (Exception ex)
-            {
-                return false;
-            }
-            if (newScale < 1)
-            {
-                return false;
-            }
-            return true;
-        }
-
         private void okButton_Click(object sender, EventArgs e)
         {
             errorMessageLabel.Visible = false;
-            bool isValid = true;
-
-            // validate scale
-            int newScale = 0;
             try
             {
-                newScale = int.Parse(scaleTextbox.Text);
+                UpdateTilesetInfo(tilesetCombobox.SelectedItem.ToString());
             }
             catch (Exception ex)
             {
-                isValid = false;
-                if (ex is ArgumentNullException || ex is FormatException || ex is OverflowException)
-                {
-                    ShowChangeDimensionsError("Scale must be an int");
-                }
-                else
-                {
-                    ShowChangeDimensionsError(ex.Message);
-                }
-            }
-            if (newScale < 1)
-            {
-                isValid = false;
-                ShowChangeDimensionsError("Scale must be >= 1");
-            }
-
-            if (isValid)
-            {
-                UpdateTilesetInfo(tilesetCombobox.SelectedItem.ToString(), newScale);
+                errorMessageLabel.Visible = true;
+                errorMessageLabel.Text = $"Error: {ex.Message}";
             }
         }
 
-        private void UpdateTilesetInfo(string newTilesetName, int newTilesetScale)
+        private void UpdateTilesetInfo(string newTilesetName)
         {
             if (newTilesetName != Map.Tileset.Name)
             {
                 Map.Tileset.TilesetFilePath = $"./Resources/TilesetFiles/{newTilesetName}.tileset";
-            }
-            if (newTilesetScale != Map.Tileset.TileScale)
-            {
-                Map.Tileset.TileScale = newTilesetScale;
             }
 
             Map.Tileset.LoadTileset();
 
             foreach (TilesetEditorListener listener in listeners)
             {
-                listener.OnTilesetInfoUpdated(newTilesetName, newTilesetScale);
+                listener.OnTilesetInfoUpdated(newTilesetName);
             }
-        }
-
-        private void ShowChangeDimensionsError(string errorMessage)
-        {
-            errorMessageLabel.Visible = true;
-            errorMessageLabel.Text = $"Error: {errorMessage}";
         }
 
         private void cancelButton_Click(object sender, EventArgs e)

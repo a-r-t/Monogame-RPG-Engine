@@ -30,9 +30,7 @@ namespace MapEditor.src.MapTilesetEditor
         private void InitializeComponent()
         {
             this.tilesetLabel = new System.Windows.Forms.Label();
-            this.scaleLabel = new System.Windows.Forms.Label();
             this.tilesetCombobox = new System.Windows.Forms.ComboBox();
-            this.scaleTextbox = new System.Windows.Forms.TextBox();
             this.cancelButton = new System.Windows.Forms.Button();
             this.okButton = new System.Windows.Forms.Button();
             this.errorMessageLabel = new System.Windows.Forms.Label();
@@ -47,15 +45,6 @@ namespace MapEditor.src.MapTilesetEditor
             this.tilesetLabel.TabIndex = 0;
             this.tilesetLabel.Text = "Tileset:";
             // 
-            // scaleLabel
-            // 
-            this.scaleLabel.AutoSize = true;
-            this.scaleLabel.Location = new System.Drawing.Point(3, 43);
-            this.scaleLabel.Name = "scaleLabel";
-            this.scaleLabel.Size = new System.Drawing.Size(37, 13);
-            this.scaleLabel.TabIndex = 1;
-            this.scaleLabel.Text = "Scale:";
-            // 
             // tilesetCombobox
             // 
             this.tilesetCombobox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -65,16 +54,9 @@ namespace MapEditor.src.MapTilesetEditor
             this.tilesetCombobox.Size = new System.Drawing.Size(165, 21);
             this.tilesetCombobox.TabIndex = 2;
             // 
-            // scaleTextbox
-            // 
-            this.scaleTextbox.Location = new System.Drawing.Point(50, 40);
-            this.scaleTextbox.Name = "scaleTextbox";
-            this.scaleTextbox.Size = new System.Drawing.Size(67, 20);
-            this.scaleTextbox.TabIndex = 3;
-            // 
             // cancelButton
             // 
-            this.cancelButton.Location = new System.Drawing.Point(119, 93);
+            this.cancelButton.Location = new System.Drawing.Point(119, 63);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(107, 37);
             this.cancelButton.TabIndex = 15;
@@ -84,7 +66,7 @@ namespace MapEditor.src.MapTilesetEditor
             // 
             // okButton
             // 
-            this.okButton.Location = new System.Drawing.Point(6, 93);
+            this.okButton.Location = new System.Drawing.Point(6, 63);
             this.okButton.Name = "okButton";
             this.okButton.Size = new System.Drawing.Size(107, 37);
             this.okButton.TabIndex = 14;
@@ -109,9 +91,7 @@ namespace MapEditor.src.MapTilesetEditor
             this.Controls.Add(this.errorMessageLabel);
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.okButton);
-            this.Controls.Add(this.scaleTextbox);
             this.Controls.Add(this.tilesetCombobox);
-            this.Controls.Add(this.scaleLabel);
             this.Controls.Add(this.tilesetLabel);
             this.Name = "TilesetEditor";
             this.Size = new System.Drawing.Size(247, 159);
@@ -124,9 +104,7 @@ namespace MapEditor.src.MapTilesetEditor
         #endregion
 
         private System.Windows.Forms.Label tilesetLabel;
-        private System.Windows.Forms.Label scaleLabel;
         private System.Windows.Forms.ComboBox tilesetCombobox;
-        private System.Windows.Forms.TextBox scaleTextbox;
         private System.Windows.Forms.Button cancelButton;
         private System.Windows.Forms.Button okButton;
         private System.Windows.Forms.Label errorMessageLabel;

@@ -48,10 +48,9 @@ namespace MapEditor.src.Models
             }
         }
 
-        public Tileset(string tilesetFilePath, int tileScale)
+        public Tileset(string tilesetFilePath)
         {
             TilesetFilePath = tilesetFilePath;
-            TileScale = tileScale;
             LoadTileset();
         }
 
@@ -69,6 +68,7 @@ namespace MapEditor.src.Models
             TilesetImage = new Bitmap(TilesetImageFilePath);
             TileWidth = tilesetProperties["tileWidth"].GetInt32();
             TileHeight = tilesetProperties["tileHeight"].GetInt32();
+            TileScale = tilesetProperties["tileScale"].GetInt32();
 
             TilesetImageWidth = TilesetImage.Width;
             TilesetImageHeight = TilesetImage.Height;
