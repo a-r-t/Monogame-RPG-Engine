@@ -15,6 +15,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Engine.Scene.EntitiesCore;
 using Engine.Scene.MapCore;
+using Engine.Scene.TilesetCore;
 
 namespace App.Maps
 {
@@ -22,7 +23,7 @@ namespace App.Maps
     {
 
         public TestMap(int cameraWidth, int cameraHeight, ContentLoader contentLoader)
-            : base("test_map.txt", new CommonTileset(contentLoader), cameraWidth, cameraHeight, contentLoader)
+            : base("test_map.map", cameraWidth, cameraHeight, contentLoader)
         {
             PlayerStartPosition = GetMapTile(17, 20).Location;
         }

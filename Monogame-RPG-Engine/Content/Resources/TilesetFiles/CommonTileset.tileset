@@ -3,406 +3,501 @@
       "tileWidth":16,
       "tileHeight":16,
       "tileScale":3,
-      "tilesetImage":"CommonTileset.png"
+      "tilesetImage":"CommonTileset"
    },
    "tiles":[
       {
-         "bottom":[
+         "name":"grass",
+         "layers":[
             {
-               "name":"grass",
-               "row":0,
-               "col":0
+               "frames":[
+                  {
+                     "row":0,
+                     "col":0
+                  }
+               ]
             }
          ]
       },
       {
-         "bottom":[
+         "name":"sign",
+         "layers":[
             {
-               "name":"sign",
-               "row":3,
-               "col":0,
+               "frames":[
+                  {
+                     "row":3,
+                     "col":0
+                  }
+               ],
                "bounds":{
-                  "row":"1",
-                  "col":"2",
+                  "x":1,
+                  "y":2,
                   "width":14,
                   "height":14
-               },
-               "tileType":"NOT_PASSABLE"
-            }
-         ]
-      },
-      {
-         "bottom":[
-            {
-               "name":"sand",
-               "row":"0",
-               "col":"1"
-            }
-         ]
-      },
-      {
-         "bottom":[
-            {
-               "name":"rock",
-               "row":"3",
-               "col":"1",
-               "tileType":"NOT_PASSABLE"
-            }
-         ]
-      },
-      {
-         "bottom":[
-            {
-               "name":"grass",
-               "row":0,
-               "col":0
+               }
             }
          ],
-         "top":[
+         "tileType":"NOT_PASSABLE"
+      },
+      {
+         "name":"sand",
+         "layers":[
             {
-               "name":"treeTrunkWithFullHole",
-               "row":"3",
-               "col":"1",
-               "tileType":"PASSABLE"
+               "frames":[
+                  {
+                     "row":0,
+                     "col":1
+                  }
+               ]
             }
          ]
       },
       {
-         "bottom":[
+         "name":"rock",
+         "layers":[
             {
-               "name":"grass",
-               "row":0,
-               "col":0
+               "frames":[
+                  {
+                     "row":3,
+                     "col":1
+                  }
+               ]
             }
          ],
-         "top":[
-            {
-               "name":"leftEndBranch",
-               "row":"2",
-               "col":"4",
-               "tileType":"PASSABLE"
-            }
-         ]
+         "tileType":"NOT_PASSABLE"
       },
       {
-         "bottom":[
+         "name":"treeTrunkWithFullHole",
+         "layers":[
             {
-               "name":"grass",
-               "row":0,
-               "col":0
+               "frames":[
+                  {
+                     "row":0,
+                     "col":0
+                  }
+               ]
+            },
+            {
+               "frames":[
+                  {
+                     "row":3,
+                     "col":1
+                  }
+               ]
             }
          ],
-         "top":[
-            {
-               "name":"rightEndBranch",
-               "row":"2",
-               "col":"4",
-               "effect":"FLIP_HORIZONTALLY",
-               "tileType":"PASSABLE"
-            }
-         ]
+         "tileType":"PASSABLE"
       },
       {
-         "bottom":[
+         "name":"leftEndBranch",
+         "layers":[
             {
-               "name":"grass",
-               "row":0,
-               "col":0
+               "frames":[
+                  {
+                     "row":0,
+                     "col":0
+                  }
+               ]
+            },
+            {
+               "frames":[
+                  {
+                     "row":2,
+                     "col":4
+                  }
+               ]
             }
          ],
-         "top":[
-            {
-               "name":"treeTrunk",
-               "row":"1",
-               "col":"0",
-               "tileType":"PASSABLE"
-            }
-         ]
+         "tileType":"PASSABLE"
       },
       {
-         "bottom":[
+         "name":"rightEndBranch",
+         "layers":[
             {
-               "name":"grass",
-               "row":0,
-               "col":0
+               "frames":[
+                  {
+                     "row":0,
+                     "col":0
+                  }
+               ]
+            },
+            {
+               "frames":[
+                  {
+                     "row":2,
+                     "col":4,
+                     "effect":"FLIP_HORIZONTALLY"
+                  }
+               ]
             }
          ],
-         "top":[
-            {
-               "name":"TreeTopLeaves",
-               "row":"1",
-               "col":"1",
-               "tileType":"PASSABLE"
-            }
-         ]
+         "tileType":"PASSABLE"
       },
       {
-         "bottom":[
+         "name":"treeTrunk",
+         "layers":[
             {
-               "name":"yellowFlower1",
-               "row":"1",
-               "col":"2",
-               "delay":33
+               "frames":[
+                  {
+                     "row":0,
+                     "col":0
+                  }
+               ]
             },
             {
-               "name":"yellowFlower2",
-               "row":"1",
-               "col":"3",
-               "delay":33
-            },
-            {
-               "name":"yellowFlower1",
-               "row":"1",
-               "col":"2",
-               "delay":33
-            },
-            {
-               "name":"yellowFlower3",
-               "row":"1",
-               "col":"4",
-               "delay":33
-            }
-         ]
-      },
-      {
-         "bottom":[
-            {
-               "name":"purpleFlower1",
-               "row":"0",
-               "col":"2",
-               "delay":33
-            },
-            {
-               "name":"purpleFlower2",
-               "row":"0",
-               "col":"3",
-               "delay":33
-            },
-            {
-               "name":"purpleFlower1",
-               "row":"0",
-               "col":"2",
-               "delay":33
-            },
-            {
-               "name":"purpleFlower3",
-               "row":"0",
-               "col":"4",
-               "delay":33
-            }
-         ]
-      },
-      {
-         "bottom":[
-            {
-               "name":"grass",
-               "row":0,
-               "col":0
+               "frames":[
+                  {
+                     "row":1,
+                     "col":0
+                  }
+               ]
             }
          ],
-         "top":[
-            {
-               "name":"middleBranch",
-               "row":"2",
-               "col":"3",
-               "tileType":"PASSABLE"
-            }
-         ]
+         "tileType":"PASSABLE"
       },
       {
-         "bottom":[
+         "name":"TreeTopLeaves",
+         "layers":[
             {
-               "name":"treeTrunkBottom",
-               "row":2,
-               "col":0,
-               "tileType":"NOT_PASSABLE"
-            }
-         ]
-      },
-      {
-         "bottom":[
+               "frames":[
+                  {
+                     "row":0,
+                     "col":0
+                  }
+               ]
+            },
             {
-               "name":"mushroom",
-               "row":2,
-               "col":1,
-               "tileType":"PASSABLE"
-            }
-         ]
-      },
-      {
-         "bottom":[
-            {
-               "name":"greyRock",
-               "row":3,
-               "col":2,
-               "tileType":"PASSABLE"
-            }
-         ]
-      },
-      {
-         "bottom":[
-            {
-               "name":"bush",
-               "row":3,
-               "col":3,
-               "tileType":"NOT_PASSABLE"
-            }
-         ]
-      },
-      {
-         "bottom":[
-            {
-               "name":"houseBody",
-               "row":3,
-               "col":4,
-               "tileType":"NOT_PASSABLE"
-            }
-         ]
-      },
-      {
-         "bottom":[
-            {
-               "name":"grass",
-               "row":0,
-               "col":0
+               "frames":[
+                  {
+                     "row":1,
+                     "col":1
+                  }
+               ]
             }
          ],
-         "top":[
+         "tileType":"PASSABLE"
+      },
+      {
+         "name":"yellowFlower",
+         "layers":[
             {
-               "name":"houseRoofBody",
-               "row":"4",
-               "col":"0",
-               "tileType":"NOT_PASSABLE"
+               "frames":[
+                  {
+                     "row":1,
+                     "col":2,
+                     "delay":33
+                  },
+                  {
+                     "row":1,
+                     "col":3,
+                     "delay":33
+                  },
+                  {
+                     "row":1,
+                     "col":2,
+                     "delay":33
+                  },
+                  {
+                     "row":1,
+                     "col":4,
+                     "delay":33
+                  }
+               ]
             }
          ]
       },
       {
-         "bottom":[
+         "name":"purpleFlower",
+         "layers":[
             {
-               "name":"grass",
-               "row":0,
-               "col":0
+               "frames":[
+                  {
+                     "row":0,
+                     "col":2,
+                     "delay":33
+                  },
+                  {
+                     "row":0,
+                     "col":3,
+                     "delay":33
+                  },
+                  {
+                     "row":0,
+                     "col":2,
+                     "delay":33
+                  },
+                  {
+                     "row":0,
+                     "col":4,
+                     "delay":33
+                  }
+               ]
+            }
+         ]
+      },
+      {
+         "name":"middleBranch",
+         "layers":[
+            {
+               "frames":[
+                  {
+                     "row":0,
+                     "col":0
+                  }
+               ]
+            },
+            {
+               "frames":[
+                  {
+                     "row":2,
+                     "col":3
+                  }
+               ]
             }
          ],
-         "top":[
-            {
-               "name":"leftHouseRoof",
-               "row":"4",
-               "col":"1",
-               "tileType":"PASSABLE"
-            }
-         ]
+         "tileType":"PASSABLE"
       },
       {
-         "bottom":[
+         "name":"treeTrunkBottom",
+         "layers":[
             {
-               "name":"grass",
-               "row":0,
-               "col":0
+               "frames":[
+                  {
+                     "row":2,
+                     "col":0
+                  }
+               ]
             }
          ],
-         "top":[
+         "tileType":"NOT_PASSABLE"
+      },
+      {
+         "name":"mushroom",
+         "layers":[
             {
-               "name":"rightHouseRoof",
-               "row":"4",
-               "col":"1",
-               "effect":"FLIP_HORIZONTALLY",
-               "tileType":"NOT_PASSABLE"
+               "frames":[
+                  {
+                     "row":2,
+                     "col":1
+                  }
+               ]
             }
          ]
       },
       {
-         "bottom":[
+         "name":"greyRock",
+         "layers":[
             {
-               "name":"leftWindow",
-               "row":4,
-               "col":2,
-               "tileType":"NOT_PASSABLE"
+               "frames":[
+                  {
+                     "row":3,
+                     "col":2
+                  }
+               ]
             }
          ]
       },
       {
-         "bottom":[
+         "name":"bush",
+         "layers":[
             {
-               "name":"rightWindow",
-               "row":4,
-               "col":2,
-               "effect":"FLIP_HORIZONTALLY",
-               "tileType":"NOT_PASSABLE"
+               "frames":[
+                  {
+                     "row":3,
+                     "col":3
+                  }
+               ]
             }
-         ]
+         ],
+         "tileType":"NOT_PASSABLE"
       },
       {
-         "bottom":[
+         "name":"houseBody",
+         "layers":[
             {
-               "name":"doorClosed",
-               "row":4,
-               "col":3,
-               "tileType":"NOT_PASSABLE"
+               "frames":[
+                  {
+                     "row":3,
+                     "col":4
+                  }
+               ]
             }
-         ]
+         ],
+         "tileType":"NOT_PASSABLE"
       },
       {
-         "bottom":[
+         "name":"houseRoofBody",
+         "layers":[
             {
-               "name":"doorOpen",
-               "row":4,
-               "col":4,
-               "tileType":"NOT_PASSABLE"
+               "frames":[
+                  {
+                     "row":0,
+                     "col":0
+                  }
+               ]
+            },
+            {
+               "frames":[
+                  {
+                     "row":4,
+                     "col":0
+                  }
+               ]
             }
-         ]
+         ],
+         "tileType":"NOT_PASSABLE"
       },
       {
-         "bottom":[
+         "name":"leftHouseRoof",
+         "layers":[
             {
-               "name":"water1",
-               "row":"5",
-               "col":"0",
-               "delay":33
+               "frames":[
+                  {
+                     "row":0,
+                     "col":0
+                  }
+               ]
             },
             {
-               "name":"water2",
-               "row":"5",
-               "col":"1",
-               "delay":33
-            },
-            {
-               "name":"water3",
-               "row":"5",
-               "col":"2",
-               "delay":33
-            },
-            {
-               "name":"water2",
-               "row":"5",
-               "col":"1",
-               "delay":33
-            },
-            {
-               "name":"water1",
-               "row":"5",
-               "col":"0",
-               "delay":33
-            },
-            {
-               "name":"water4",
-               "row":"5",
-               "col":"3",
-               "delay":33
-            },
-            {
-               "name":"water5",
-               "row":"5",
-               "col":"4",
-               "delay":33
-            },
-            {
-               "name":"water4",
-               "row":"5",
-               "col":"3",
-               "delay":33
+               "frames":[
+                  {
+                     "row":4,
+                     "col":1
+                  }
+               ]
             }
-         ]
+         ],
+         "tileType":"PASSABLE"
+      },
+      {
+         "name":"rightHouseRoof",
+         "layers":[
+            {
+               "frames":[
+                  {
+                     "row":0,
+                     "col":0
+                  }
+               ]
+            },
+            {
+               "frames":[
+                  {
+                     "row":4,
+                     "col":1,
+                     "effect":"FLIP_HORIZONTALLY"
+                  }
+               ]
+            }
+         ],
+         "tileType":"PASSABLE"
+      },
+      {
+         "name":"leftWindow",
+         "layers":[
+            {
+               "frames":[
+                  {
+                     "row":4,
+                     "col":2
+                  }
+               ]
+            }
+         ],
+         "tileType":"NOT_PASSABLE"
+      },
+      {
+         "name":"rightWindow",
+         "layers":[
+            {
+               "frames":[
+                  {
+                     "row":4,
+                     "col":2,
+                     "effect":"FLIP_HORIZONTALLY"
+                  }
+               ]
+            }
+         ],
+         "tileType":"NOT_PASSABLE"
+      },
+      {
+         "name":"doorClosed",
+         "layers":[
+            {
+               "frames":[
+                  {
+                     "row":4,
+                     "col":3
+                  }
+               ]
+            }
+         ],
+         "tileType":"NOT_PASSABLE"
+      },
+      {
+         "name":"doorOpen",
+         "layers":[
+            {
+               "frames":[
+                  {
+                     "row":4,
+                     "col":4
+                  }
+               ]
+            }
+         ],
+         "tileType":"NOT_PASSABLE"
+      },
+      {
+         "name":"water",
+         "layers":[
+            {
+               "frames":[
+                  {
+                     "row":5,
+                     "col":0,
+                     "delay":33
+                  },
+                  {
+                     "row":5,
+                     "col":1,
+                     "delay":33
+                  },
+                  {
+                     "row":5,
+                     "col":2,
+                     "delay":33
+                  },
+                  {
+                     "row":5,
+                     "col":1,
+                     "delay":33
+                  },
+                  {
+                     "row":5,
+                     "col":0,
+                     "delay":33
+                  },
+                  {
+                     "row":5,
+                     "col":3,
+                     "delay":33
+                  },
+                  {
+                     "row":5,
+                     "col":4,
+                     "delay":33
+                  },
+                  {
+                     "row":5,
+                     "col":3,
+                     "delay":33
+                  }
+               ]
+            }
+         ],
+         "tileType":"NOT_PASSABLE"
       }
    ]
 }

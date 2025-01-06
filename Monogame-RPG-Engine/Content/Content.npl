@@ -5,7 +5,7 @@
 	{
 		"mapfiles":
 		{
-			"path": "MapFiles/*.txt",
+			"path": "MapFiles/*.map",
 			"recursive": "True",
 			"action": "copy"
 		},
@@ -26,6 +26,12 @@
 				"MakeSquare": "False",
 				"TextureFormat": "Color"
 			}
+		},
+		"tilesetfiles":
+		{
+			"path": "TilesetFiles/*.tileset",
+			"recursive": "True",
+			"action": "copy"
 		},
 		"songs":
 		{

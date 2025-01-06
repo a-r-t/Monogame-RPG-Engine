@@ -44,8 +44,11 @@
     <Folder Include="Content\Resources\Sounds\SoundEffects\" />
   </ItemGroup>
   <ItemGroup>
+    <None Update="Content\Resources\MapFiles\test_map.map">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
     <None Update="Content\Resources\TilesetFiles\CommonTileset.tileset">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <Target Name="RestoreDotnetTools" BeforeTargets="Restore">

@@ -7,7 +7,13 @@ namespace Engine.SpriteGraphics
 {
     public class Frame : Sprite
     {
-        public int Delay { get; private set; }
+        public int Delay { get; set; }
+
+        public Frame(Texture2D image)
+            : base(image, 0, 0, SpriteEffects.None)
+        {
+
+        }
 
         public Frame(Texture2D image, SpriteEffects spriteEffect, float scale, Rectangle bounds, int delay)
             : base(image, 0, 0, spriteEffect)

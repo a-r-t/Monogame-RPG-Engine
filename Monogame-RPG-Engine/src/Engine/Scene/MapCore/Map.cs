@@ -15,6 +15,7 @@ using Engine.Scene.EntitiesCore;
 using Engine.Scene.PlayerCore;
 using Engine.Scene.ScriptCore;
 using Engine.Scene.TextboxCore;
+using Engine.Scene.TilesetCore;
 
 /*
     This class is for defining a map that is used for a specific level
@@ -165,18 +166,17 @@ namespace Engine.Scene.MapCore
         // instance of content loader to allow maps to load their own content
         public ContentLoader ContentLoader { get; private set; }
 
-        public Map(string mapFileName, Tileset tileset, int cameraWidth, int cameraHeight, ContentLoader contentLoader)
+        public Map(string mapFileName, int cameraWidth, int cameraHeight, ContentLoader contentLoader)
         {
             MapFileName = mapFileName;
-            Tileset = tileset;
             ContentLoader = contentLoader;
             this.cameraWidth = cameraWidth;
             this.cameraHeight = cameraHeight;
             SetupMap();
             this.startBoundX = 0;
             this.startBoundY = 0;
-            EndBoundX = Width * tileset.SpriteWidthScaled;
-            EndBoundY = Height * tileset.SpriteHeightScaled;
+            EndBoundX = Width * Tileset.SpriteWidthScaled;
+            EndBoundY = Height * Tileset.SpriteHeightScaled;
             this.xMidPoint = cameraWidth / 2;
             this.yMidPoint = cameraHeight / 2;
             PlayerStartTile = new Point(0, 0);
@@ -246,6 +246,10 @@ namespace Engine.Scene.MapCore
             string[] dimensions = fileInput.ReadLine().Split(" ");
             Width = Convert.ToInt32(dimensions[0]);
             Height = Convert.ToInt32(dimensions[1]);
+
+            string tilesetName = fileInput.ReadLine().Trim();
+            Tileset = new Tileset(Tileset.ReadTilesetDataFile(Config.TILESET_FILES_PATH + tilesetName + ".tileset"), ContentLoader);
+
 
             // define array size for map tiles, which is width * height (this is a standard array, NOT a 2D array)
             MapTiles = new MapTile[Height * Width];
