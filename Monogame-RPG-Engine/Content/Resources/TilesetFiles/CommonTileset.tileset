@@ -80,8 +80,8 @@
             {
                "frames":[
                   {
-                     "row":3,
-                     "col":1
+                     "row":2,
+                     "col":2
                   }
                ]
             }
@@ -436,20 +436,6 @@
          "tileType":"NOT_PASSABLE"
       },
       {
-         "name":"doorOpen",
-         "layers":[
-            {
-               "frames":[
-                  {
-                     "row":4,
-                     "col":4
-                  }
-               ]
-            }
-         ],
-         "tileType":"NOT_PASSABLE"
-      },
-      {
          "name":"water",
          "layers":[
             {
@@ -493,6 +479,20 @@
                      "row":5,
                      "col":3,
                      "delay":33
+                  }
+               ]
+            }
+         ],
+         "tileType":"NOT_PASSABLE"
+      },
+      {
+         "name":"doorOpen",
+         "layers":[
+            {
+               "frames":[
+                  {
+                     "row":4,
+                     "col":4
                   }
                ]
             }
