@@ -146,22 +146,26 @@ namespace MapEditor.src.MapList
         private void PopulateMapTreeView()
         {
             Queue<string> paths = new Queue<string>();
-            string rootDir = Path.Combine(".", "Resources", "MapFiles");
-            mapTreeView.Nodes.Add("MapFiles", "MapFiles");
-            TreeNode rootFolderNode = mapTreeView.Nodes["MapFiles"];
+            string rootDir = Config.GameMapFilesPath;
+            string[] rootPathParts = rootDir.Split(Path.DirectorySeparatorChar);
+            int rootPathPartsCount = rootPathParts.Length;
+            string lastFolder = rootPathParts.Last();
+            mapTreeView.Nodes.Add(lastFolder, lastFolder);
+            TreeNode rootFolderNode = mapTreeView.Nodes[lastFolder];
             rootFolderNode.ImageKey = "folder";
             rootFolderNode.SelectedImageKey = "folder";
             rootFolderNode.Tag = "folder";
             paths.Enqueue(rootDir);
+
            
             while (paths.Count > 0)
             {
                 string path = paths.Dequeue();
                 string[] pathParts = path.Split(Path.DirectorySeparatorChar);
 
-                TreeNode temp = mapTreeView.Nodes[pathParts[2]];
+                TreeNode temp = mapTreeView.Nodes[pathParts[rootPathPartsCount - 1]];
                 int traversalDepth = File.Exists(path) ? pathParts.Length - 1 : pathParts.Length;
-                for (int i = 3; i < traversalDepth; i++)
+                for (int i = rootPathPartsCount; i < traversalDepth; i++)
                 {
                     temp = temp.Nodes[pathParts[i]];
                 }
@@ -227,9 +231,14 @@ namespace MapEditor.src.MapList
                 selectedNode.ImageKey = "file-selected";
                 selectedNode.SelectedImageKey = "file-selected";
 
+                // this chops off root path since it is already included in config
+                string fullPath = selectedNode.FullPath;
+                string[] fullPathParts = fullPath.Split(Path.DirectorySeparatorChar);
+                string modifiedFullPath = string.Join(Path.DirectorySeparatorChar.ToString(), fullPathParts.Skip(1));
+
                 foreach (MapListListener listener in listeners)
                 {
-                    listener.OnMapSelected(selectedNode.FullPath);
+                    listener.OnMapSelected(modifiedFullPath);
                 }
             }
         }

@@ -68,7 +68,7 @@ namespace MapEditor.src.Models
 
                 string tilesetName = sr.ReadLine().Trim();
 
-                this.Tileset = new Tileset($"./Resources/TilesetFiles/{tilesetName}.tileset");
+                this.Tileset = new Tileset($"{Config.TilesetFilesPath}/{tilesetName}.tileset");
 
                 MapTiles = new Tile[Width * Height];
                 string indexes = "";
