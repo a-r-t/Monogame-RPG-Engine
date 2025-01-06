@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.Json;
 
 namespace MapEditor.src.Models
 {
@@ -54,21 +55,27 @@ namespace MapEditor.src.Models
             LoadTileset();
         }
 
+        public static Dictionary<string, JsonElement> ReadTilesetFile(string tilesetFilePath)
+        {
+            string json = File.ReadAllText(tilesetFilePath);
+            return JsonSerializer.Deserialize<Dictionary<string, JsonElement>>(json);
+        }
+
         public void LoadTileset()
         {
-            using (StreamReader sr = File.OpenText(TilesetFilePath))
-            {
-                string[] tilesetInfo = sr.ReadLine().Split(' ');
-                TilesetImageFilePath = $"./Resources/Tilesets/{Name}.png";
-                TilesetImage = new Bitmap(TilesetImageFilePath);
-                TileWidth = int.Parse(tilesetInfo[0]);
-                TileHeight = int.Parse(tilesetInfo[1]);
-                NumberOfTiles = int.Parse(tilesetInfo[2]);
-            }
+            Dictionary<string, JsonElement> tilesetProperties = ReadTilesetFile(TilesetFilePath);
+
+            TilesetImageFilePath = $"./Resources/Tilesets/{tilesetProperties["tilesetImage"].GetString()}";
+            TilesetImage = new Bitmap(TilesetImageFilePath);
+            TileWidth = tilesetProperties["tileWidth"].GetInt32();
+            TileHeight = tilesetProperties["tileHeight"].GetInt32();
+
             TilesetImageWidth = TilesetImage.Width;
             TilesetImageHeight = TilesetImage.Height;
             numberOfRows = TilesetImageHeight / TileHeight;
             numberOfColumns = TilesetImageWidth / TileWidth;
+
+            NumberOfTiles = numberOfRows * numberOfColumns;
 
             Tiles = new Tile[NumberOfTiles];
             for (int i = 0; i < NumberOfTiles; i++)
