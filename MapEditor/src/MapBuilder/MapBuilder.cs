@@ -50,7 +50,7 @@ namespace MapEditor.src.MapBuilder
         public void OnMapSelected(string mapPath)
         {
             CheckDirty();
-            map = new Map($"{Config.GameMapFilesPath}/{mapPath}.map");
+            map = new Map($"{Config.MapFilesPath}/{mapPath}.map");
             tileEditor.Map = map;
             dimensionsEditorHandler.Map = map;
             tilesetEditorHandler.Map = map;

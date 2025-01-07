@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MapEditor.src.TilesetEditor;
 using MapEditor.src.MapBuilder;
 
 namespace MapEditor
@@ -78,6 +79,11 @@ namespace MapEditor
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             mapBuilder.CheckDirty();
+        }
+
+        private void tilesetEditorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new TilesetEditorForm().ShowDialog();
         }
     }
 }

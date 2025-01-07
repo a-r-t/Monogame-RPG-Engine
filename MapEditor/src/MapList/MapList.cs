@@ -53,10 +53,10 @@ namespace MapEditor.src.MapList
             folderContextMenu.Items.Add("Add New Folder");
             folderContextMenu.Items[0].Click += (sender, e) => {
                 TreeNode selectedNode = mapTreeView.SelectedNode;
-                string path = selectedNode.FullPath;
-                int newFolderIndex = GetNewFolderIndex($"./Resources/{path}");
+                string path = stripRootFolderName(selectedNode.FullPath);
+                int newFolderIndex = GetNewFolderIndex($"{Config.MapFilesPath}/{path}");
                 string newFolderName = newFolderIndex == 0 ? "New folder" : $"New folder ({newFolderIndex})";
-                string newFolderDirectory = $"./Resources/{path}/{newFolderName}";
+                string newFolderDirectory = $"{Config.MapFilesPath}/{path}/{newFolderName}";
                 Directory.CreateDirectory(newFolderDirectory);
                 if (Directory.Exists(newFolderDirectory))
                 {
@@ -77,12 +77,16 @@ namespace MapEditor.src.MapList
             folderContextMenu.Items.Add("Add New Map");
             folderContextMenu.Items[1].Click += (sender, e) => {
                 TreeNode selectedNode = mapTreeView.SelectedNode;
-                string path = selectedNode.FullPath;
-                int newMapIndex = GetNewMapIndex($"./Resources/{path}");
+                string path = stripRootFolderName(selectedNode.FullPath);
+                int newMapIndex = GetNewMapIndex($"{Config.MapFilesPath}/{path}");
                 string newMapName = newMapIndex == 0 ? "New map" : $"New map ({newMapIndex})";
-                string newMapFilePath = $"./Resources/{path}/{newMapName}.map";
-                FileStream fs = File.Create(newMapFilePath);
-                fs.Close();
+                string newMapFilePath = $"{Config.MapFilesPath}/{path}/{newMapName}.map";
+                string[] tilesetFilePaths = Directory.GetFiles(Config.TilesetFilesPath);
+                Array.Sort(tilesetFilePaths, StringComparer.OrdinalIgnoreCase);
+
+                // create map file with width/height of 0, 0 and set its tileset to the first tileset alphabetically in the tilesets folder
+                File.WriteAllText(newMapFilePath, $"0 0\n{Path.GetFileNameWithoutExtension(tilesetFilePaths[0])}");
+
                 if (File.Exists(newMapFilePath))
                 {
                     TreeNode newNode = new TreeNode(newMapName);
@@ -146,8 +150,8 @@ namespace MapEditor.src.MapList
         private void PopulateMapTreeView()
         {
             Queue<string> paths = new Queue<string>();
-            string rootDir = Config.GameMapFilesPath;
-            string[] rootPathParts = rootDir.Split(Path.DirectorySeparatorChar);
+            string rootDir = Config.MapFilesPath;
+            string[] rootPathParts = rootDir.Split("/");
             int rootPathPartsCount = rootPathParts.Length;
             string lastFolder = rootPathParts.Last();
             mapTreeView.Nodes.Add(lastFolder, lastFolder);
@@ -161,7 +165,7 @@ namespace MapEditor.src.MapList
             while (paths.Count > 0)
             {
                 string path = paths.Dequeue();
-                string[] pathParts = path.Split(Path.DirectorySeparatorChar);
+                string[] pathParts = path.Split("/");
 
                 TreeNode temp = mapTreeView.Nodes[pathParts[rootPathPartsCount - 1]];
                 int traversalDepth = File.Exists(path) ? pathParts.Length - 1 : pathParts.Length;
@@ -173,7 +177,7 @@ namespace MapEditor.src.MapList
                 {
                     foreach (string subdirPath in GetSubdirsInDir(path))
                     {
-                        string[] subdirPathParts = subdirPath.Split(Path.DirectorySeparatorChar);
+                        string[] subdirPathParts = subdirPath.Split("/");
                         paths.Enqueue(subdirPath);
                         string subdirName = subdirPathParts[subdirPathParts.Length - 1];
                         temp.Nodes.Add(subdirName, subdirName);
@@ -205,7 +209,7 @@ namespace MapEditor.src.MapList
 
         private string[] GetFilesInDir(string dir)
         {
-            return Directory.GetFiles(dir);
+            return Directory.GetFiles(dir).Select(file => file.Replace("\\", "/")).ToArray();
         }
 
         private bool IsMapNode(TreeNode node)
@@ -231,16 +235,22 @@ namespace MapEditor.src.MapList
                 selectedNode.ImageKey = "file-selected";
                 selectedNode.SelectedImageKey = "file-selected";
 
-                // this chops off root path since it is already included in config
-                string fullPath = selectedNode.FullPath;
-                string[] fullPathParts = fullPath.Split(Path.DirectorySeparatorChar);
-                string modifiedFullPath = string.Join(Path.DirectorySeparatorChar.ToString(), fullPathParts.Skip(1));
+                string mapPath = stripRootFolderName(selectedNode.FullPath);
 
                 foreach (MapListListener listener in listeners)
                 {
-                    listener.OnMapSelected(modifiedFullPath);
+                    listener.OnMapSelected(mapPath);
                 }
             }
+        }
+
+        // this chops off root path of a file path
+        // for example, if file path is MapFiles/test_map.map, it will chop off "MapFiles/".
+        // this is used in many places in this class because the tree view starts with MapFiles/ and includes it in all its node paths, but it's not needed because the Config file already has the full path to the MapFiles
+        private string stripRootFolderName(string path)
+        {
+            string[] pathParts = path.Replace("\\", "/").Split("/");
+            return string.Join("/", pathParts.Skip(1));
         }
 
         // node single click
@@ -282,11 +292,11 @@ namespace MapEditor.src.MapList
             {
                 if ((string)node.Tag == "folder")
                 {
-                    Directory.Move($"./Resources/{oldPath}", $"./Resources/{mapTreeView.SelectedNode.FullPath}");
+                    Directory.Move($"{Config.MapFilesPath}/{stripRootFolderName(oldPath)}", $"{Config.MapFilesPath}/{stripRootFolderName(mapTreeView.SelectedNode.FullPath)}");
                 }
                 else if ((string)node.Tag == "file")
                 {
-                    Directory.Move($"./Resources/{oldPath}.map", $"./Resources/{mapTreeView.SelectedNode.FullPath}.map");
+                    Directory.Move($"{Config.MapFilesPath}/{stripRootFolderName(oldPath)}.map", $"{Config.MapFilesPath}/{stripRootFolderName(mapTreeView.SelectedNode.FullPath)}.map");
                 }
             }
             else
