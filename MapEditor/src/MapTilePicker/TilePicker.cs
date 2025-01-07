@@ -102,13 +102,13 @@ namespace MapEditor.src.MapTilePicker
                         return;
                     }
                 }
-                Cursor = Cursors.Arrow;
+                Cursor = Cursors.Default;
             }
         }
 
         private void tilePickerPictureBox_MouseLeave(object sender, EventArgs e)
         {
-            Cursor = Cursors.Arrow;
+            Cursor = Cursors.Default;
         }
 
         private void tilePickerPanel_Resize(object sender, EventArgs e)
@@ -133,7 +133,7 @@ namespace MapEditor.src.MapTilePicker
                         return;
                     }
                 }
-                Cursor = Cursors.Arrow;
+                Cursor = Cursors.Default;
             }
         }
 
