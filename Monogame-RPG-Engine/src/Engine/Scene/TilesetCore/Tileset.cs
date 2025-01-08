@@ -79,9 +79,9 @@ namespace Engine.Scene.TilesetCore
                     {
                         Frame frame = new Frame(GetSubImage(frameData.Row, frameData.Column));
                         frame.Scale = TileScale;
-                        if (layerData.Bounds != null)
+                        if (tileData.Bounds != null)
                         {
-                            frame.Bounds = new SpriteGraphics.Rectangle(layerData.Bounds.X, layerData.Bounds.Y, layerData.Bounds.Width, layerData.Bounds.Height);
+                            frame.Bounds = new SpriteGraphics.Rectangle(tileData.Bounds.X, tileData.Bounds.Y, tileData.Bounds.Width, tileData.Bounds.Height);
                         }
                         if (frameData.Delay.HasValue)
                         {

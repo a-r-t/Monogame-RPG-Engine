@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace MapEditor.Models
+namespace MapEditor.src.Models
 {
     public class TilesetDataFile
     {
@@ -15,27 +15,6 @@ namespace MapEditor.Models
 
         [JsonPropertyName("tiles")]
         public List<TileData> Tiles { get; set; }
-
-        public class BottomData
-        {
-            [JsonPropertyName("name")]
-            public string Name { get; set; }
-
-            [JsonPropertyName("row")]
-            public int Row { get; set; }
-
-            [JsonPropertyName("col")]
-            public int Column { get; set; }
-
-            [JsonPropertyName("bounds")]
-            public BoundsData Bounds { get; set; }
-
-            [JsonPropertyName("delay")]
-            public int? Delay { get; set; }
-
-            [JsonPropertyName("effect")]
-            public string SpriteEffect { get; set; }
-        }
 
         public class BoundsData
         {
@@ -74,9 +53,6 @@ namespace MapEditor.Models
 
             [JsonPropertyName("frames")]
             public List<FrameData> Frames { get; set; }
-
-            [JsonPropertyName("bounds")]
-            public BoundsData Bounds { get; set; }
         }
 
         public class PropertiesData
@@ -104,6 +80,9 @@ namespace MapEditor.Models
 
             [JsonPropertyName("tileType")]
             public string TileType { get; set; }
+
+            [JsonPropertyName("bounds")]
+            public BoundsData Bounds { get; set; }
         }
     }
 }

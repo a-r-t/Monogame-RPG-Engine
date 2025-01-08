@@ -8,9 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Text.Json;
 using System.Data.Common;
-using MapEditor.Utils;
-using static MapEditor.Models.TilesetDataFile;
-using MapEditor.Models;
+using static MapEditor.src.Models.TilesetDataFile;
+using MapEditor.src.Utils;
 
 namespace MapEditor.src.Models
 {
@@ -42,7 +41,7 @@ namespace MapEditor.src.Models
         private int numberOfRows;
         private int numberOfColumns;
         public int NumberOfTiles { get; private set; }
-
+        public TilesetDataFile TilesetDataFile { get; set; }
 
         public string Name
         {
@@ -66,25 +65,25 @@ namespace MapEditor.src.Models
 
         public void LoadTileset()
         {
-            TilesetDataFile tilesetData = Tileset.ReadTilesetDataFile(TilesetFilePath);
+            TilesetDataFile = Tileset.ReadTilesetDataFile(TilesetFilePath);
 
-            TilesetImageFilePath = $"{Config.GraphicsPath}/{tilesetData.Properties.TilesetImagePath}";
+            TilesetImageFilePath = $"{Config.GraphicsPath}/{TilesetDataFile.Properties.TilesetImagePath}";
             TilesetImage = new Bitmap(TilesetImageFilePath);
-            TileWidth = tilesetData.Properties.TileWidth;
-            TileHeight = tilesetData.Properties.TileHeight;
-            TileScale = tilesetData.Properties.TileScale;
+            TileWidth = TilesetDataFile.Properties.TileWidth;
+            TileHeight = TilesetDataFile.Properties.TileHeight;
+            TileScale = TilesetDataFile.Properties.TileScale;
 
             TilesetImageWidth = TilesetImage.Width;
             TilesetImageHeight = TilesetImage.Height;
             numberOfRows = TilesetImageHeight / TileHeight;
             numberOfColumns = TilesetImageWidth / TileWidth;
 
-            NumberOfTiles = tilesetData.Tiles.Count;
+            NumberOfTiles = TilesetDataFile.Tiles.Count;
             Tiles = new Tile[NumberOfTiles];
 
-            for (int i = 0; i < tilesetData.Tiles.Count; i++)
+            for (int i = 0; i < TilesetDataFile.Tiles.Count; i++)
             {
-                TileData tileData = tilesetData.Tiles[i];
+                TileData tileData = TilesetDataFile.Tiles[i];
                 Bitmap finalTileImage = null;
                 foreach (LayerData layerData in tileData.Layers)
                 {
