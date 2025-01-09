@@ -27,6 +27,7 @@ namespace MapEditor.src.MapTilePicker
         public void SetupTilePicker()
         {
             tilePickerPictureBox.Size = new Size(0, 0);
+            tilePickerPictureBox.BackColor = Config.TransparentColor;
 
             // number of columns and rows needed to fit all tiles based on size of parent panel's width number of tiles
             // the smaller the width of the parent panel, the less columns and more rows that will be needed

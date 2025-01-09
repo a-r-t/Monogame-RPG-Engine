@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -59,16 +60,20 @@ namespace MapEditor.src.TilesetEditor
         private List<System.Windows.Forms.Timer> animationTimers = new List<System.Windows.Forms.Timer>();
         private List<int> frameTimers;
 
+        private ComboBox previewComboBox;
 
+        private const int MAX_LAYER_COUNT = 2;
         private Label layerLabel;
         private Button addLayerButton;
-        private Button previousLayer;
-        private Button nextLayer;
+        private Button previousLayerButton;
+        private Button nextLayerButton;
+        private int selectedLayer;
 
         private Label frameLabel;
-        private Button previousFrame;
-        private Button nextFrame;
+        private Button previousFrameButton;
+        private Button nextFrameButton;
         private Button addFrameButton;
+        private int selectedFrame;
 
         private NumericUpDown rowInput;
         private NumericUpDown columnInput;
@@ -103,7 +108,7 @@ namespace MapEditor.src.TilesetEditor
 
             };
 
-            tilesetTilesPictureBoxPanel.BackColor = Config.TransparentColor;
+            tilesetTilesPictureBoxPanel.BackColor = Color.Black;
             tilesetTilesPictureBoxPanel.AutoScroll = true;
             tilesetTilesPictureBoxPanel.Resize += (sender, e) =>
             {
@@ -116,7 +121,7 @@ namespace MapEditor.src.TilesetEditor
 
             tilesetTilesPictureBox = new PictureBox();
             tilesetTilesPictureBox.Location = new Point(0, 0);
-            tilesetTilesPictureBox.BackColor = Color.Black;
+            tilesetTilesPictureBox.BackColor = Config.TransparentColor;
             tilesetTilesPictureBoxPanel.Controls.Add(tilesetTilesPictureBox);
             tilesetTilesPictureBox.SizeMode = PictureBoxSizeMode.AutoSize;
 
@@ -270,14 +275,12 @@ namespace MapEditor.src.TilesetEditor
             Label previewLabel = new Label
             {
                 Text = "Preview:",
-                Location = new Point(5, 72),
+                Location = new Point(5, 82),
                 AutoSize = true
             };
             tilePreviewPictureBox = new PictureBox();
             tilePreviewPictureBox.BackColor = Color.Black;
-            tilePreviewPictureBox.Location = new Point(5, 92);
-            tilePropertiesPanel.Controls.Add(previewLabel);
-            tilePropertiesPanel.Controls.Add(tilePreviewPictureBox);
+            tilePreviewPictureBox.Location = new Point(5, 108);
 
             tilePreviewPictureBox.Paint += (sender, e) =>
             {
@@ -285,17 +288,60 @@ namespace MapEditor.src.TilesetEditor
                 {
                     e.Graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
                     e.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-                    for (int i = 0; i < tileLayerPreviews.Count; i++)
+
+                    string previewSelection = previewComboBox.SelectedItem.ToString();
+                    if (previewSelection == "Full")
                     {
-                        e.Graphics.DrawImage(tileLayerPreviews[i][currentFrameIndexes[i]].image, new Rectangle(0, 0, tileset.TilesetScaledWidth, tileset.TilesetScaledHeight));
+                        for (int i = 0; i < tileLayerPreviews.Count; i++)
+                        {
+                            e.Graphics.DrawImage(tileLayerPreviews[i][currentFrameIndexes[i]].image, new Rectangle(0, 0, tileset.TilesetScaledWidth, tileset.TilesetScaledHeight));
+                        }
+                    }
+                    else if (previewSelection == "Layer")
+                    {
+                        e.Graphics.DrawImage(tileLayerPreviews[selectedLayer][currentFrameIndexes[selectedLayer]].image, new Rectangle(0, 0, tileset.TilesetScaledWidth, tileset.TilesetScaledHeight));
+                    }
+                    else if (previewSelection == "Frame")
+                    {
+                        e.Graphics.DrawImage(tileLayerPreviews[selectedLayer][selectedFrame].image, new Rectangle(0, 0, tileset.TilesetScaledWidth, tileset.TilesetScaledHeight));
                     }
                 }
             };
+
+            tilePropertiesPanel.Controls.Add(previewLabel);
+            tilePropertiesPanel.Controls.Add(tilePreviewPictureBox);
+
+            previewComboBox = new ComboBox()
+            {
+                Location = new Point(58, 78),
+                DropDownStyle = ComboBoxStyle.DropDownList
+            };
+            previewComboBox.Items.AddRange(new string[] { "Full", "Layer", "Frame" });
+            previewComboBox.Width = Math.Max(tilePropertiesPanel.ClientSize.Width - previewComboBox.Left - 5, 50);
+            tilePropertiesPanel.Controls.Add(previewComboBox);
+
+            previewComboBox.SelectedIndexChanged += (sender, e) =>
+            {
+                currentFrameIndexes = currentFrameIndexes.Select(frameIndex => 0).ToList();
+                tilePreviewPictureBox.Invalidate();
+            };
+
+            layerLabel = new Label
+            {
+                Text = "Layer 0/0:",
+                Location = new Point(5, 152),
+                AutoSize = true
+            };
+
+            tilePropertiesPanel.Controls.Add(layerLabel);
 
             tilePropertiesPanel.Resize += (sender, e) =>
             {
                 nameTextbox.Width = Math.Max(tilePropertiesPanel.ClientSize.Width - nameTextbox.Left - 5, 100);
                 tileTypeComboBox.Width = Math.Max(tilePropertiesPanel.ClientSize.Width - tileTypeComboBox.Left - 5, 100);
+                previewComboBox.Width = Math.Max(tilePropertiesPanel.ClientSize.Width - previewComboBox.Left - 5, 50);
+
+                tilePreviewPictureBox.Location = new Point((tilePropertiesPanel.ClientSize.Width / 2) - (tilePreviewPictureBox.Width / 2), tilePreviewPictureBox.Location.Y);
 
                 //rowInput.Width = Math.Max(tilePropertiesPanel.ClientSize.Width - rowInput.Left - 5, 50);
                 //columnInput.Width = Math.Max(tilePropertiesPanel.ClientSize.Width - columnInput.Left - 5, 50);
@@ -356,7 +402,7 @@ namespace MapEditor.src.TilesetEditor
 
                 foreach (FrameData frameData in layerData.Frames)
                 {
-                    Bitmap layerImage = ImageUtils.MakeColorTransparent(tileset.GetTileSubImage(frameData.Row, frameData.Column), Color.Magenta);
+                    Bitmap layerImage = ImageUtils.MakeColorTransparent(tileset.GetTileSubImage(frameData.Row, frameData.Column), Config.TransparentColor);
                     if (frameData.SpriteEffect != null)
                     {
                         switch (frameData.SpriteEffect)
@@ -411,7 +457,9 @@ namespace MapEditor.src.TilesetEditor
 
             tilePreviewPictureBox.Size = new Size(tileset.TilesetScaledWidth, tileset.TilesetScaledHeight);
             tilePreviewPictureBox.Image = new Bitmap(tileset.TilesetScaledWidth, tileset.TilesetScaledHeight);
+            tilePreviewPictureBox.Location = new Point((tilePropertiesPanel.ClientSize.Width / 2) - (tilePreviewPictureBox.Width / 2), tilePreviewPictureBox.Location.Y);
 
+            previewComboBox.SelectedItem = "Full";
         }
 
     }
