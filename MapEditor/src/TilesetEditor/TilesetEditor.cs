@@ -784,7 +784,20 @@ namespace MapEditor.src.TilesetEditor
             {
                 Location = new Point(50, 86),
                 Width = 50,
-                DecimalPlaces = 0
+                DecimalPlaces = 0,
+                Minimum = 0,
+                Maximum = decimal.MaxValue
+        };
+            delayInput.ValueChanged += (sender, e) =>
+            {
+                int? oldDelay = SelectedTileData.Layers[selectedLayer].Frames[selectedFrame].Delay;
+                if (!oldDelay.HasValue || oldDelay != (int)delayInput.Value) {
+                    SelectedTileData.Layers[selectedLayer].Frames[selectedFrame].Delay = (int)delayInput.Value;
+                    if (SelectedTileData.Layers[selectedLayer].Frames.Count > 1)
+                    {
+                        OnTileSelected();
+                    }
+                }
             };
             frameGroupBox.Controls.Add(delayLabel);
             frameGroupBox.Controls.Add(delayInput);
@@ -895,8 +908,18 @@ namespace MapEditor.src.TilesetEditor
             tilesetTilesPictureBox.Image = new Bitmap(tilesetTilesPictureBoxPanel.ClientSize.Width, numberOfRows * Tileset.TilesetScaledHeight + (numberOfRows * tileSpacing) + tileSpacing);
         }
 
+        private void StopAnimationTimers()
+        {
+            foreach (System.Windows.Forms.Timer timer in animationTimers)
+            {
+                timer.Stop();
+            }
+        }
+
         private void OnTileSelected()
         {
+            StopAnimationTimers();
+
             nameTextbox.Text = SelectedTileData.Name;
 
             switch (SelectedTileData.TileType)
@@ -946,7 +969,7 @@ namespace MapEditor.src.TilesetEditor
                 frameTimers.Add(0);
 
                 System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer();
-                timer.Interval = 240; // closest I can get to 60 fps
+                timer.Interval = 17; // closest I can get to 60 fps
 
                 int layerIndex = i; // this is needed to prevent i from increasing by 1 when going into the tick method later, don't ask I don't really understand why it does that
                 timer.Tick += (sender, e) =>
@@ -954,15 +977,15 @@ namespace MapEditor.src.TilesetEditor
                     int? delay = tileLayerPreviews[layerIndex][currentFrameIndexes[layerIndex]].frameData.Delay;
                     if (delay.HasValue)
                     {
-                        if (delay.Value > frameTimers[layerIndex])
+                        if (frameTimers[layerIndex] > delay.Value)
                         {
+                            frameTimers[layerIndex] = 0;
                             currentFrameIndexes[layerIndex]++;
                             if (currentFrameIndexes[layerIndex] >= tileLayerPreviews[layerIndex].Count)
                             {
                                 currentFrameIndexes[layerIndex] = 0;
-                                frameTimers[layerIndex] = 0;
                             }
-                            tilePreviewPictureBox.Refresh();
+                            tilePreviewPictureBox.Invalidate();
                         }
                         else
                         {
@@ -1073,7 +1096,6 @@ namespace MapEditor.src.TilesetEditor
             if (numberOfFrames > 1)
             {
                 delayInput.Enabled = true;
-                delayInput.Minimum = 0;
 
                 if (SelectedTileData.Layers[selectedLayer].Frames[selectedFrame].Delay != null)
                 {
