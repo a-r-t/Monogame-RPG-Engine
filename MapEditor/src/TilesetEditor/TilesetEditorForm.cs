@@ -18,7 +18,7 @@ namespace MapEditor.src.TilesetEditor
         {
             InitializeComponent();
 
-            Size = new Size(900, 600);
+            Size = new Size(900, 700);
 
             tilesetEditor = new TilesetEditor();
             Controls.Add(tilesetEditor);
