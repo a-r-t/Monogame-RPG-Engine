@@ -21,11 +21,23 @@ namespace MapEditor.src.TilesetEditor
     public partial class TilesetEditor : UserControl
     {
         private Tileset tileset;
-
+        private Tileset Tileset
+        {
+            get
+            {
+                return tileset;
+            }
+            set
+            {
+                tileset = value;
+                OnTilesetSelected();
+            }
+        }
         private PictureBox tilesetTilesPictureBox;
 
         private Panel tilesetTilesPictureBoxPanel;
         private Panel tilePropertiesPanel;
+        private Panel tilePreviewPanel;
 
         private Tile selectedTile;
         private Tile SelectedTile
@@ -43,7 +55,7 @@ namespace MapEditor.src.TilesetEditor
                         timer.Stop();
                     }
                     selectedTile = value;
-                    selectedTileData = tileset.TilesetDataFile.Tiles[value.Index];
+                    selectedTileData = Tileset.TilesetDataFile.Tiles[value.Index];
                     OnTileSelected();
                 }
             }
@@ -55,24 +67,32 @@ namespace MapEditor.src.TilesetEditor
 
         // list of layers, each layer then has a list of each frame of the bitmap
         private List<List<(FrameData frameData, Bitmap image)>> tileLayerPreviews;
-        private PictureBox tilePreviewPictureBox;
         private List<int> currentFrameIndexes;
         private List<System.Windows.Forms.Timer> animationTimers = new List<System.Windows.Forms.Timer>();
         private List<int> frameTimers;
 
+        private PictureBox tilePreviewPictureBox;
         private ComboBox previewComboBox;
+        private CheckBox showBoundsCheckBox;
+        private bool showBoundsInPreview;
+        private Color selectedBoundsColor;
+        private ComboBox boundsColorComboBox;
+        private Button removeTile;
+        private NumericUpDown tileIndexInput;
 
         private const int MAX_LAYER_COUNT = 2;
-        private Label layerLabel;
+        private Label numberOfLayersLabel;
+        private Label selectedLayerLabel;
+
         private Button addLayerButton;
-        private Button previousLayerButton;
-        private Button nextLayerButton;
+        private Button removeLayerButton;
+        private NumericUpDown selectLayerInput;
         private int selectedLayer;
 
-        private Label frameLabel;
-        private Button previousFrameButton;
-        private Button nextFrameButton;
+        private Label numberOfFramesLabel;
+        private NumericUpDown selectFrameInput;
         private Button addFrameButton;
+        private Button removeFrameButton;
         private int selectedFrame;
 
         private NumericUpDown rowInput;
@@ -80,15 +100,17 @@ namespace MapEditor.src.TilesetEditor
         private Button selectGraphicButton;
         private ComboBox imageEffectComboBox;
         private NumericUpDown delayInput;
-        
+
 
         public TilesetEditor()
         {
             InitializeComponent();
 
             // had to partially use the designer view to use split containers, so this is just an alias to make the code easier to read since I can't rename the panels in the split containers
-            tilesetTilesPictureBoxPanel = splitContainer2.Panel1;
+            tilesetTilesPictureBoxPanel = splitContainer3.Panel1;
             tilePropertiesPanel = splitContainer2.Panel2;
+            tilePreviewPanel = splitContainer3.Panel2;
+
 
             string[] tilesetFilePaths = Directory.GetFiles(Config.TilesetFilesPath, "*.tileset", SearchOption.AllDirectories);
             Array.Sort(tilesetFilePaths, StringComparer.OrdinalIgnoreCase);
@@ -102,17 +124,16 @@ namespace MapEditor.src.TilesetEditor
             tilesetListBox.SelectedIndexChanged += (sender, e) =>
             {
                 ListBoxItem<string> selectedTileset = tilesetListBox.Items[tilesetListBox.SelectedIndex] as ListBoxItem<string>;
-                tileset = new Tileset(selectedTileset.Value);
+                Tileset = new Tileset(selectedTileset.Value);
 
                 SetupTilePanel();
-
             };
 
             tilesetTilesPictureBoxPanel.BackColor = Color.Black;
             tilesetTilesPictureBoxPanel.AutoScroll = true;
             tilesetTilesPictureBoxPanel.Resize += (sender, e) =>
             {
-                if (tileset != null)
+                if (Tileset != null)
                 {
                     SetupTilePanel();
                     tilesetTilesPictureBoxPanel.Invalidate();
@@ -127,22 +148,22 @@ namespace MapEditor.src.TilesetEditor
 
             tilesetTilesPictureBox.Paint += (sender, e) =>
             {
-                if (tileset != null)
+                if (Tileset != null)
                 {
                     e.Graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
                     e.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
 
                     // paint tile picker tiles
-                    for (int i = 0; i < tileset.Tiles.Length; i++)
+                    for (int i = 0; i < Tileset.Tiles.Length; i++)
                     {
-                        Tile tile = tileset.Tiles[i];
+                        Tile tile = Tileset.Tiles[i];
                         tile.Paint(e.Graphics);
                     }
 
                     // paint yellow rectangle around selected tile
                     if (selectedTile != null)
                     {
-                        int borderSize = tileset.TileScale + 2;
+                        int borderSize = Tileset.TileScale + 2;
                         Pen pen = new Pen(Color.Yellow, borderSize);
                         e.Graphics.DrawRectangle(
                             pen,
@@ -159,9 +180,9 @@ namespace MapEditor.src.TilesetEditor
 
             tilesetTilesPictureBox.MouseMove += (sender, e) =>
             {
-                if (tileset != null)
+                if (Tileset != null)
                 {
-                    foreach (Tile tile in tileset.Tiles)
+                    foreach (Tile tile in Tileset.Tiles)
                     {
                         if (tile.IsPointInTile(e.Location))
                         {
@@ -180,9 +201,9 @@ namespace MapEditor.src.TilesetEditor
 
             tilesetTilesPictureBox.MouseClick += (sender, e) =>
             {
-                if (tileset != null)
+                if (Tileset != null)
                 {
-                    foreach (Tile tile in tileset.Tiles)
+                    foreach (Tile tile in Tileset.Tiles)
                     {
                         if (tile.IsPointInTile(e.Location))
                         {
@@ -200,7 +221,7 @@ namespace MapEditor.src.TilesetEditor
             {
                 if (e.Button == MouseButtons.Left)
                 {
-                    foreach (Tile tile in tileset.Tiles)
+                    foreach (Tile tile in Tileset.Tiles)
                     {
                         if (tile.IsPointInTile(e.Location))
                         {
@@ -244,6 +265,21 @@ namespace MapEditor.src.TilesetEditor
             tilePropertiesPanel.Controls.Add(tileTypeLabel);
             tilePropertiesPanel.Controls.Add(tileTypeComboBox);
 
+
+            Label tileIndexLabel = new Label()
+            {
+                Text = "Index:",
+                Location = new Point(5, 74),
+                AutoSize = true
+            };
+
+            tileIndexInput = new NumericUpDown()
+            {
+                Location = new Point(50, 71),
+                Width = 60
+            };
+            tilePropertiesPanel.Controls.Add(tileIndexLabel);
+            tilePropertiesPanel.Controls.Add(tileIndexInput);
             //Label rowLabel = new Label
             //{
             //    Text = "Row:",
@@ -274,13 +310,13 @@ namespace MapEditor.src.TilesetEditor
 
             Label previewLabel = new Label
             {
-                Text = "Preview:",
-                Location = new Point(5, 82),
+                Text = "Preview Mode:",
+                Location = new Point(5, 10),
                 AutoSize = true
             };
             tilePreviewPictureBox = new PictureBox();
-            tilePreviewPictureBox.BackColor = Color.Black;
-            tilePreviewPictureBox.Location = new Point(5, 108);
+            tilePreviewPictureBox.BackColor = Config.TransparentColor;
+            tilePreviewPictureBox.Location = new Point(tilePreviewPanel.Width / 2 - tilePreviewPictureBox.Width / 2, 100);
 
             tilePreviewPictureBox.Paint += (sender, e) =>
             {
@@ -294,31 +330,40 @@ namespace MapEditor.src.TilesetEditor
                     {
                         for (int i = 0; i < tileLayerPreviews.Count; i++)
                         {
-                            e.Graphics.DrawImage(tileLayerPreviews[i][currentFrameIndexes[i]].image, new Rectangle(0, 0, tileset.TilesetScaledWidth, tileset.TilesetScaledHeight));
+                            e.Graphics.DrawImage(tileLayerPreviews[i][currentFrameIndexes[i]].image, new Rectangle(0, 0, Tileset.TilesetScaledWidth, Tileset.TilesetScaledHeight));
                         }
                     }
                     else if (previewSelection == "Layer")
                     {
-                        e.Graphics.DrawImage(tileLayerPreviews[selectedLayer][currentFrameIndexes[selectedLayer]].image, new Rectangle(0, 0, tileset.TilesetScaledWidth, tileset.TilesetScaledHeight));
+                        e.Graphics.DrawImage(tileLayerPreviews[selectedLayer][currentFrameIndexes[selectedLayer]].image, new Rectangle(0, 0, Tileset.TilesetScaledWidth, Tileset.TilesetScaledHeight));
                     }
                     else if (previewSelection == "Frame")
                     {
-                        e.Graphics.DrawImage(tileLayerPreviews[selectedLayer][selectedFrame].image, new Rectangle(0, 0, tileset.TilesetScaledWidth, tileset.TilesetScaledHeight));
+                        e.Graphics.DrawImage(tileLayerPreviews[selectedLayer][selectedFrame].image, new Rectangle(0, 0, Tileset.TilesetScaledWidth, Tileset.TilesetScaledHeight));
+                    }
+
+                    if (showBoundsInPreview && selectedTileData.TileType == "NOT_PASSABLE")
+                    {
+                        if (selectedTileData.Bounds != null)
+                        {
+                            e.Graphics.FillRectangle(new SolidBrush(selectedBoundsColor), new Rectangle(selectedTileData.Bounds.X * Tileset.TileScale, selectedTileData.Bounds.Y * Tileset.TileScale, selectedTileData.Bounds.Width * Tileset.TileScale, selectedTileData.Bounds.Height * Tileset.TileScale));
+                        }
+                        else
+                        {
+                            e.Graphics.FillRectangle(new SolidBrush(selectedBoundsColor), new Rectangle(0, 0, Tileset.TilesetScaledWidth, Tileset.TilesetScaledHeight));
+                        }
                     }
                 }
             };
 
-            tilePropertiesPanel.Controls.Add(previewLabel);
-            tilePropertiesPanel.Controls.Add(tilePreviewPictureBox);
-
             previewComboBox = new ComboBox()
             {
-                Location = new Point(58, 78),
-                DropDownStyle = ComboBoxStyle.DropDownList
+                Location = new Point(94, 7),
+                DropDownStyle = ComboBoxStyle.DropDownList,
+                Width = 80
             };
             previewComboBox.Items.AddRange(new string[] { "Full", "Layer", "Frame" });
-            previewComboBox.Width = Math.Max(tilePropertiesPanel.ClientSize.Width - previewComboBox.Left - 5, 50);
-            tilePropertiesPanel.Controls.Add(previewComboBox);
+            //previewComboBox.Width = Math.Max(tilePropertiesPanel.ClientSize.Width - previewComboBox.Left - 5, 50);
 
             previewComboBox.SelectedIndexChanged += (sender, e) =>
             {
@@ -326,53 +371,216 @@ namespace MapEditor.src.TilesetEditor
                 tilePreviewPictureBox.Invalidate();
             };
 
-            layerLabel = new Label
+            showBoundsCheckBox = new CheckBox()
             {
-                Text = "Layer 0/0:",
-                Location = new Point(5, 152),
-                AutoSize = true
+                Text = "Show Bounds",
+                Location = new Point(5, 40),
+                CheckAlign = ContentAlignment.MiddleLeft,
+                Width = 100
+            };
+            showBoundsCheckBox.CheckedChanged += (sender, e) =>
+            {
+                showBoundsInPreview = showBoundsCheckBox.Checked;
+                tilePreviewPictureBox.Invalidate();
             };
 
-            tilePropertiesPanel.Controls.Add(layerLabel);
+            boundsColorComboBox = new ComboBox()
+            {
+                Location = new Point(108, 40),
+                DropDownStyle = ComboBoxStyle.DropDownList,
+                Width = 66
+            };
+            boundsColorComboBox.Items.AddRange(new string[] { "Red", "Blue", "Green" });
+            boundsColorComboBox.SelectedIndexChanged += (sender, e) =>
+            {
+                switch (boundsColorComboBox.Items[boundsColorComboBox.SelectedIndex] as string)
+                {
+                    case "Red":
+                        selectedBoundsColor = Color.FromArgb(100, 255, 0, 0);
+                        break;
+                    case "Blue":
+                        selectedBoundsColor = Color.FromArgb(100, 0, 0, 255);
+                        break;
+                    case "Green":
+                        selectedBoundsColor = Color.FromArgb(100, 0, 255, 0);
+                        break;
+                }
+                tilePreviewPictureBox.Invalidate();
+            };
+
+            tilePreviewPanel.Controls.Add(previewLabel);
+            tilePreviewPanel.Controls.Add(tilePreviewPictureBox);
+            tilePreviewPanel.Controls.Add(previewComboBox);
+            tilePreviewPanel.Controls.Add(showBoundsCheckBox);
+            tilePreviewPanel.Controls.Add(boundsColorComboBox);
+
+
+
+            GroupBox layerGroupBox = new GroupBox()
+            {
+                Text = "Layers",
+                Location = new Point(5, 172),
+                Size = new Size(150, 170)
+            };
+
+            numberOfLayersLabel = new Label
+            {
+                Text = "Number of Layers:",
+                Location = new Point(5, 25),
+                AutoSize = true
+            };
+            selectedLayer = 0;
+
+            Label selectedLayerLabel = new Label
+            {
+                Text = "Selected Layer:",
+                Location = new Point(5, 54),
+                AutoSize = true
+            };
+            selectLayerInput = new NumericUpDown()
+            {
+                Location = new Point(95, 52),
+                Width = 50
+            };
+            //selectLayerInput.Width = Math.Max(layerGroupBox.ClientSize.Width - selectLayerInput.Left - 5, 50);
+
+            selectLayerInput.ValueChanged += (sender, e) =>
+            {
+                selectedLayer = (int)selectLayerInput.Value - 1;
+                tilePreviewPictureBox.Invalidate();
+            };
+
+            addLayerButton = new Button()
+            {
+                Text = "Add Layer",
+                Size = new Size(100, 30),
+                Location = new Point(5, 89)
+            };
+            removeLayerButton = new Button()
+            {
+                Text = "Remove Layer",
+                Size = new Size(100, 30),
+                Location = new Point(5, 128)
+            };
+
+
+            layerGroupBox.Controls.Add(selectedLayerLabel);
+            layerGroupBox.Controls.Add(selectLayerInput);
+            layerGroupBox.Controls.Add(numberOfLayersLabel);
+            layerGroupBox.Controls.Add(addLayerButton);
+            layerGroupBox.Controls.Add(removeLayerButton);
+            tilePropertiesPanel.Controls.Add(layerGroupBox);
+
+
+            GroupBox frameGroupBox = new GroupBox()
+            {
+                Text = "Frames",
+                Location = new Point(5, 372),
+                Size = new Size(150, 170)
+            };
+
+            numberOfFramesLabel = new Label
+            {
+                Text = "Number of Frames:",
+                Location = new Point(5, 25),
+                AutoSize = true
+            };
+            selectedFrame = 0;
+
+            Label selectedFrameLabel = new Label
+            {
+                Text = "Selected Frame:",
+                Location = new Point(5, 54),
+                AutoSize = true
+            };
+            selectFrameInput = new NumericUpDown()
+            {
+                Location = new Point(95, 52),
+                Width = 50
+            };
+            //selectFrameInput.Width = Math.Max(frameGroupBox.ClientSize.Width - selectFrameInput.Left - 5, 50);
+
+            selectFrameInput.ValueChanged += (sender, e) =>
+            {
+                selectedFrame = (int)selectFrameInput.Value - 1;
+                tilePreviewPictureBox.Invalidate();
+            };
+
+            addFrameButton = new Button()
+            {
+                Text = "Add Frame",
+                Size = new Size(100, 30),
+                Location = new Point(5, 89)
+            };
+            removeFrameButton = new Button()
+            {
+                Text = "Remove Frame",
+                Size = new Size(100, 30),
+                Location = new Point(5, 128)
+            };
+
+
+            frameGroupBox.Controls.Add(selectedFrameLabel);
+            frameGroupBox.Controls.Add(selectFrameInput);
+            frameGroupBox.Controls.Add(numberOfFramesLabel);
+            frameGroupBox.Controls.Add(addFrameButton);
+            frameGroupBox.Controls.Add(removeFrameButton);
+            tilePropertiesPanel.Controls.Add(frameGroupBox);
 
             tilePropertiesPanel.Resize += (sender, e) =>
             {
                 nameTextbox.Width = Math.Max(tilePropertiesPanel.ClientSize.Width - nameTextbox.Left - 5, 100);
                 tileTypeComboBox.Width = Math.Max(tilePropertiesPanel.ClientSize.Width - tileTypeComboBox.Left - 5, 100);
-                previewComboBox.Width = Math.Max(tilePropertiesPanel.ClientSize.Width - previewComboBox.Left - 5, 50);
+                //previewComboBox.Width = Math.Max(tilePropertiesPanel.ClientSize.Width - previewComboBox.Left - 5, 50);
 
-                tilePreviewPictureBox.Location = new Point((tilePropertiesPanel.ClientSize.Width / 2) - (tilePreviewPictureBox.Width / 2), tilePreviewPictureBox.Location.Y);
+                //selectLayerInput.Width = Math.Max(tilePropertiesPanel.ClientSize.Width - selectLayerInput.Left - 5, 50);
 
                 //rowInput.Width = Math.Max(tilePropertiesPanel.ClientSize.Width - rowInput.Left - 5, 50);
                 //columnInput.Width = Math.Max(tilePropertiesPanel.ClientSize.Width - columnInput.Left - 5, 50);
+
+            };
+
+            tilePreviewPanel.Resize += (sender, e) =>
+            {
+                tilePreviewPictureBox.Location = new Point(tilePreviewPanel.Width / 2 - tilePreviewPictureBox.Width / 2, tilePreviewPictureBox.Location.Y);
+
             };
 
 
             tilesetListBox.SelectedIndex = 0;
+            boundsColorComboBox.SelectedIndex = 0;
 
-            if (tileset.Tiles.Length > 0)
+
+        }
+
+        private void OnTilesetSelected()
+        {
+            if (Tileset.Tiles.Length > 0)
             {
-                SelectedTile = tileset.Tiles[0];
+                SelectedTile = Tileset.Tiles[0];
             }
+
+            tileIndexInput.Minimum = 1;
+            tileIndexInput.Maximum = Tileset.Tiles.Length;
         }
 
         private void SetupTilePanel()
         {
-            int tileSpacing = tileset.TileScale + 2;
-            int numberOfColumns = Math.Max((tilesetTilesPictureBoxPanel.ClientSize.Width - tileSpacing) / (tileset.TilesetScaledWidth + tileSpacing), 1);
-            int numberOfRows = (int)Math.Ceiling(tileset.NumberOfTiles / (float)numberOfColumns);
+            int tileSpacing = Tileset.TileScale + 2;
+            int numberOfColumns = Math.Max((tilesetTilesPictureBoxPanel.ClientSize.Width - tileSpacing) / (Tileset.TilesetScaledWidth + tileSpacing), 1);
+            int numberOfRows = (int)Math.Ceiling(Tileset.NumberOfTiles / (float)numberOfColumns);
 
             // set location of tiles in tile picker
-            for (int i = 0; i < tileset.Tiles.Length; i++)
+            for (int i = 0; i < Tileset.Tiles.Length; i++)
             {
-                Tile tile = tileset.Tiles[i];
+                Tile tile = Tileset.Tiles[i];
                 int row = i / numberOfColumns;
                 int column = i % numberOfColumns;
-                tile.SetLocation(column * tileset.TilesetScaledWidth + (column * tileSpacing) + tileSpacing, row * tileset.TilesetScaledHeight + (row * tileSpacing) + tileSpacing);
-                tile.SetDimensions(tileset.TilesetScaledWidth, tileset.TilesetScaledHeight);
+                tile.SetLocation(column * Tileset.TilesetScaledWidth + (column * tileSpacing) + tileSpacing, row * Tileset.TilesetScaledHeight + (row * tileSpacing) + tileSpacing);
+                tile.SetDimensions(Tileset.TilesetScaledWidth, Tileset.TilesetScaledHeight);
             }
 
-            tilesetTilesPictureBox.Image = new Bitmap(tilesetTilesPictureBoxPanel.ClientSize.Width, numberOfRows * tileset.TilesetScaledHeight + (numberOfRows * tileSpacing) + tileSpacing);
+            tilesetTilesPictureBox.Image = new Bitmap(tilesetTilesPictureBoxPanel.ClientSize.Width, numberOfRows * Tileset.TilesetScaledHeight + (numberOfRows * tileSpacing) + tileSpacing);
         }
 
         private void OnTileSelected()
@@ -402,7 +610,7 @@ namespace MapEditor.src.TilesetEditor
 
                 foreach (FrameData frameData in layerData.Frames)
                 {
-                    Bitmap layerImage = ImageUtils.MakeColorTransparent(tileset.GetTileSubImage(frameData.Row, frameData.Column), Config.TransparentColor);
+                    Bitmap layerImage = ImageUtils.MakeColorTransparent(Tileset.GetTileSubImage(frameData.Row, frameData.Column), Config.TransparentColor);
                     if (frameData.SpriteEffect != null)
                     {
                         switch (frameData.SpriteEffect)
@@ -447,7 +655,7 @@ namespace MapEditor.src.TilesetEditor
                     }
                 };
                 animationTimers.Add(timer);
-                
+
             }
 
             foreach (System.Windows.Forms.Timer timer in animationTimers)
@@ -455,11 +663,24 @@ namespace MapEditor.src.TilesetEditor
                 timer.Start();
             }
 
-            tilePreviewPictureBox.Size = new Size(tileset.TilesetScaledWidth, tileset.TilesetScaledHeight);
-            tilePreviewPictureBox.Image = new Bitmap(tileset.TilesetScaledWidth, tileset.TilesetScaledHeight);
-            tilePreviewPictureBox.Location = new Point((tilePropertiesPanel.ClientSize.Width / 2) - (tilePreviewPictureBox.Width / 2), tilePreviewPictureBox.Location.Y);
+            tilePreviewPictureBox.Size = new Size(Tileset.TilesetScaledWidth, Tileset.TilesetScaledHeight);
+            tilePreviewPictureBox.Image = new Bitmap(Tileset.TilesetScaledWidth, Tileset.TilesetScaledHeight);
+            tilePreviewPictureBox.Location = new Point((tilePreviewPanel.ClientSize.Width / 2) - (tilePreviewPictureBox.Width / 2), tilePreviewPictureBox.Location.Y);
 
             previewComboBox.SelectedItem = "Full";
+            numberOfLayersLabel.Text = $"Number of Layers: {tileLayerPreviews.Count}";
+            selectedLayer = 0;
+            selectLayerInput.Minimum = 1;
+            selectLayerInput.Maximum = tileLayerPreviews.Count;
+
+            numberOfFramesLabel.Text = $"Number of Frames: {tileLayerPreviews[selectedLayer].Count}";
+            selectedFrame = 0;
+            selectFrameInput.Minimum = 1;
+            selectFrameInput.Maximum = tileLayerPreviews[selectedLayer].Count;
+
+            tileIndexInput.Value = SelectedTile.Index + 1;
+
+
         }
 
     }

@@ -32,13 +32,17 @@
             panel1 = new Panel();
             tilesetListBox = new ListBox();
             splitContainer2 = new SplitContainer();
+            splitContainer3 = new SplitContainer();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
             splitContainer1.Panel1.SuspendLayout();
             splitContainer1.Panel2.SuspendLayout();
             splitContainer1.SuspendLayout();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)splitContainer2).BeginInit();
+            splitContainer2.Panel1.SuspendLayout();
             splitContainer2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)splitContainer3).BeginInit();
+            splitContainer3.SuspendLayout();
             SuspendLayout();
             // 
             // splitContainer1
@@ -86,17 +90,37 @@
             // 
             // splitContainer2.Panel1
             // 
-            splitContainer2.Panel1.AutoScroll = true;
+            splitContainer2.Panel1.Controls.Add(splitContainer3);
             // 
             // splitContainer2.Panel2
             // 
             splitContainer2.Panel2.AutoScroll = true;
             splitContainer2.Size = new Size(645, 545);
-            splitContainer2.SplitterDistance = 505;
+            splitContainer2.SplitterDistance = 481;
             splitContainer2.TabIndex = 0;
+            // 
+            // splitContainer3
+            // 
+            splitContainer3.Dock = DockStyle.Fill;
+            splitContainer3.Location = new Point(0, 0);
+            splitContainer3.Name = "splitContainer3";
+            splitContainer3.Orientation = Orientation.Horizontal;
+            // 
+            // splitContainer3.Panel1
+            // 
+            splitContainer3.Panel1.AutoScroll = true;
+            // 
+            // splitContainer3.Panel2
+            // 
+            splitContainer3.Panel2.AutoScroll = true;
+            splitContainer3.Size = new Size(481, 545);
+            splitContainer3.SplitterDistance = 287;
+            splitContainer3.TabIndex = 0;
             // 
             // TilesetEditor
             // 
+            AutoScaleMode = AutoScaleMode.Inherit;
+            AutoScroll = true;
             Controls.Add(splitContainer1);
             Name = "TilesetEditor";
             Size = new Size(770, 545);
@@ -105,16 +129,20 @@
             ((System.ComponentModel.ISupportInitialize)splitContainer1).EndInit();
             splitContainer1.ResumeLayout(false);
             panel1.ResumeLayout(false);
+            splitContainer2.Panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)splitContainer2).EndInit();
             splitContainer2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)splitContainer3).EndInit();
+            splitContainer3.ResumeLayout(false);
             ResumeLayout(false);
         }
 
         #endregion
 
         private SplitContainer splitContainer1;
-        private SplitContainer splitContainer2;
         private Panel panel1;
         private ListBox tilesetListBox;
+        private SplitContainer splitContainer2;
+        private SplitContainer splitContainer3;
     }
 }
