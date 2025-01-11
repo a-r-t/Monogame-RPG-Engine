@@ -678,13 +678,50 @@ namespace MapEditor.src.TilesetEditor
                 Size = new Size(100, 30),
                 Location = new Point(5, 89)
             };
+            addLayerButton.Click += (sender, e) =>
+            {
+                foreach (System.Windows.Forms.Timer timer in animationTimers)
+                {
+                    timer.Stop();
+                }
+                SelectedTileData.Layers.Add(new LayerData()
+                {
+                    Frames = new List<FrameData>()
+                    {
+                        new FrameData()
+                        {
+                            Row = 0,
+                            Column = 0
+                        }
+                    }
+                });
+                OnTileSelected();
+                
+            };
             removeLayerButton = new Button()
             {
                 Text = "Remove Layer",
                 Size = new Size(100, 30),
                 Location = new Point(5, 128)
             };
+            removeLayerButton.Click += (sender, e) =>
+            {
+                int numberOfLayers = SelectedTileData.Layers.Count;
+                if (numberOfLayers > 1)
+                {
+                    foreach (System.Windows.Forms.Timer timer in animationTimers)
+                    {
+                        timer.Stop();
+                    }
+                    if (selectedLayer + 1 > numberOfLayers)
+                    {
+                        selectedLayer--;
+                    }
+                    SelectedTileData.Layers.RemoveAt(selectedLayer);
+                    OnTileSelected();
+                }
 
+            };
 
             layerGroupBox.Controls.Add(selectedLayerLabel);
             layerGroupBox.Controls.Add(selectLayerInput);
@@ -947,19 +984,25 @@ namespace MapEditor.src.TilesetEditor
             tilePreviewPictureBox.Location = new Point((tilePreviewPanel.ClientSize.Width / 2) - (tilePreviewPictureBox.Width / 2), tilePreviewPictureBox.Location.Y);
 
             previewComboBox.SelectedItem = "Full";
-            numberOfLayersLabel.Text = $"Number of Layers: {tileLayerPreviews.Count}";
+
+            int numberOfLayers = tileLayerPreviews.Count;
+            numberOfLayersLabel.Text = $"Number of Layers: {numberOfLayers}";
             selectedLayer = 0;
             selectLayerInput.Minimum = 1;
-            selectLayerInput.Maximum = tileLayerPreviews.Count;
+            selectLayerInput.Maximum = numberOfLayers;
             selectLayerInput.Value = 1;
 
-            numberOfFramesLabel.Text = $"Number of Frames: {tileLayerPreviews[selectedLayer].Count}";
+            int numberOfFrames = tileLayerPreviews[selectedLayer].Count;
+            numberOfFramesLabel.Text = $"Number of Frames: {numberOfFrames}";
             selectedFrame = 0;
             selectFrameInput.Minimum = 1;
-            selectFrameInput.Maximum = tileLayerPreviews[selectedLayer].Count;
+            selectFrameInput.Maximum = numberOfFrames;
             selectFrameInput.Value = 1;
 
             tileIndexInput.Value = SelectedTile.Index;
+
+            removeLayerButton.Enabled = numberOfLayers > 1;
+            removeFrameButton.Enabled = numberOfFrames > 1;
 
             SetUpBoundsControls();
             SetUpDelayControls();

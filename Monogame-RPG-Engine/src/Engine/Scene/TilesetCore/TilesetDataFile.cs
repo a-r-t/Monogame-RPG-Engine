@@ -48,9 +48,6 @@ namespace src.Engine.Scene.TilesetCore
 
         public class LayerData
         {
-            [JsonPropertyName("layer")]
-            public int Layer { get; set; }
-
             [JsonPropertyName("frames")]
             public List<FrameData> Frames { get; set; }
         }
