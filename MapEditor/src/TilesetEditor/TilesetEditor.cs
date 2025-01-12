@@ -815,6 +815,17 @@ namespace MapEditor.src.TilesetEditor
                 Width = 70
             };
             imageEffectComboBox.Items.AddRange(new string[] { "NONE", "FLIP H", "FLIP V", "FLIP HV" });
+            imageEffectComboBox.SelectedIndexChanged += (sender, e) =>
+            {
+                string oldImageEffect = SelectedTileData.Layers[selectedLayer].Frames[selectedFrame].SpriteEffect;
+                string newImageEffect = ConvertImageEffectText(imageEffectComboBox.Items[imageEffectComboBox.SelectedIndex] as string);
+                if (oldImageEffect == null || oldImageEffect != newImageEffect)
+                {
+                    SelectedTileData.Layers[selectedLayer].Frames[selectedFrame].SpriteEffect = newImageEffect;
+                    OnTileSelected();
+                }
+                
+            };
             frameGroupBox.Controls.Add(imageEffectLabel);
             frameGroupBox.Controls.Add(imageEffectComboBox);
 
@@ -875,6 +886,23 @@ namespace MapEditor.src.TilesetEditor
             splitContainer2.FixedPanel = FixedPanel.Panel2;
 
 
+        }
+
+        private string ConvertImageEffectText(string imageEffectText)
+        {
+            switch(imageEffectText)
+            {
+                case "NONE":
+                    return "NONE";
+                case "FLIP H":
+                    return "FLIP_HORIZONTALLY";
+                case "FLIP V":
+                    return "FLIP_VERTICALLY";
+                case "FLIP HV":
+                    return "FLIP_HORIZONTALLY_AND_VERTICALLY";
+                default:
+                    return null;
+            }
         }
 
         private void OnTilesetSelected()
