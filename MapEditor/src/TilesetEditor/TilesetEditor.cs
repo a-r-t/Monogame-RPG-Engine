@@ -680,10 +680,7 @@ namespace MapEditor.src.TilesetEditor
             };
             addLayerButton.Click += (sender, e) =>
             {
-                foreach (System.Windows.Forms.Timer timer in animationTimers)
-                {
-                    timer.Stop();
-                }
+                StopAnimationTimers();
                 SelectedTileData.Layers.Add(new LayerData()
                 {
                     Frames = new List<FrameData>()
@@ -696,7 +693,6 @@ namespace MapEditor.src.TilesetEditor
                     }
                 });
                 OnTileSelected();
-                
             };
             removeLayerButton = new Button()
             {
@@ -709,18 +705,14 @@ namespace MapEditor.src.TilesetEditor
                 int numberOfLayers = SelectedTileData.Layers.Count;
                 if (numberOfLayers > 1)
                 {
-                    foreach (System.Windows.Forms.Timer timer in animationTimers)
-                    {
-                        timer.Stop();
-                    }
-                    if (selectedLayer + 1 > numberOfLayers)
+                    StopAnimationTimers();
+                    SelectedTileData.Layers.RemoveAt(selectedLayer);
+                    if (selectedLayer > numberOfLayers - 1)
                     {
                         selectedLayer--;
                     }
-                    SelectedTileData.Layers.RemoveAt(selectedLayer);
                     OnTileSelected();
                 }
-
             };
 
             layerGroupBox.Controls.Add(selectedLayerLabel);
@@ -787,7 +779,7 @@ namespace MapEditor.src.TilesetEditor
                 DecimalPlaces = 0,
                 Minimum = 0,
                 Maximum = decimal.MaxValue
-        };
+            };
             delayInput.ValueChanged += (sender, e) =>
             {
                 int? oldDelay = SelectedTileData.Layers[selectedLayer].Frames[selectedFrame].Delay;
@@ -841,11 +833,35 @@ namespace MapEditor.src.TilesetEditor
                 Size = new Size(100, 30),
                 Location = new Point(5, 200)
             };
+            addFrameButton.Click += (sender, e) =>
+            {
+                StopAnimationTimers();
+                SelectedTileData.Layers[selectedLayer].Frames.Add(new FrameData()
+                {
+                    Row = 0,
+                    Column = 0
+                });
+                OnTileSelected();
+            };
             removeFrameButton = new Button()
             {
                 Text = "Remove Frame",
                 Size = new Size(100, 30),
                 Location = new Point(5, 239)
+            };
+            removeFrameButton.Click += (sender, e) =>
+            {
+                int numberOfFrames = SelectedTileData.Layers[selectedLayer].Frames.Count;
+                if (numberOfFrames > 1)
+                {
+                    StopAnimationTimers();
+                    SelectedTileData.Layers[selectedLayer].Frames.RemoveAt(selectedFrame);
+                    if (selectedFrame > numberOfFrames - 1)
+                    {
+                        selectedFrame--;
+                    }
+                    OnTileSelected();
+                }
             };
 
             frameGroupBox.Controls.Add(selectFrameGraphicButton);
