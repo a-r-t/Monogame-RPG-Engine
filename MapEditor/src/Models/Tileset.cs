@@ -84,41 +84,47 @@ namespace MapEditor.src.Models
             for (int i = 0; i < TilesetDataFile.Tiles.Count; i++)
             {
                 TileData tileData = TilesetDataFile.Tiles[i];
-                Bitmap finalTileImage = null;
-                foreach (LayerData layerData in tileData.Layers)
-                {
-                    FrameData firstFrameOfLayer = layerData.Frames[0];
-                    Bitmap layerImage = GetTileSubImage(firstFrameOfLayer.Row, firstFrameOfLayer.Column);
-                    layerImage = ImageUtils.MakeColorTransparent(layerImage, Color.Magenta);
-                    if (firstFrameOfLayer.SpriteEffect != null)
-                    {
-                        switch (firstFrameOfLayer.SpriteEffect)
-                        {
-                            case "FLIP_HORIZONTALLY":
-                                layerImage.RotateFlip(RotateFlipType.RotateNoneFlipX);
-                                break;
-                            case "FLIP VERTICALLY":
-                                layerImage.RotateFlip(RotateFlipType.RotateNoneFlipY);
-                                break;
-                        }
-                    }
-                    if (finalTileImage == null)
-                    {
-                        finalTileImage = layerImage;
-                    }
-                    else
-                    {
-                        using (Graphics g = Graphics.FromImage(finalTileImage))
-                        {
-                            g.DrawImage(layerImage, new Point(0, 0));
-                        }
-                    }
-                }
-                Tiles[i] = new Tile(i, finalTileImage);
+                Bitmap tileImage = CreateTileImage(tileData);
+                Tiles[i] = new Tile(i, tileImage);
             }
         }
 
-        public Bitmap GetTileSubImage(int row, int column)
+        public Bitmap CreateTileImage(TileData tileData)
+        {
+            Bitmap finalTileImage = null;
+            foreach (LayerData layerData in tileData.Layers)
+            {
+                FrameData firstFrameOfLayer = layerData.Frames[0];
+                Bitmap layerImage = GetTilesetGraphicSubImage(firstFrameOfLayer.Row, firstFrameOfLayer.Column);
+                layerImage = ImageUtils.MakeColorTransparent(layerImage, Color.Magenta);
+                if (firstFrameOfLayer.SpriteEffect != null)
+                {
+                    switch (firstFrameOfLayer.SpriteEffect)
+                    {
+                        case "FLIP_HORIZONTALLY":
+                            layerImage.RotateFlip(RotateFlipType.RotateNoneFlipX);
+                            break;
+                        case "FLIP VERTICALLY":
+                            layerImage.RotateFlip(RotateFlipType.RotateNoneFlipY);
+                            break;
+                    }
+                }
+                if (finalTileImage == null)
+                {
+                    finalTileImage = layerImage;
+                }
+                else
+                {
+                    using (Graphics g = Graphics.FromImage(finalTileImage))
+                    {
+                        g.DrawImage(layerImage, new Point(0, 0));
+                    }
+                }
+            }
+            return finalTileImage;
+        }
+
+        public Bitmap GetTilesetGraphicSubImage(int row, int column)
         {
             Rectangle tileRectangle = new Rectangle(column * TileWidth + column, row * TileHeight + row, TileWidth, TileHeight);
             return TilesetImage.Clone(tileRectangle, TilesetImage.PixelFormat);

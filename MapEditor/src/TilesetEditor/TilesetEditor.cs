@@ -238,6 +238,7 @@ namespace MapEditor.src.TilesetEditor
                         Tile tile = Tileset.Tiles[i];
                         if (tile.IsPointInTile(e.Location))
                         {
+                            Cursor = Cursors.Hand;
                             selectedTileIndex = i;
                             SelectedTile = tile;
                             tilesetTilesPictureBox.Invalidate();
@@ -827,6 +828,27 @@ namespace MapEditor.src.TilesetEditor
                 Size = new Size(100, 30),
                 Location = new Point(5, 161)
             };
+            selectFrameGraphicButton.Click += (e, sender) =>
+            {
+                TileGraphicChooserForm tileGraphicChooserForm = new TileGraphicChooserForm();
+                tileGraphicChooserForm.Tileset = Tileset;
+                int row = SelectedTileData.Layers[selectedLayer].Frames[selectedFrame].Row;
+                int column = SelectedTileData.Layers[selectedLayer].Frames[selectedFrame].Column;
+                tileGraphicChooserForm.SelectedTileLocation = (row, column);
+
+                DialogResult tileGraphicChooserFormResult = tileGraphicChooserForm.ShowDialog();
+                if (tileGraphicChooserFormResult == DialogResult.OK)
+                {
+                    SelectedTileData.Layers[selectedLayer].Frames[selectedFrame].Row = tileGraphicChooserForm.SelectedTileLocation.Row;
+                    SelectedTileData.Layers[selectedLayer].Frames[selectedFrame].Column = tileGraphicChooserForm.SelectedTileLocation.Column;
+                    Bitmap tileImage = Tileset.CreateTileImage(SelectedTileData);
+                    Tileset.Tiles[selectedTileIndex].Image = tileImage;
+                    tilesetTilesPictureBox.Invalidate();
+                    OnTileSelected();
+                }
+
+                tileGraphicChooserForm.Dispose();
+            };
             addFrameButton = new Button()
             {
                 Text = "Add Frame",
@@ -989,7 +1011,7 @@ namespace MapEditor.src.TilesetEditor
 
                 foreach (FrameData frameData in layerData.Frames)
                 {
-                    Bitmap layerImage = ImageUtils.MakeColorTransparent(Tileset.GetTileSubImage(frameData.Row, frameData.Column), Config.TransparentColor);
+                    Bitmap layerImage = ImageUtils.MakeColorTransparent(Tileset.GetTilesetGraphicSubImage(frameData.Row, frameData.Column), Config.TransparentColor);
                     if (frameData.SpriteEffect != null)
                     {
                         switch (frameData.SpriteEffect)
