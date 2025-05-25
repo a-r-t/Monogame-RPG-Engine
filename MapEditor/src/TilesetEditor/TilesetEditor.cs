@@ -1234,6 +1234,5 @@ namespace MapEditor.src.TilesetEditor
             SetupTilePanel();
             tileIndexInput.Maximum = Tileset.Tiles.Length - 1;
         }
-
     }
 }

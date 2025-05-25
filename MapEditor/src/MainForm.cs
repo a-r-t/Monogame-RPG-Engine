@@ -85,5 +85,10 @@ namespace MapEditor
         {
             new TilesetEditorForm().ShowDialog();
         }
+
+        private void tilesetsManagerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new TilesetsManagerForm().ShowDialog();
+        }
     }
 }

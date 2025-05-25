@@ -39,6 +39,7 @@
             tilesetEditorToolStripMenuItem = new ToolStripMenuItem();
             toolStrip1 = new ToolStrip();
             saveButton = new ToolStripButton();
+            tilesetsManagerToolStripMenuItem = new ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
             splitContainer1.Panel1.SuspendLayout();
             splitContainer1.Panel2.SuspendLayout();
@@ -106,13 +107,13 @@
             // 
             saveToolStripMenuItem.Name = "saveToolStripMenuItem";
             saveToolStripMenuItem.ShortcutKeys = Keys.Control | Keys.S;
-            saveToolStripMenuItem.Size = new Size(180, 22);
+            saveToolStripMenuItem.Size = new Size(138, 22);
             saveToolStripMenuItem.Text = "Save";
             saveToolStripMenuItem.Click += saveToolStripMenuItem_Click;
             // 
             // toolsToolStripMenuItem
             // 
-            toolsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { tilesetEditorToolStripMenuItem });
+            toolsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { tilesetsManagerToolStripMenuItem, tilesetEditorToolStripMenuItem });
             toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
             toolsToolStripMenuItem.Size = new Size(46, 20);
             toolsToolStripMenuItem.Text = "Tools";
@@ -145,6 +146,13 @@
             saveButton.Text = "toolStripButton1";
             saveButton.Click += saveButton_Click;
             // 
+            // tilesetsManagerToolStripMenuItem
+            // 
+            tilesetsManagerToolStripMenuItem.Name = "tilesetsManagerToolStripMenuItem";
+            tilesetsManagerToolStripMenuItem.Size = new Size(181, 22);
+            tilesetsManagerToolStripMenuItem.Text = "Tilesets Manager";
+            tilesetsManagerToolStripMenuItem.Click += tilesetsManagerToolStripMenuItem_Click;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -156,6 +164,7 @@
             MainMenuStrip = menuStrip1;
             Margin = new Padding(4, 3, 4, 3);
             Name = "MainForm";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Map Editor";
             FormClosing += MainForm_FormClosing;
             Load += MainForm_Load;
@@ -183,6 +192,7 @@
         private ToolStripButton saveButton;
         private ToolStripMenuItem toolsToolStripMenuItem;
         private ToolStripMenuItem tilesetEditorToolStripMenuItem;
+        private ToolStripMenuItem tilesetsManagerToolStripMenuItem;
     }
 }
 
