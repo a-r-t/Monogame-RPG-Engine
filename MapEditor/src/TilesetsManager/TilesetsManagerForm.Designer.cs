@@ -33,7 +33,7 @@
             tilesetPreviewPictureBox = new PictureBox();
             deleteTilesetButton = new Button();
             createTilesetButton = new Button();
-            editTilesetNameButton = new Button();
+            editTilesetButton = new Button();
             tilesetImagePreviewPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)tilesetPreviewPictureBox).BeginInit();
             SuspendLayout();
@@ -87,23 +87,23 @@
             createTilesetButton.UseVisualStyleBackColor = true;
             createTilesetButton.Click += createTilesetButton_Click;
             // 
-            // editTilesetNameButton
+            // editTilesetButton
             // 
-            editTilesetNameButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            editTilesetNameButton.Location = new Point(8, 400);
-            editTilesetNameButton.Name = "editTilesetNameButton";
-            editTilesetNameButton.Size = new Size(173, 36);
-            editTilesetNameButton.TabIndex = 4;
-            editTilesetNameButton.Text = "Edit Tileset Name";
-            editTilesetNameButton.UseVisualStyleBackColor = true;
-            editTilesetNameButton.Click += editTilesetNameButton_Click;
+            editTilesetButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            editTilesetButton.Location = new Point(8, 400);
+            editTilesetButton.Name = "editTilesetButton";
+            editTilesetButton.Size = new Size(173, 36);
+            editTilesetButton.TabIndex = 4;
+            editTilesetButton.Text = "Edit Tileset Properties";
+            editTilesetButton.UseVisualStyleBackColor = true;
+            editTilesetButton.Click += editTilesetButton_Click;
             // 
             // TilesetsManagerForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(897, 490);
-            Controls.Add(editTilesetNameButton);
+            Controls.Add(editTilesetButton);
             Controls.Add(createTilesetButton);
             Controls.Add(deleteTilesetButton);
             Controls.Add(tilesetImagePreviewPanel);
@@ -123,6 +123,6 @@
         private Button deleteTilesetButton;
         private Button createTilesetButton;
         private PictureBox tilesetPreviewPictureBox;
-        private Button editTilesetNameButton;
+        private Button editTilesetButton;
     }
 }

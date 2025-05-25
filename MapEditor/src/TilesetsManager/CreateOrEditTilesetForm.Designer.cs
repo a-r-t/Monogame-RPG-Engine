@@ -1,6 +1,6 @@
 ﻿namespace MapEditor.src.TilesetsManager
 {
-    partial class CreateTilesetForm
+    partial class CreateOrEditTilesetForm
     {
         /// <summary>
         /// Required designer variable.

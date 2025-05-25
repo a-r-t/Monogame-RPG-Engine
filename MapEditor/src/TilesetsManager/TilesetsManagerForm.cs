@@ -106,7 +106,8 @@ namespace MapEditor.src.TilesetEditor
 
         private void createTilesetButton_Click(object sender, EventArgs e)
         {
-            CreateTilesetForm createTilesetForm = new CreateTilesetForm();
+            CreateOrEditTilesetForm createTilesetForm = new CreateOrEditTilesetForm();
+            createTilesetForm.Text = "Create Tileset";
 
             DialogResult createTilesetFormResult = createTilesetForm.ShowDialog();
             if (createTilesetFormResult == DialogResult.OK)
@@ -140,9 +141,52 @@ namespace MapEditor.src.TilesetEditor
             createTilesetForm.Dispose();
         }
 
-        private void editTilesetNameButton_Click(object sender, EventArgs e)
+        private void editTilesetButton_Click(object sender, EventArgs e)
         {
+            CreateOrEditTilesetForm editTilesetForm = new CreateOrEditTilesetForm();
+            editTilesetForm.Text = "Edit Tileset Properties";
+            editTilesetForm.TilesetName = tileset.Name;
+            editTilesetForm.TilesetWidth = tileset.TileWidth;
+            editTilesetForm.TilesetHeight = tileset.TileHeight;
+            editTilesetForm.TilesetScale = tileset.TileScale;
+            editTilesetForm.TilesetImage = tileset.TilesetDataFile.Properties.TilesetImagePath;
 
+            DialogResult editTilesetFormResult = editTilesetForm.ShowDialog();
+            if (editTilesetFormResult == DialogResult.OK)
+            {
+                TilesetDataFile tilesetDataFile = new TilesetDataFile();
+                tilesetDataFile.Properties = new PropertiesData();
+                tilesetDataFile.Properties.TileWidth = editTilesetForm.TilesetWidth;
+                tilesetDataFile.Properties.TileHeight = editTilesetForm.TilesetHeight;
+                tilesetDataFile.Properties.TileScale = editTilesetForm.TilesetScale;
+                tilesetDataFile.Properties.TilesetImagePath = editTilesetForm.TilesetImage;
+                tilesetDataFile.Tiles = new List<TileData>();
+
+                string newTilesetPath = $"{Config.TilesetFilesPath}/{editTilesetForm.TilesetName}.tileset";
+                string originalTilesetPath = $"{Config.TilesetFilesPath}/{tileset.Name}.tileset";
+
+                if (originalTilesetPath != newTilesetPath && File.Exists(newTilesetPath))
+                {
+                    MessageBox.Show($"Error editing tileset: file {newTilesetPath} already exists, cannot rename!!");
+                }
+                else
+                {
+                    try
+                    {
+                        File.WriteAllText(originalTilesetPath, JsonSerializer.Serialize(tilesetDataFile, new JsonSerializerOptions { WriteIndented = true }));
+                        if (originalTilesetPath != newTilesetPath)
+                        {
+                            File.Move(originalTilesetPath, newTilesetPath, false);
+                        }
+                        LoadTilesets();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Error updating tileset: {ex.Message}");
+                    }
+                }
+            }
+            editTilesetForm.Dispose();
         }
 
         private void deleteTilesetButton_Click(object sender, EventArgs e)

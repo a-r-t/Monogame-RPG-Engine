@@ -10,15 +10,75 @@ using System.Windows.Forms;
 
 namespace MapEditor.src.TilesetsManager
 {
-    public partial class CreateTilesetForm : Form
+    public partial class CreateOrEditTilesetForm : Form
     {
-        public string TilesetName { get; set; }
-        public int TilesetWidth { get; set; }
-        public int TilesetHeight { get; set; }
-        public int TilesetScale { get; set; }
-        public string TilesetImage { get; set; }
+        private string tilesetName;
+        public string TilesetName
+        {
+            get
+            {
+                return tilesetName;
+            }
+            set
+            {
+                tilesetName = value;
+                nameTextBox.Text = tilesetName;
+            }
+        }
+        private int tilesetWidth;
+        public int TilesetWidth
+        {
+            get
+            {
+                return tilesetWidth;
+            }
+            set
+            {
+                tilesetWidth = value;
+                widthTextBox.Value = tilesetWidth;
+            }
+        }
+        private int tilesetHeight;
+        public int TilesetHeight
+        {
+            get
+            {
+                return tilesetHeight;
+            }
+            set
+            {
+                tilesetHeight = value;
+                heightTextBox.Value = tilesetHeight;
+            }
+        }
+        private int tilesetScale;
+        public int TilesetScale
+        {
+            get
+            {
+                return tilesetScale;
+            }
+            set
+            {
+                tilesetScale = value;
+                scaleTextBox.Value = tilesetScale;
+            }
+        }
+        private string tilesetImage;
+        public string TilesetImage
+        {
+            get
+            {
+                return tilesetImage;
+            }
+            set
+            {
+                tilesetImage = value;
+                imageTextBox.Text = tilesetImage;
+            }
+        }
 
-        public CreateTilesetForm()
+        public CreateOrEditTilesetForm()
         {
             InitializeComponent();
 
