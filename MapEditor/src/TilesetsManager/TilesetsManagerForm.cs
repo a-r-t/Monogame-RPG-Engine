@@ -102,6 +102,14 @@ namespace MapEditor.src.TilesetEditor
             }
 
             tilesetPreviewPictureBox.Image = new Bitmap(tilesetImagePreviewPanel.ClientSize.Width, numberOfRows * tileset.TilesetScaledHeight + (numberOfRows * tileSpacing) + tileSpacing);
+            if (tileset.Tiles.Length > 0)
+            {
+                tilesetPreviewPictureBox.BackColor = Config.TransparentColor;
+            }
+            else
+            {
+                tilesetPreviewPictureBox.BackColor = Color.Transparent;
+            }
         }
 
         private void createTilesetButton_Click(object sender, EventArgs e)
