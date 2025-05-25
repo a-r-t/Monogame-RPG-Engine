@@ -96,7 +96,7 @@
             // 
             splitContainer2.Panel2.AutoScroll = true;
             splitContainer2.Size = new Size(645, 545);
-            splitContainer2.SplitterDistance = 481;
+            splitContainer2.SplitterDistance = 466;
             splitContainer2.TabIndex = 0;
             // 
             // splitContainer3
@@ -113,7 +113,7 @@
             // splitContainer3.Panel2
             // 
             splitContainer3.Panel2.AutoScroll = true;
-            splitContainer3.Size = new Size(481, 545);
+            splitContainer3.Size = new Size(466, 545);
             splitContainer3.SplitterDistance = 287;
             splitContainer3.TabIndex = 0;
             // 

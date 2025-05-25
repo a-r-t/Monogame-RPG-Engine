@@ -784,7 +784,8 @@ namespace MapEditor.src.TilesetEditor
             delayInput.ValueChanged += (sender, e) =>
             {
                 int? oldDelay = SelectedTileData.Layers[selectedLayer].Frames[selectedFrame].Delay;
-                if (!oldDelay.HasValue || oldDelay != (int)delayInput.Value) {
+                if (!oldDelay.HasValue || oldDelay != (int)delayInput.Value)
+                {
                     SelectedTileData.Layers[selectedLayer].Frames[selectedFrame].Delay = (int)delayInput.Value;
                     if (SelectedTileData.Layers[selectedLayer].Frames.Count > 1)
                     {
@@ -817,7 +818,7 @@ namespace MapEditor.src.TilesetEditor
                     SelectedTileData.Layers[selectedLayer].Frames[selectedFrame].SpriteEffect = newImageEffect;
                     OnTileSelected();
                 }
-                
+
             };
             frameGroupBox.Controls.Add(imageEffectLabel);
             frameGroupBox.Controls.Add(imageEffectComboBox);
@@ -846,7 +847,6 @@ namespace MapEditor.src.TilesetEditor
                     tilesetTilesPictureBox.Invalidate();
                     OnTileSelected();
                 }
-
                 tileGraphicChooserForm.Dispose();
             };
             addFrameButton = new Button()
@@ -928,7 +928,7 @@ namespace MapEditor.src.TilesetEditor
 
         private string ConvertImageEffectText(string imageEffectText)
         {
-            switch(imageEffectText)
+            switch (imageEffectText)
             {
                 case "NONE":
                     return "NONE";
@@ -1203,6 +1203,28 @@ namespace MapEditor.src.TilesetEditor
             {
                 imageEffectComboBox.SelectedItem = "NONE";
             }
+        }
+
+        public void AddTile()
+        {
+            TileData tileData = new TileData();
+            tileData.Name = "NEW_TILE";
+            tileData.TileType = "PASSABLE";
+            LayerData layerData = new LayerData();
+            FrameData frameData = new FrameData();
+            frameData.Row = 0;
+            frameData.Column = 0;
+            layerData.Frames = new List<FrameData>();
+            layerData.Frames.Add(frameData);
+            tileData.Layers = new List<LayerData>();
+            tileData.Layers.Add(layerData);
+            Tileset.TilesetDataFile.Tiles.Add(tileData);
+
+            // reload tileset with change
+            Tileset.LoadTileset();
+            SetupTilePanel();
+
+            tileIndexInput.Maximum = Tileset.Tiles.Length - 1;
         }
 
     }

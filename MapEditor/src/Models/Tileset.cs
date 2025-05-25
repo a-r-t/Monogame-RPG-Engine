@@ -54,6 +54,7 @@ namespace MapEditor.src.Models
         public Tileset(string tilesetFilePath)
         {
             TilesetFilePath = tilesetFilePath;
+            TilesetDataFile = ReadTilesetDataFile(TilesetFilePath);
             LoadTileset();
         }
 
@@ -65,8 +66,6 @@ namespace MapEditor.src.Models
 
         public void LoadTileset()
         {
-            TilesetDataFile = Tileset.ReadTilesetDataFile(TilesetFilePath);
-
             TilesetImageFilePath = $"{Config.GraphicsPath}/{TilesetDataFile.Properties.TilesetImagePath}";
             TilesetImage = new Bitmap(TilesetImageFilePath);
             TileWidth = TilesetDataFile.Properties.TileWidth;
