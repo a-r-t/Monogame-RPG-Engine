@@ -1205,7 +1205,7 @@ namespace MapEditor.src.TilesetEditor
             }
         }
 
-        public void AddTile()
+        public void AddNewTileToTileset()
         {
             TileData tileData = new TileData();
             tileData.Name = "NEW_TILE";
@@ -1224,6 +1224,14 @@ namespace MapEditor.src.TilesetEditor
             Tileset.LoadTileset();
             SetupTilePanel();
 
+            tileIndexInput.Maximum = Tileset.Tiles.Length - 1;
+        }
+
+        public void DeleteSelectedTileFromTileset()
+        {
+            Tileset.TilesetDataFile.Tiles.RemoveAt(selectedTileIndex);
+            Tileset.LoadTileset();
+            SetupTilePanel();
             tileIndexInput.Maximum = Tileset.Tiles.Length - 1;
         }
 

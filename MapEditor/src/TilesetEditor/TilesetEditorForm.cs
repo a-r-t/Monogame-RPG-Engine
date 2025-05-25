@@ -40,14 +40,14 @@ namespace MapEditor.src.TilesetEditor
             ToolStripMenuItem addTile = new ToolStripMenuItem("Add Tile");
             addTile.Click += (sender, e) =>
             {
-                tilesetEditor.AddTile();
+                tilesetEditor.AddNewTileToTileset();
             };
             editMenu.DropDownItems.Add(addTile);
 
             ToolStripMenuItem deleteTile = new ToolStripMenuItem("Delete Tile");
             deleteTile.Click += (sender, e) =>
             {
-                // DELETE CURRENTLY SELECTED TILE FROM TILE SET
+                tilesetEditor.DeleteSelectedTileFromTileset();
             };
             editMenu.DropDownItems.Add(deleteTile);
 
