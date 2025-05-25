@@ -191,7 +191,26 @@ namespace MapEditor.src.TilesetEditor
 
         private void deleteTilesetButton_Click(object sender, EventArgs e)
         {
+            DialogResult result = MessageBox.Show(
+                $"Are you sure you want to delete tileset {tilesetsListBox.Items[tilesetsListBox.SelectedIndex]}?",       
+                "Confirm",                       
+                MessageBoxButtons.OKCancel,       
+                MessageBoxIcon.Question           
+            );
 
+            if (result == DialogResult.OK)
+            {
+                try
+                {
+                    string tilesetPath = $"{Config.TilesetFilesPath}/{tileset.Name}.tileset";
+                    File.Delete(tilesetPath);
+                    LoadTilesets();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error deleting tileset: {ex.Message}");
+                }
+            }
         }
     }
 }
